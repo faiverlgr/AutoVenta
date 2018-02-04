@@ -40,6 +40,7 @@
                                     <th style="width: 5%">Linea</th>
                                     <th style="width: 5%">Articulo</th>
                                     <th style="width: 65%">Nombre</th>
+                                    <th style="width: 65%">Precio</th>
                                     <th style="width: 25%">.:.</th>
                                 </tr>
                             </thead>
@@ -50,6 +51,7 @@
                                     <td>{{ $arti->codcate }}</td>
                                     <td>{{ $arti->codarti }}</td>
                                     <td>{{ $arti->nombre }}</td>
+                                    <td>{{ $arti->vneto }}</td>
                                     <td>
                                         <a href="{{URL::action('ArticuloController@edit', $arti->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                         @if($arti->estado == 0)
