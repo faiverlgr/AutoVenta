@@ -39,8 +39,8 @@
                                     <th style="width: 5%">Prov</th>
                                     <th style="width: 5%">Linea</th>
                                     <th style="width: 5%">Articulo</th>
-                                    <th style="width: 65%">Nombre</th>
-                                    <th style="width: 65%">Precio</th>
+                                    <th style="width: 50%">Nombre</th>
+                                    <th style="width: 10%">Precio</th>
                                     <th style="width: 25%">.:.</th>
                                 </tr>
                             </thead>
