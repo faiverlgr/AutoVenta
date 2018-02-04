@@ -211,7 +211,7 @@
     <!-- /.content-wrapper -->
     @section('scripts')
     <script>
-
+        // comentarios
         function fvalor(){
             var vcos = document.getElementById('vcosto').value;
             var vmar = document.getElementById('pmargen').value;
