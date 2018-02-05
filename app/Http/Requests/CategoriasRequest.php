@@ -28,7 +28,7 @@ class CategoriasRequest extends FormRequest
             // el primero es el nombre en del campo en el formulario
             'codprov'       =>  'required',
             'codcate'       =>  'required | max:4',
-            'nombre'        =>  'required | max:100',
+            'nomcate'       =>  'required | max:100',
             'validaCate'    =>  ['required', new valCate()]
         ];
     }

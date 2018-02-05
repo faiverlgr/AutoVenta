@@ -16,7 +16,7 @@ class Categoria extends Model
     protected $fillable = [
         'idprov',
         'idcate',
-        'nombre',
+        'nomcate',
         'estado',
         'validaCate'
     ];

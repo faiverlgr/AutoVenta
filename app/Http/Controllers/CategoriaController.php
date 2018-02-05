@@ -26,7 +26,7 @@ class CategoriaController extends Controller
         if ($request) {
             $query=trim($request->get('searchText'));
             
-            $categorias=DB::table('categorias')->where('nombre', 'LIKE', '%'.$query.'%')
+            $categorias=DB::table('categorias')->where('nomcate', 'LIKE', '%'.$query.'%')
             ->orderBy('codprov', 'asc')
             ->orderBy('codcate', 'asc')
             ->paginate(10);
@@ -78,7 +78,7 @@ class CategoriaController extends Controller
         $categoria = new categoria;
         $categoria->codprov     = $request->get('codprov');
         $categoria->codcate     = $request->get('codcate');
-        $categoria->nombre      = $request->get('nombre');
+        $categoria->nomcate      = $request->get('nombre');
         $categoria->estado      = '1';
         $categoria->save();
         return back()->with('notification', 'Registro guardado exitosamente.');

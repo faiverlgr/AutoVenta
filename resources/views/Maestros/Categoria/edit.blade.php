@@ -54,8 +54,8 @@
                             <input disabled type="text" name="codcate" class="form-control" value="{{ $categ->codcate }}">
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Nombre *</label>
-                            <input type="text" name="nombre" class="form-control" value="{{ $categ->nombre }}">
+                            <label for="nomcate">Nombre *</label>
+                            <input type="text" name="nomcate" class="form-control" value="{{ $categ->nomcate }}">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-sm btn-primary" type="submit">Guardar</button>

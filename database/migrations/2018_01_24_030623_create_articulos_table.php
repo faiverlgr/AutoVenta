@@ -18,8 +18,8 @@ class CreateArticulosTable extends Migration
             $table->string('codprov', 2)->required();
             $table->string('codcate', 4)->required();
             $table->string('codarti', 4)->required();
-            $table->string('nombre', 100)->required();
-            $table->string('nombrec', 50);
+            $table->string('nomarti', 100)->required();
+            $table->string('nomartic', 50);
             $table->decimal('vcosto', 11, 2)->required();
             $table->decimal('vneto', 11, 2)->required();
             $table->decimal('piva', 5, 2)->required();

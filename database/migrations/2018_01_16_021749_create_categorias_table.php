@@ -17,7 +17,7 @@ class CreateCategoriasTable extends Migration
             $table->increments('id');
             $table->string('idprov', 2);
             $table->string('idcate', 4)->primary();
-            $table->string('nombre', 100)->required();
+            $table->string('nomcate', 100)->required();
             $table->boolean('estado')->default(1);
             $table->timestamps();
         });

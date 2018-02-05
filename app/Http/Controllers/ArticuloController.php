@@ -25,14 +25,17 @@ class ArticuloController extends Controller
         if ($request) {
             $query=trim($request->get('searchText'));
             
-            $articulos=DB::table('articulos')->where('nombrec', 'LIKE', '%'.$query.'%')
-            ->orderBy('codprov', 'desc')
-            ->orderBy('codcate', 'desc')
-            ->orderBy('codarti', 'desc')
-            ->paginate(10);
-            return view('maestros.articulo.index', [
-                "articulos" => $articulos,
-                "searchText" => $query
+            $articulos=DB::table('articulos')
+                ->select('id', 'codprov', 'codcate', 'codarti', 'nomarti', 'vneto', 'piva', DB::raw('round(vneto + ((vneto*piva)/100),2) as pventa'), 'estado')
+                ->where('nomarti', 'LIKE', '%'.$query.'%')
+                ->orderBy('codprov', 'desc')
+                ->orderBy('codcate', 'desc')
+                ->orderBy('codarti', 'desc')
+                ->paginate(10);
+                //dd($articulos);
+                return view('maestros.articulo.index', [
+                    "articulos" => $articulos,
+                    "searchText" => $query
                 ]
             );
         }
@@ -106,7 +109,15 @@ class ArticuloController extends Controller
      */
     public function edit($id)
     {
-        //
+        $articulo = Articulo::findOrFail($id);
+        $query = DB::table('articulos')
+            ->join('proveedores', 'proveedores.codprov', '=', 'articulos.codprov')
+            ->join('categorias', [['categorias.codprov', '=', 'articulos.codprov'], ['categorias.codcate', '=', 'articulos.codcate']])
+            ->select('articulos.*', 'proveedores.razons', 'categorias.nomcate')
+            ->where('articulos.id', '=', $id)
+            ->first();
+        dd($query);
+        //return view('maestros.categoria.edit', compact(['$query', 'articulo']));
     }
 
     /**

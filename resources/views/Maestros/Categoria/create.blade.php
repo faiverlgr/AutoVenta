@@ -64,8 +64,8 @@
                             <input type="text" id="codcate" name="codcate" onchange="uneCodigo()" class="form-control" placeholder="Categoria.." value="{{old('codcate')}}">
                         </div>
                         <div class="form-group">
-                            <label for="nombre">Nombre *</label>
-                            <input type="text" name="nombre" class="form-control" value="{{old('nombre')}}">
+                            <label for="nomcate">Nombre *</label>
+                            <input type="text" name="nomcate" class="form-control" value="{{old('nomcate')}}">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-sm btn-primary" type="submit">Guardar</button>

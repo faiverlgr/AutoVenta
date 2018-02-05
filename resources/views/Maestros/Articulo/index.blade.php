@@ -21,8 +21,8 @@
                     <h3>Listado<a href="articulo/create"><button class="btn btn-succes pull-right">Crear un nuevo item</button></a></h3>
                 </div>
                 <!-- /.box-header -->
-                <div class="box-body">
-                    <div class="col col-md-8 col-md-offset-2">                    
+                <div class="box-body">  
+                    <div class="col col-md-10 col-md-offset-1">                    
                         {!! Form::open(array('url'=>'/articulo','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
                         <div class="form-group">
                             <div class="input-group">
@@ -39,9 +39,11 @@
                                     <th style="width: 5%">Prov</th>
                                     <th style="width: 5%">Linea</th>
                                     <th style="width: 5%">Articulo</th>
-                                    <th style="width: 50%">Nombre</th>
-                                    <th style="width: 10%">Precio</th>
-                                    <th style="width: 25%">.:.</th>
+                                    <th style="width: 40%">Nombre</th>
+                                    <th style="width: 10%">Neto</th>
+                                    <th style="width: 10%">Iva</th>
+                                    <th style="width: 10%">Venta</th>
+                                    <th style="width: 15%">.:.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,8 +52,10 @@
                                     <td>{{ $arti->codprov }}</td>
                                     <td>{{ $arti->codcate }}</td>
                                     <td>{{ $arti->codarti }}</td>
-                                    <td>{{ $arti->nombre }}</td>
+                                    <td>{{ $arti->nomarti }}</td>
                                     <td>{{ $arti->vneto }}</td>
+                                    <td>{{ $arti->piva }}</td>
+                                    <td>{{ $arti->pventa }}</td>
                                     <td>
                                         <a href="{{URL::action('ArticuloController@edit', $arti->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                         @if($arti->estado == 0)
