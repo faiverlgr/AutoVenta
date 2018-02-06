@@ -1,6 +1,4 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true"
-role="dialog" tabindex="-1" id="modal-delete-{{$prov->id}}">
-    {{Form::Open(array('action'=>array('Maestros\ProveedorController@destroy', $prov->id),'method'=>'delete'))}}
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$prov->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,14 +7,18 @@ role="dialog" tabindex="-1" id="modal-delete-{{$prov->id}}">
                 </button>
                 <h4 class="modal-title">Se va a cambiar el estado del registro</h4>
             </div>      
+            {{ Form::Open(['route' => ['proveedor.destroy', $prov->id], 'method' => 'DELETE']) }}
+            {{ Form::token() }}    
             <div class="modal-body">
-                <p>Desea continuar?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-primary">Confirmar</button>
-            </div>
+                    
+                    <p>Desea continuar?</p>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    {{ Form::submit('Aceptar', array('class' => 'btn btn-primary')) }}
+                </div>
+            {{ Form::Close() }}
         </div>
     </div>
-    {{Form::Close()}}
 </div>

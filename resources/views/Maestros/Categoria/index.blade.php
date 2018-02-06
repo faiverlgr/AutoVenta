@@ -47,7 +47,7 @@
                                 <tr>
                                     <td>{{ $cate->codprov }}</td>
                                     <td>{{ $cate->codcate }}</td>
-                                    <td>{{ $cate->nombre }}</td>
+                                    <td>{{ $cate->nomcate }}</td>
                                     <td>
                                         <a href="{{URL::action('CategoriaController@edit', $cate->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                         @if($cate->estado == 0)

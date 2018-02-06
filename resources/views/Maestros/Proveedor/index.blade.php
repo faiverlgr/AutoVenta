@@ -50,7 +50,7 @@
                             <td>{{ $prov->sigla }}</td>
                             <td>{{ $prov->telefono1 }}</td>
                             <td>
-                                <a href="{{URL::action('Maestros\ProveedorController@edit', $prov->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
+                                <a href="{{URL::action('ProveedorController@edit', $prov->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                 @if($prov->estado == 0)
                                     <a href="" data-target="#modal-delete-{{$prov->id}}" data-toggle="modal"><button class="btn btn-xs btn-danger">Inactivo</button></a>
                                 @else

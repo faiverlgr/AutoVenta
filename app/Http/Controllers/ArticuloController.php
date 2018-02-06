@@ -140,6 +140,13 @@ class ArticuloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $articulo = Articulo::findOrFail($id);   
+        if ($articulo->estado == 1) {
+            $articulo->estado = 0;
+        } else {
+            $articulo->estado = 1;
+        }
+        $articulo->update();        
+        return Redirect::to('articulo');
     }
 }
