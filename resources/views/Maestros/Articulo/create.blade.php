@@ -54,7 +54,7 @@
                                     <td style="width:10%">{{$codcate->codprov}}</td>
                                     <td style="width:40%">{{$codcate->razons}}</td>
                                     <td style="width:10%">{{$codcate->codcate}}</td>
-                                    <td style="width:40%">{{$codcate->nombre}}</td>
+                                    <td style="width:40%">{{$codcate->nomcate}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -93,22 +93,22 @@
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
-                                        <label class="control-label" for="nombre">Nombre</label>
-                                        <input id="nombre" readonly type="text" name="nombre" class="form-control" value="{{old('nombre')}}" required>
+                                        <label class="control-label" for="nomcate">Nombre</label>
+                                        <input id="nombre" readonly type="text" name="nomcate" class="form-control" value="{{old('nomcate')}}" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <label class="control-label" for="nombrec">Codigo *</label>
+                                        <label class="control-label" for="codarti">Codigo *</label>
                                         <input id="codarti" onchange="uneCodigo()" type="text" name="codarti" class="form-control" value="{{old('codarti')}}" required>
                                     </div>
                                 </div>
                                 <div class="col col-md-10">
                                     <div class="form-group">
                                         <label class="control-label" for="nombre">Nombre*</label>
-                                        <input type="text" name="nombrec" class="form-control" value="{{old('nombrec')}}" required>
+                                        <input type="text" name="nomartic" class="form-control" value="{{old('nomartic')}}" required>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label" for="nombrec">Nombre abreviado</label>
-                                        <input type="text" name="nombrel" class="form-control" value="{{old('nombrel')}}">
+                                        <input type="text" name="nomarti" class="form-control" value="{{old('nomarti')}}">
                                     </div>
                                 </div>                            
                             </div>                            

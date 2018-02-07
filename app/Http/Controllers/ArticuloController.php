@@ -51,7 +51,7 @@ class ArticuloController extends Controller
         $gcodcates = DB::table('categorias as c')
         ->join("proveedores as p", "c.codprov", "=", "p.codprov")
         ->where('c.estado', '=', 1)
-        ->select('c.codprov', 'p.razons', 'c.codcate', 'c.nombre')
+        ->select('c.codprov', 'p.razons', 'c.codcate', 'c.nomcate')
         ->orderby('c.codprov', 'ASC')
         ->get();
 

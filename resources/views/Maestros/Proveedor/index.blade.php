@@ -52,9 +52,15 @@
                             <td>
                                 <a href="{{URL::action('ProveedorController@edit', $prov->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                 @if($prov->estado == 0)
-                                    <a href="" data-target="#modal-delete-{{$prov->id}}" data-toggle="modal"><button class="btn btn-xs btn-danger">Inactivo</button></a>
+                                    <a class="btn btn-xs btn-danger" href="{{ route('proveedor.destroy', $prov->id) }}" onclick="return confirm('¿Confirma el cambio de estado?')">
+                                        <span aria-hidden="true" class="glyphicon glyphicon-trash">
+                                        </span>
+                                    </a>
                                 @else
-                                <a href="" data-target="#modal-delete-{{$prov->id}}" data-toggle="modal"><button class="btn btn-xs btn-success">Activo</button></a>
+                                    <a class="btn btn-xs btn-success" href="{{ route('proveedor.destroy', $prov->id) }}" onclick="¿Confirma el cambio de estado?">
+                                        <span aria-hidden="true" class="glyphicon glyphicon-ok">
+                                        </span>
+                                    </a>
                                 @endif
                             </td>
                         </tr>

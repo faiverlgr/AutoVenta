@@ -11,6 +11,7 @@ role="dialog" tabindex="-1" id="modal-delete-{{$cate->id}}">
             </div>      
             <div class="modal-body">
                 <p>Desea continuar?</p>
+                <p>{{$cate->id}}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

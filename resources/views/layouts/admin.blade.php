@@ -34,7 +34,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     -->
     <body class="hold-transition skin-blue layout-boxed sidebar-mini">
         @yield('wrapper')
-            <script src="{{ asset('js/app.js') }}"></script>
+            <!-- jQuery 3.3.1 -->
+            <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+            <!-- Bootstrap 3.3.7 -->
+            <script src="{{asset('js/bootstrap.min.js')}}"></script>
+            <!-- AdminLTE App -->
+            <script src="{{asset('js/adminlte.min.js')}}"></script>
         @yield('scripts')
     </body>
 </html>
