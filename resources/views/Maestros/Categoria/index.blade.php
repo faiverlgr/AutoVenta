@@ -38,8 +38,8 @@
                                 <tr>
                                     <th style="width: 5%">Prov</th>
                                     <th style="width: 5%">Linea</th>
-                                    <th style="width: 65%">Nombre</th>
-                                    <th style="width: 25%">.:.</th>
+                                    <th style="width: 80%">Nombre</th>
+                                    <th style="width: 10%">.:.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,11 +49,23 @@
                                     <td>{{ $cate->codcate }}</td>
                                     <td>{{ $cate->nomcate }}</td>
                                     <td>
-                                        <a href="{{URL::action('CategoriaController@edit', $cate->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                         @if($cate->estado == 0)
-                                        <a href="" data-target="#modal-delete-{{$cate->id}}" data-toggle="modal"><button class="btn btn-xs btn-danger">Inactivo</button></a>
+                                            <a href="" data-target="#modal-delete-{{$cate->id}}" data-toggle="modal">
+                                                <button class="btn btn-xs btn-warning">
+                                                    <span aria-hidden="true" class="glyphicon glyphicon-check"></span>
+                                                </button>
+                                            </a>
                                         @else
-                                        <a href="" data-target="#modal-delete-{{$cate->id}}" data-toggle="modal"><button class="btn btn-xs btn-success">Activo</button></a>
+                                            <a href="{{URL::action('CategoriaController@edit', $cate->id)}}">
+                                                <button class="btn btn-xs btn-success">
+                                                    <span aria-hidden="true" class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                            </a>
+                                            <a data-target="#modal-delete-{{$cate->id}}" data-toggle="modal">
+                                                <button class="btn btn-xs btn-danger">
+                                                    <span aria-hidden="true" class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

@@ -32,10 +32,10 @@
         <section class="content container-fluid">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3>Nuevo Proveedor<a href="/proveedor"><button class="btn btn-succes pull-right">Listado</button></a></h3>
+                    <h3>Nuevo<a href="/proveedor"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                 </div>
                     <div class="box-body">
-                        <div class="col col-md-6 col-md-offset-3">
+                        <div class="col col-md-4 col-md-offset-4">
                             {!!Form::open(array('url'=>'proveedor','method'=>'POST','autocompleted'=>'off'))!!}
                             {{Form::token()}}
                             <div class="form-group">    

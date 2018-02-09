@@ -32,7 +32,7 @@
         <section class="content container-fluid">            
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h4>Editar Categoria<a href="/categoria"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h4>
+                    <h3>Editar Categoria<a href="/categoria"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h3>
                 </div>
                 <div class="box-body">
                     <div class="col col-md-6 col-md-offset-3">

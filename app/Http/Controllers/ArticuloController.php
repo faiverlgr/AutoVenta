@@ -26,7 +26,7 @@ class ArticuloController extends Controller
             $query=trim($request->get('searchText'));
             
             $articulos=DB::table('articulos')
-                ->select('id', 'codprov', 'codcate', 'codarti', 'nomarti', 'vneto', 'piva', DB::raw('round(vneto + ((vneto*piva)/100),2) as pventa'), 'estado')
+                ->select('articulos.*', DB::raw('round(vneto + ((vneto*piva)/100),2) as pventa'), 'estado')
                 ->where('nomarti', 'LIKE', '%'.$query.'%')
                 ->orderBy('codprov', 'desc')
                 ->orderBy('codcate', 'desc')
@@ -74,8 +74,8 @@ class ArticuloController extends Controller
         $articulo->codprov     = $request->get('codprov');
         $articulo->codcate     = $request->get('codcate');
         $articulo->codarti     = $request->get('codarti');
-        $articulo->nombre      = $request->get('nombre');
-        $articulo->nombrec     = $request->get('nombrec');
+        $articulo->nomarti     = $request->get('nomarti');
+        $articulo->nomartic    = $request->get('nomartic');
         $articulo->vcosto      = $request->get('vcosto');
         $articulo->vneto       = $request->get('vneto');
         $articulo->piva        = $request->get('piva');
@@ -117,7 +117,7 @@ class ArticuloController extends Controller
             ->where('articulos.id', '=', $id)
             ->first();
         //dd($query);
-        return view('maestros.articulo.edit', compact(['$query', 'articulo']));
+        return view('maestros.articulo.edit', compact(['query', 'articulo']));
     }
 
     /**

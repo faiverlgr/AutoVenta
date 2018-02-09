@@ -37,7 +37,7 @@
         <section class="content container-fluid">            
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h4>Nueva Categoria<a href="/categoria"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h4>
+                    <h3>Nueva Categoria<a href="/categoria"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h3>
                 </div>
                 <div id="app" class="box-body">
                     <div class="col col-md-6 col-md-offset-3">

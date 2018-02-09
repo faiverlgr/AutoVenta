@@ -39,11 +39,13 @@
                                     <th style="width: 5%">Prov</th>
                                     <th style="width: 5%">Linea</th>
                                     <th style="width: 5%">Articulo</th>
-                                    <th style="width: 40%">Nombre</th>
+                                    <th style="width: 33%">Nombre</th>
+                                    <th style="width: 10%">Costo</th>
+                                    <th style="width: 7%">Margen</th>
                                     <th style="width: 10%">Neto</th>
-                                    <th style="width: 10%">Iva</th>
+                                    <th style="width: 7%">Iva</th>
                                     <th style="width: 10%">Venta</th>
-                                    <th style="width: 15%">.:.</th>
+                                    <th style="width: 8%">.:.</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,15 +55,29 @@
                                     <td>{{ $arti->codcate }}</td>
                                     <td>{{ $arti->codarti }}</td>
                                     <td>{{ $arti->nomarti }}</td>
+                                    <td>{{ $arti->vcosto }}</td>
+                                    <td>{{ $arti->pmargen }}</td>
                                     <td>{{ $arti->vneto }}</td>
                                     <td>{{ $arti->piva }}</td>
                                     <td>{{ $arti->pventa }}</td>
                                     <td>
-                                        <a href="{{URL::action('ArticuloController@edit', $arti->id)}}"><button class="btn btn-xs btn-info">Editar</button></a>
                                         @if($arti->estado == 0)
-                                        <a href="" data-target="#modal-delete-{{$arti->id}}" data-toggle="modal"><button class="btn btn-xs btn-danger">Inactivo</button></a>
+                                            <a href="" data-target="#modal-delete-{{$arti->id}}" data-toggle="modal">
+                                                <button class="btn btn-xs btn-warning">
+                                                    <span aria-hidden="true" class="glyphicon glyphicon-check"></span>
+                                                </button>
+                                            </a>
                                         @else
-                                        <a href="" data-target="#modal-delete-{{$arti->id}}" data-toggle="modal"><button class="btn btn-xs btn-success">Activo</button></a>
+                                            <a href="{{URL::action('ArticuloController@edit', $arti->id)}}">
+                                                <button class="btn btn-xs btn-success">
+                                                    <span aria-hidden="true" class="glyphicon glyphicon-pencil"></span>
+                                                </button>
+                                            </a>
+                                            <a data-target="#modal-delete-{{$arti->id}}" data-toggle="modal">
+                                                <button class="btn btn-xs btn-danger">
+                                                    <span aria-hidden="true" class="glyphicon glyphicon-trash"></span>
+                                                </button>
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>

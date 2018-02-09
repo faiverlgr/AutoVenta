@@ -21,6 +21,7 @@ Route::get('/cargos', function () {
     }
 );
 
+Route::resource('agencia', 'AgenciaController');
 Route::resource('articulo', 'ArticuloController');
 Route::resource('proveedor', 'ProveedorController');
 Route::resource('categoria', 'CategoriaController');

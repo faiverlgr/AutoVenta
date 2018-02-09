@@ -32,7 +32,7 @@
         <section class="content container-fluid">            
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h4>Editar Categoria<a href="/categoria"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h4>
+                    <h3>Editar Categoria<a href="/articulo"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h3>
                 </div>
                 <div class="box-body">
                     <div class="col col-md-10 col-md-offset-1">
@@ -42,13 +42,13 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="codprov">codprov</label>
-                                    <input id="codprov" readonly type="text" name="codprov" class="form-control" value="{{old('codprov')}}">
+                                    <input id="codprov" readonly type="text" name="codprov" class="form-control" value="{{$query->codprov}}">
                                 </div>
                             </div>
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label for="#">Nombre</label>
-                                    <input id="razons" readonly type="text" name="razons" class="form-control" value="{{old('razons')}}">
+                                    <input id="razons" readonly type="text" name="razons" class="form-control" value="{{$query->razons}}">
                                 </div>
                             </div>
                         </div>
@@ -56,13 +56,13 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="codprov">Codcate</label>
-                                    <input id="codcate" readonly type="text" name="codcate" class="form-control" value="{{old('codcate')}}">
+                                    <input id="codcate" readonly type="text" name="codcate" class="form-control" value="{{$query->codcate}}">
                                 </div>
                             </div>
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label class="control-label" for="nomcate">Nombre</label>
-                                    <input id="nombre" readonly type="text" name="nomcate" class="form-control" value="{{old('nomcate')}}" required>
+                                    <input id="nombre" readonly type="text" name="nomcate" class="form-control" value="{{$query->nomcate}}" required>
                                 </div>
                             </div>
                         </div>
@@ -70,13 +70,13 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label class="control-label" for="codarti">Codigo *</label>
-                                    <input id="codarti" readonly onchange="uneCodigo()" type="text" name="codarti" class="form-control" value="{{old('codarti')}}" required>
+                                    <input id="codarti" readonly type="text" name="codarti" class="form-control" value="{{$query->codarti}}" required>
                                 </div>
                             </div>
                             <div class="col col-md-10">
                                 <div class="form-group">
                                     <label class="control-label" for="nombre">Nombre*</label>
-                                    <input type="text" name="nomartic" class="form-control" value="{{old('nomartic')}}" required>
+                                    <input type="text" name="nomartic" class="form-control" value="{{$query->nomartic}}" required>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label" for="nombrec">Nombre abreviado</label>
-                                    <input type="text" name="nomarti" class="form-control" value="{{old('nomarti')}}">
+                                    <input type="text" name="nomarti" class="form-control" value="{{$query->nomarti}}">
                                 </div>
                             </div>                            
                         </div>                            
@@ -92,13 +92,13 @@
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="vcosto">Valor costo *</label>
-                                    <input id="vcosto" onblur="fvalor()" type="number" name="vcosto" class="form-control" step="0.01" value="{{old('vcosto')}}" required style="padding: 6px 4px 6px 8px">
+                                    <input id="vcosto" onblur="fvalor()" type="number" name="vcosto" class="form-control" step="0.01" value="{{$query->vcosto}}" required style="padding: 6px 4px 6px 8px">
                                 </div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label for="pmargen">Marg*</label>
-                                    <input id="pmargen" onblur="fvalor()" type="number" step="0.01" name="pmargen" class="form-control" value="{{old('pmargen')}}" required style="padding: 6px 4px 6px 8px">
+                                    <input id="pmargen" type="number" step="0.01" name="pmargen" class="form-control" value="{{$query->pmargen}}" required style="padding: 6px 4px 6px 8px">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -110,13 +110,13 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="vneto">Valor neto *</label>
-                                    <input id="vneto" name="vneto" onblur="ftotal()" type="number" step="0.01" class="form-control" value="{{old('vneto')}}" required style="padding: 6px 4px 6px 8px">
+                                    <input id="vneto" name="vneto" onblur="ftotal()" type="number" step="0.01" class="form-control" value="{{$query->vneto}}" required style="padding: 6px 4px 6px 8px">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="piva">Iva *</label>
-                                    <input id="piva" onblur="ftotal()" type="number" step="0.01" name="piva" class="form-control" value="{{old('piva')}}" required style="padding: 6px 4px 6px 8px">
+                                    <input id="piva" onblur="ftotal()" type="number" step="0.01" name="piva" class="form-control" value="{{$query->piva}}" required style="padding: 6px 4px 6px 8px">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -130,31 +130,31 @@
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="minimo">Mínimo *</label>
-                                    <input type="number" name="minimo" class="form-control" value="{{old('minimo')}}" required>
+                                    <input type="number" name="minimo" class="form-control" value="{{$query->minimo}}" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="maximo">Máximo *</label>
-                                    <input type="number" name="maximo" class="form-control" value="{{old('maximo')}}" required>
+                                    <input type="number" name="maximo" class="form-control" value="{{$query->maximo}}" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label for="embalaje">Embalaje *</label>
-                                    <input type="number" name="embalaje" class="form-control" value="{{old('embalaje')}}" required>
+                                    <input type="number" name="embalaje" class="form-control" value="{{$query->embalaje}}" required>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="unidad">Unidad</label>
-                                    <input type="text" name="unidad" class="form-control" value="{{old('unidad')}}">
+                                    <input type="text" name="unidad" class="form-control" value="{{$query->unidad}}">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="cbarras">Código de barras</label>
-                                    <input type="text" name="cbarras" class="form-control" value="{{old('cbarras')}}">
+                                    <input type="text" name="cbarras" class="form-control" value="{{$query->cbarras}}">
                                 </div>
                             </div>
                         </div>
@@ -178,4 +178,10 @@
     <!-- /.Main Footer -->
 </div>
     <!-- /.content-wrapper -->
+    @section('scripts')
+    <script> 
+        window.onload = fvalor();
+        window.onload = ftotal();
+    </script>
+    @endsection
 @endsection
