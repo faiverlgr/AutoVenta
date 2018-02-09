@@ -116,8 +116,8 @@ class ArticuloController extends Controller
             ->select('articulos.*', 'proveedores.razons', 'categorias.nomcate')
             ->where('articulos.id', '=', $id)
             ->first();
-        dd($query);
-        //return view('maestros.categoria.edit', compact(['$query', 'articulo']));
+        //dd($query);
+        return view('maestros.articulo.edit', compact(['$query', 'articulo']));
     }
 
     /**
@@ -129,7 +129,22 @@ class ArticuloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $articulo = Articulo::FindOrFail($id);
+        $articulo->nomarti  = $request->get('nomarti');
+        $articulo->nomartic = $request->get('nomartic');
+        $articulo->vcosto   = $request->get('vcosto');
+        $articulo->vneto    = $request->get('vneto');
+        $articulo->piva     = $request->get('piva');
+        $articulo->pmargen  = $request->get('pmargen');
+        $articulo->minimo   = $request->get('minimo');
+        $articulo->maximo   = $request->get('maximo');
+        $articulo->embalaje = $request->get('embalaje');
+        $articulo->unidad   = $request->get('unidad');
+        $articulo->unidad   = $request->get('unidad');
+        $articulo->cbarras  = $request->get('cbarras');
+        $articulo->update();
+        return back()->with('notification', 'Registro actualizado exitosamente.');
+        //dd($articulo);
     }
 
     /**
