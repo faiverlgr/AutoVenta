@@ -16,7 +16,8 @@ class CreateAgenciasTable extends Migration
         Schema::create('agencias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codage', 4)->required()->unique();
-            $table->string('nombreage', 50)->required();
+            $table->string('nitage', 15)->nullable();
+            $table->string('nombre', 50)->required();
             $table->string('nomrepre', 50)->required();
             $table->string('docrepre', 15)->required();
             $table->string('direccion', 80)->required();

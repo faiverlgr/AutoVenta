@@ -11,7 +11,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Proveedores</h1>
+            <h1>Agencias</h1>
             @if (session('notification'))
                 <div class="alert alert-success">
                     {{ session('notification') }}
@@ -32,43 +32,51 @@
         <section class="content container-fluid">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3>Nuevo Proveedor<a href="/proveedor"><button class="btn btn-succes pull-right">Listado</button></a></h3>
+                    <h3>Crear Agencia<a href="/agencia"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                 </div>
                     <div class="box-body">
-                        <div class="col col-md-6 col-md-offset-3">
-                            {!!Form::open(array('url'=>'proveedor','method'=>'POST','autocompleted'=>'off'))!!}
+                        <div class="col col-md-4 col-md-offset-4">
+                            {!!Form::open(array('url'=>'agencia','method'=>'POST','autocompleted'=>'off'))!!}
                             {{Form::token()}}
-                            <div class="form-group">
-                                <label for="codprov">Codigo *</label>
-                                <input tabindex="-1" type="text" name="codprov" class="form-control" placeholder="Codigo.." value="{{old('codprov')}}">
+                            <div class="form-group">    
+                                <label for="codage">Codigo *</label>
+                                <input type="text" name="codage" class="form-control" value="{{old('codage')}}">
+                            </div>
+                            <div class="form-group">    
+                                <label for="nitage">Nit</label>
+                                <input type="text" name="nitage" class="form-control" value="{{old('nitage')}}">
                             </div>
                             <div class="form-group">
-                                <label for="nit">Nit</label>
-                                <input type="text" name="nit" class="form-control" placeholder="Nit.." value="{{old('nit')}}">
+                                <label for="nit">Nombre *</label>
+                                <input type="nombre" name="nombre" class="form-control" value="{{old('nombre')}}">
                             </div>
                             <div class="form-group">
-                                <label for="razons">Razon Social *</label>
-                                <input type="text" name="razons" class="form-control" placeholder="Razon social.."value="{{old('razons')}}">
+                                <label for="nomrepre">Representante Legal *</label>
+                                <input type="text" name="nomrepre" class="form-control" value="{{old('nomrepre')}}">
                             </div>
                             <div class="form-group">
-                                <label for="sigla">Sigla</label>
-                                <input type="text" name="sigla" class="form-control" placeholder="Sigla.." value="{{old('sigla')}}">
+                                <label for="docrepre">Documento Representante *</label>
+                                <input type="text" name="docrepre" class="form-control" value="{{old('docrepre')}}">
                             </div>
                             <div class="form-group">
                                 <label for="direccion">Dirección *</label>
-                                <input type="text" name="direccion" class="form-control" placeholder="Dirección.." value="{{old('direccion')}}">
+                                <input type="text" name="direccion" class="form-control" value="{{old('direccion')}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="direccion">Barrio *</label>
+                                <input type="text" name="barrio" class="form-control" value="{{old('barrio')}}">
                             </div>
                             <div class="form-group">
                                 <label for="telefono1">Teléfono1</label>
-                                <input type="text" name="telefono1" class="form-control" placeholder="Teléfono1.." value="{{old('telefono1')}}">
+                                <input type="text" name="telefono1" class="form-control" value="{{old('telefono1')}}">
                             </div>
                             <div class="form-group">
                                 <label for="telefono2">Teléfono2</label>
-                                <input type="text" name="telefono2" class="form-control" placeholder="Teléfono2.." value="{{old('telefono2')}}">
+                                <input type="text" name="telefono2" class="form-control" value="{{old('telefono2')}}">
                             </div>
                             <div class="form-group">
                                 <label for="mail">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Correo electrónico.." value="{{old('email')}}">
+                                <input type="email" name="email" class="form-control" value="{{old('email')}}">
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-sm btn-primary" type="submit">Guardar</button>

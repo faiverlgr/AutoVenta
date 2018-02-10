@@ -15,7 +15,8 @@ class Agencia extends Model
      */
     protected $fillable = [
         'codage',
-        'nombreage',
+        'nitage',
+        'nombre',
         'nomrepre',
         'docrepre',
         'direccion',

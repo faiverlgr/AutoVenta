@@ -32,7 +32,7 @@ class ProveedoresRequest extends FormRequest
             'direccion'=>'required | max:80',
             'telefono1'=>'max:20',
             'telefono2'=>'max:20',
-            'email'=>'max:80',
+            'email'=>'max:80'
         ];
     }
 }

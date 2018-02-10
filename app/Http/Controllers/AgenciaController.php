@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//add
+use App\Entities\Agencia;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\AgenciasRequest;
+use Illuminate\Support\Collection as Collection;
+use DB;
 
 class AgenciaController extends Controller
 {
@@ -11,9 +17,20 @@ class AgenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        //return view('Maestros.Proveedor.Index');
+        if ($request) {
+            $query=trim($request->get('searchText'));
+            $agencias=DB::table('agencias')->where('nombre', 'LIKE', '%'.$query.'%')
+            ->orderBy('codage', 'desc')
+            ->paginate(10);
+            return view('parametros.agencia.index', [
+                "agencias"=>$agencias,
+                "searchText"=>$query
+                ]
+            );
+        }
     }
 
     /**
@@ -23,7 +40,7 @@ class AgenciaController extends Controller
      */
     public function create()
     {
-        //
+        return view('parametros.agencia.create');
     }
 
     /**
@@ -32,9 +49,22 @@ class AgenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AgenciasRequest $request)
     {
-        //
+        $agencia=new Agencia;
+        $agencia->codage     = $request->get('codage');
+        $agencia->nitage     = $request->get('nitage');
+        $agencia->nombre     = $request->get('nombre');
+        $agencia->nomrepre   = $request->get('nomrepre');
+        $agencia->docrepre   = $request->get('docrepre');
+        $agencia->direccion  = $request->get('direccion');
+        $agencia->barrio     = $request->get('barrio');
+        $agencia->telefono1  = $request->get('telefono1');
+        $agencia->telefono2  = $request->get('telefono2');
+        $agencia->email      = $request->get('email');
+        $agencia->estado     = '1';
+        $agencia->save();
+        return back()->with('notification', 'Registro guardado exitosamente.');
     }
 
     /**
@@ -56,7 +86,8 @@ class AgenciaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $agencia = Agencia::findOrFail($id);
+        return view('parametros.agencia.edit', compact('agencia'));
     }
 
     /**
@@ -68,7 +99,19 @@ class AgenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $agencia = Agencia::findOrFail($id);
+        $agencia->codage     = $request->get('codage');
+        $agencia->nitage     = $request->get('nitage');
+        $agencia->nombre     = $request->get('nombre');
+        $agencia->nomrepre   = $request->get('nomrepre');
+        $agencia->docrepre   = $request->get('docrepre');
+        $agencia->direccion  = $request->get('direccion');
+        $agencia->barrio     = $request->get('barrio');
+        $agencia->telefono1  = $request->get('telefono1');
+        $agencia->telefono2  = $request->get('telefono2');
+        $agencia->email      = $request->get('email');
+        $agencia->update();
+        return Redirect::to('agencia');
     }
 
     /**
@@ -79,6 +122,13 @@ class AgenciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $agencia = Agencia::findOrFail($id);   
+        if ($agencia->estado == 1) {
+            $agencia->estado = 0;
+        } else {
+            $agencia->estado = 1;
+        }
+        $agencia->update();        
+        return Redirect::to('agencia');
     }
 }
