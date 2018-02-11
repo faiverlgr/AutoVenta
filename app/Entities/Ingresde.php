@@ -4,27 +4,26 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Agencia extends Model
+class Ingresde extends Model
 {
     //use Notifiable;
-    protected $table='agencias';
+    protected $table='ingresde';
+    public $timestamps=false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'codage',
-        'nitage',
-        'nombre',
-        'nomrepre',
-        'docrepre',
-        'direccion',
-        'barrio',
-        'telefono1',
-        'telefono2',
-        'email',
-        'estado'
+        'idingresen',
+        'idbod',
+        'idarti',
+        'cantidad',
+        'vcosto',
+        'vneto',
+        'piva',
+        'vtotal',
+        'vtmarg'
     ];
 
     /**

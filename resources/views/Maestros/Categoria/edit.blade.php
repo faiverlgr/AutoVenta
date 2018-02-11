@@ -70,17 +70,12 @@
                 @   {{ $proveedores }}
             </pre>  --}}
         </section>
-        <!-- /.content -->
     </div>
-    <!-- Main Footer -->
     @include('layouts.footer')
-    <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
     @section('scripts')
     <script>            
 
     </script>
-    <!-- Select2 -->
     @endsection
 @endsection

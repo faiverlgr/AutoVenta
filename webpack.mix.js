@@ -17,7 +17,7 @@ let mix = require('laravel-mix');
      'resources/assets/js/jquery-3.3.1.js',
      'resources/assets/js/bootstrap.js',
      'resources/assets/js/adminlte.js',
-     'resources/assets/js/vmisoft.js'
+     'resources/assets/js/vmisoft.js',
     ], 'public/js/app.js')
  .sass('resources/assets/sass/app.scss', 'public/css');
 

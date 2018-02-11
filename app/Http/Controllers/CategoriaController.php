@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 //add
-
 use App\Entities\Categoria; 
 use App\Entities\Proveedor;
 use Illuminate\Support\Facades\Redirect;
@@ -15,6 +14,10 @@ use DB;
 
 class CategoriaController extends Controller
 {
+    public function select($codprov){
+        $categorias=DB::table('categorias')->where('codprov', '=', $codprov);
+    }
+    
     /**
      * Display a listing of the resource.
      *

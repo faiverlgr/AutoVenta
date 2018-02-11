@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 //agregados
+use App\Entities\Categoria;
 use App\Entities\Proveedor;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\ProveedoresRequest;
@@ -27,12 +28,14 @@ class ProveedorController extends Controller
             $proveedores=DB::table('proveedores')->where('razons', 'LIKE', '%'.$query.'%')
             ->orderBy('codprov', 'desc')
             ->paginate(10);
+            $categorias=DB::table('categorias')->where('id', '=', '1')->get();
             return view('maestros.proveedor.index', [
-                "proveedores"=>$proveedores,
-                "searchText"=>$query
+                'proveedores'   =>$proveedores,
+                'searchText'    =>$query,
+                'categorias'    =>$categorias
                 ]
             );
-        }
+        };
     }
 
     /**
@@ -76,12 +79,22 @@ class ProveedorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        return view('maestros.proveedor.show', [
-            'proveedor'=>Proveedor::findOrFail($id)
-            ]
-        );
+    public function show(Request $request, $id)
+    {       
+        if ($request->ajax()) {
+            $categorias=DB::table('categorias')->where('codprov', '=', $id)
+            ->orderBy('codcate', 'asc');
+            return response()->json([
+                'categorias'    => $categorias,
+                'mensaje'       => 'Búsqueda completada',
+                ]
+            );
+        }
+
+        // return view('maestros.proveedor.show', [
+        //     'proveedor'=>Proveedor::findOrFail($id)
+        //     ]
+        // );
     }
     
     /**

@@ -37,7 +37,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 5%">Prov</th>
-                                    <th style="width: 5%">Linea</th>
+                                    <th style="width: 5%">Categoria</th>
                                     <th style="width: 80%">Nombre</th>
                                     <th style="width: 10%">.:.</th>
                                 </tr>
@@ -76,15 +76,9 @@
                     </div>
                 </div>
                 {{$categorias->render()}}
-                <!-- /.box-body -->
               </div>
-              <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- Main Footer -->
     @include('layouts.footer')
-    <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
 @endsection

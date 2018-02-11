@@ -88,15 +88,9 @@
                     </div>
                 </div>
                 {{$articulos->render()}}
-                <!-- /.box-body -->
               </div>
-              <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- Main Footer -->
     @include('layouts.footer')
-    <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
 @endsection

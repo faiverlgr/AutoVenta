@@ -21,6 +21,15 @@ Route::get('/cargos', function () {
     }
 );
 
+//use DB;
+use App\Entities\Categoria; 
+
+Route::get('categoriasm/{$codprov}', function(){
+//    $codprov = Input::get('option');
+    $categorias=DB::table('categorias')->where('codprov', '=', $codprov);
+    return $categorias->lists('nomcate');
+});
+
 Route::resource('agencia', 'AgenciaController');
 Route::resource('articulo', 'ArticuloController');
 Route::resource('proveedor', 'ProveedorController');
