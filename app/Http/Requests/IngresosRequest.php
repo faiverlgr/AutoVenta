@@ -27,8 +27,7 @@ class IngresosRequest extends FormRequest
             //encabezado
             'idper'     =>  'required',
             'idprov'    =>  'required',
-            'idarti'    =>  'required',
-            'numdoc' =>  'required | max:15',
+            'numdoc'    =>  'required | max:15',
             'fecha'     =>  'required | max:8',
             'fechav'    =>  'required | max:8',
             'tcosto'    =>  'required',
@@ -46,7 +45,6 @@ class IngresosRequest extends FormRequest
             'piva'          =>  'required',
             'vtotal'        =>  'required',
             'vtmarg'        =>  'required',
-            
         ];
     }
 }

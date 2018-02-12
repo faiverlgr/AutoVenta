@@ -17,7 +17,6 @@ class CreateIngresenTable extends Migration
             $table->increments('id');
             $table->integer('idper')->required();
             $table->integer('idprov')->required();
-            $table->integer('idarti')->required();
             $table->string('numdoc', 15)->required();
             $table->date('fecha')->required();
             $table->date('fechav')->nullable();

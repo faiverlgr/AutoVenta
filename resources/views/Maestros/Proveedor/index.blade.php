@@ -1,4 +1,19 @@
 @extends ('layouts.admin')
+@section ('styles')
+    <style type="text/css">
+        div.loading, .loading {
+            background-color: #FFFFFF;
+            background-image: url("{{asset('images/Loading_icon.gif')}}");
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 1400;
+            position: relative
+        }
+        div.loading * {
+            visibility: hidden;
+        }
+    </style>
+@endsection
 @section ('wrapper')
     <div id="app" class="wrapper">
         <!-- Main Header // BARRA HORIZONTAL include('layouts.partials.header')-->
@@ -79,12 +94,11 @@
                     </div>
                     {{$proveedores->render()}}
                 </div>
-
                 <div class="box box-info">
-                    <div class="box-header with-border">
+                    <div id="load" class="box-header with-border">
                         <h3>Categorias</h3>
                     </div>
-                    <div id="alert" class="alert alert-info"></div>
+                    {{--  <div id="alert" class="alert alert-info"></div>  --}}
                     <div class="box-body">
                         {{ Form::open() }}
                             <select name="select1" id="select1">
@@ -103,17 +117,40 @@
         @include('layouts.footer')
     </div>
     @section('scripts')
-    <script>            
+    <script>
         $(document).ready(function(){
             $('#select1').change(function(){
-                $.get("{{url('categoriasm/'{{$item->codprov}})}}",
-                    function(data) {
-                        $('#select2').empty();
-                        $each(data, function(key, element){
-                            $('#select2').append("<option value='" + key + "'>" + element + "</option>");
+                var $sel = $(select2);
+                var cadena = `/categoriasm/${this.value}`;
+                var val = "{{url("")}}";
+                var conca = val.concat(cadena);
+                var options = [];
+                $sel.find('option').not(':first').remove();
+                
+                console.time( &#8220;Peticion AJAX&#8221; );
+
+                $.ajax({
+                    url: conca,
+                    type: 'GET',
+                    dataType: "json",
+                    beforeSend: function () {$('#load').addClass("loading")},
+                    success: function(data){
+                        $.each(data, function(index, item){
+                            options.push(`<option value= "${item.id}">${item.nomcate}</option>`);
                         });
-                    };
-                );
+                        $sel.append(options);
+                    },
+                    console.timeEnd( &#8220;Peticion AJAX&#8221; );
+                    complete: function(){$('div.loading').removeClass("loading")}
+                });
+                /*
+                $.get(conca, function(data) {
+                    $('#select2').empty();
+                    $.each(data, function(key, element){
+                        $('#select2').append("<option value='" + key + "'>" + element + "</option>");
+                    });
+                });
+                */
             });
         });
     </script>

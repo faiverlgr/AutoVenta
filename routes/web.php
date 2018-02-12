@@ -24,11 +24,8 @@ Route::get('/cargos', function () {
 //use DB;
 use App\Entities\Categoria; 
 
-Route::get('categoriasm/{$codprov}', function(){
-//    $codprov = Input::get('option');
-    $categorias=DB::table('categorias')->where('codprov', '=', $codprov);
-    return $categorias->lists('nomcate');
-});
+//Ruta usada por ajax para econtrar categorías según los proveedores
+Route::get('categoriasm/{codprov}', 'CategoriaController@select');
 
 Route::resource('agencia', 'AgenciaController');
 Route::resource('articulo', 'ArticuloController');

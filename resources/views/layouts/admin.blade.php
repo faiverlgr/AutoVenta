@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
         <title>Vmisoft</title>
+        @yield('styles')
     </head>
     <body class="hold-transition skin-blue layout-boxed sidebar-mini">
         <div id="vmisoft">

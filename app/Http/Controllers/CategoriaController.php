@@ -11,13 +11,24 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CategoriasRequest;
 use Illuminate\Support\Collection as Collection;
 use DB;
+use Response;
 
 class CategoriaController extends Controller
 {
+    /**
+     * Responde a solicitud ajax para buscar categorías de un proveedor.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function select($codprov){
-        $categorias=DB::table('categorias')->where('codprov', '=', $codprov);
+        $categorias=DB::table('categorias')
+        ->select('id','nomcate')
+        ->where('codprov', '=', $codprov)
+        ->where('estado', '=', 1)
+        ->get();
+        return Response::json($categorias);
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -98,7 +109,7 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        //
+        retrun('desde show');
     }
 
     /**

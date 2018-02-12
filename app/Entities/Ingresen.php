@@ -16,7 +16,6 @@ class Ingresen extends Model
     protected $fillable = [
         'idper',
         'idprov',
-        'idarti',
         'numdoc',
         'fecha',
         'fechav',
