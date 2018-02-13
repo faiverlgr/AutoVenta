@@ -3,15 +3,13 @@
 <div id="app" class="wrapper">
     <!-- Main Header // BARRA HORIZONTAL include('layouts.partials.header')-->
     @include('layouts.partials.home.header')
-    <!-- /.Main Header -->
     <!-- Main Header // BARRA VERTICAL include('layouts.partials.menu')-->
     @include('layouts.partials.home.menu')
-    <!-- /.Main Header -->
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Agencias</h1>
+            <h1>Ingresos</h1>
             @if (session('notification'))
                 <div class="alert alert-success">
                     {{ session('notification') }}
@@ -32,68 +30,54 @@
         <section class="content container-fluid">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3>Crear Agencia<a href="/agencia"><button class="btn btn-succes pull-right">Listado</button></a></h3>
+                    <h3>Crear Ingreso<a href="/ingreso"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                 </div>
                     <div class="box-body">
-                        <div class="col col-md-4 col-md-offset-4">
-                            {!!Form::open(array('url'=>'agencia','method'=>'POST','autocompleted'=>'off'))!!}
-                            {{Form::token()}}
-                            <div class="form-group">    
-                                <label for="codage">Codigo *</label>
-                                <input type="text" name="codage" class="form-control" value="{{old('codage')}}">
+                        {!!Form::open(array('url'=>'ingreso','method'=>'POST','autocompleted'=>'off'))!!}
+                        {{Form::token()}}
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                                <div class="form-group">    
+                                    <label fr="codprov">Proveedor *</label>
+                                    <select name="idproveedor" id="idproveedor" class="form-control">
+                                        @foreach($proveedores as $item)
+                                        <option value="{{$item->id}}">{{$item->razons}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">    
-                                <label for="nitage">Nit</label>
-                                <input type="text" name="nitage" class="form-control" value="{{old('nitage')}}">
+                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                                <div class="form-group">    
+                                    <label for="anoper">Periodo</label>
+                                    <input readonly type="text" name="anoper" class="form-control" value="{{$periodos->anoper}}-{{$periodos->mesper}}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="nit">Nombre *</label>
-                                <input type="nombre" name="nombre" class="form-control" value="{{old('nombre')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="nomrepre">Representante Legal *</label>
-                                <input type="text" name="nomrepre" class="form-control" value="{{old('nomrepre')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="docrepre">Documento Representante *</label>
-                                <input type="text" name="docrepre" class="form-control" value="{{old('docrepre')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="direccion">Dirección *</label>
-                                <input type="text" name="direccion" class="form-control" value="{{old('direccion')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="direccion">Barrio *</label>
-                                <input type="text" name="barrio" class="form-control" value="{{old('barrio')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="telefono1">Teléfono1</label>
-                                <input type="text" name="telefono1" class="form-control" value="{{old('telefono1')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="telefono2">Teléfono2</label>
-                                <input type="text" name="telefono2" class="form-control" value="{{old('telefono2')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="mail">Email</label>
-                                <input type="email" name="email" class="form-control" value="{{old('email')}}">
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
-                            </div>
-                            {!!Form::close()!!}
                         </div>
-                        <!-- /.box-body -->
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body">
+                                        <div class="form-group">    
+                                            <label for="articulo">Articulo</label>
+                                            <select name="piarticulo" class="form-control" id="piarticulo">
+                                                @foreach($articulos as $art)
+                                                    <option value="{{ $art->id }}">{{ $art->nomartic }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                        </div>
+                        {!!Form::close()!!}
                     </div>
                 </div>
             </div>
-              <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- Main Footer -->
     @include('layouts.footer')
-    <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
 @endsection

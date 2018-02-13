@@ -21,12 +21,11 @@ Route::get('/cargos', function () {
     }
 );
 
-//use DB;
-use App\Entities\Categoria; 
 
 //Ruta usada por ajax para econtrar categorías según los proveedores
 Route::get('categoriasm/{codprov}', 'CategoriaController@select');
 
+Route::resource('ingresen', 'IngresenController');
 Route::resource('agencia', 'AgenciaController');
 Route::resource('articulo', 'ArticuloController');
 Route::resource('proveedor', 'ProveedorController');

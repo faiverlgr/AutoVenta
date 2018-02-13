@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 //add
+use App\Entities\Periodo;
 use App\Entities\Ingresen;
 use App\Entities\Ingresde;
 use Illuminate\Support\Facades\Redirect;
@@ -46,19 +47,30 @@ class IngresenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        $gcodcates = DB::table('articulos as c')
-        ->join("proveedorews as p", "c.codprov", "=", "p.codprov")
-        ->where('c.estado', '=', 1, 'p.id', '=', $id)
-        ->select('c.codprov', 'p.razons', 'c.codcate', 'c.nomcate')
-        ->orderby('c.codprov', 'ASC')
+        $articulos = DB::table('articulos as ar')
+        ->where('ar.estado', '=', 1)
+        ->select('ar.id', 'ar.codprov', 'ar.codcate', 'ar.codarti', 'ar.nomartic')
+        ->orderby('ar.codprov', 'ASC')
         ->get();
         
         $proveedores = DB::table('proveedores')
+        ->select('id', 'codprov', 'razons')
         ->where('estado', '=', 1)
-        ->select('codprov', 'razons')
         ->get();
+
+        $periodos = DB::table('periodos')
+        ->select('anoper', 'mesper')
+        ->where('estado', '=', 1)
+        ->first();
+
+        return view('movimientos.ingreso.create', [
+            "proveedores" => $proveedores,
+            "periodos" => $periodos,
+            "articulos" => $articulos
+            ]
+        );
     }
 
     /**
@@ -75,9 +87,7 @@ class IngresenController extends Controller
             $ingreso->idper     = $request->get('idper');
             $ingreso->idprov    = $request->get('idprov');
             $ingreso->numdoc    = $request->get('numdoc');
-            
             $mytime = Carbon::now('America/Bogota');
-
             $ingreso->fecha     = $mytime->todDateTimeString();
             $ingreso->fechav    = $request->get('fechav');
             $ingreso->tcosto    = $request->get('tcosto');
@@ -86,7 +96,6 @@ class IngresenController extends Controller
             $ingreso->tiva      = $request->get('tiva');
             $ingreso->estado    = 1;
             $ingreso->save();            
-
             // detalle
             $ingreso->idingresen = $request->get('idingresen');
             $idbod      = $request->get('idbod');
@@ -97,9 +106,7 @@ class IngresenController extends Controller
             $piva       = $request->get('piva');
             $vtotal     = $request->get('vtotal');
             $vtmarg     = $request->get('vtmarg');
-
             $cont = 0;
-
             while($cont < count($idarticulo)){
                 $detalle = new Ingresde();
                 $detalle->idingresen = $ingreso->idingresen;
@@ -114,9 +121,7 @@ class IngresenController extends Controller
                 $detalle->save();
                 $cont = $cont+1;
             }
-
             DB::commit();
-            
         }catch(\Exception $e)
         {
             DB::rollback();
@@ -138,16 +143,18 @@ class IngresenController extends Controller
         ->select('en.numdoc', 'pr.razons', 'en.idper', 'en.numdoc', 'en.fecha', 'en.fechav', 'en.tcosto', 'en.tmargen', 'en.tventa', 'en.tiva', 'en.estado', 'pe.anoper', 'pe.mesper', 'pe.estado')
         ->where('en.id', '=', $id)
         ->first();
-        
-        $ingreso=DB::table('ingresde as de')
+        //detalle
+        $detalle=DB::table('ingresde as de')
+        ->join('ingresen as en', 'de.idingresen', '=', 'en.id')
         ->join('articulos as ar', 'de.idarti', '=', 'ar.id')
         ->where('de.idingresen', '=', $id)
-        ->select('de.codprov', 'de.codcate', 'de.codarrti', 'de.nomartic', 'de.cantidad', 'de.vcosto', 'de.vneto', 'de.piva', 'de.vtotal' , 'de.vtmargen')
-        ->first();
-
-        // revisar nombre de campos tabla detalle y revisar si debe contener columna valor unitario de venta
-
-        return Redirect::to('movimientos/ingreso/show');
+        ->select('ar.codprov', 'ar.codcate', 'ar.codarti', 'ar.nomartic', 'de.cantidad', 'de.vcosto', 'de.vneto', 'de.piva', 'de.vtotal' , 'de.vtmargen')
+        ->get();
+        return view('movimientos.ingreso.show', [
+            '$ingreso'   =>$ingreso,
+            '$detalle'   =>$detalle
+            ]
+        );
     }
 
     /**
@@ -181,6 +188,13 @@ class IngresenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ingreso = Ingresen::findOrFail($id);   
+        if ($ingreso->estado == 1) {
+            $ingreso->estado = 0;
+        } else {
+            $ingreso->estado = 1;
+        }
+        $ingreso->update();        
+        return Redirect::to('ingreso');
     }
 }

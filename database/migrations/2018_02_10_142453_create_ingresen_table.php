@@ -24,7 +24,7 @@ class CreateIngresenTable extends Migration
             $table->decimal('tmargen', 11, 2)->required();
             $table->decimal('tventa', 11, 2)->required();
             $table->decimal('tiva', 11, 2)->required();
-            $table->tinyInteger('estado')->default(1);            
+            $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });
     }

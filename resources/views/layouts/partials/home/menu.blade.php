@@ -39,7 +39,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{url('/cargo')}}"><i class="fa fa-circle-o"></i> Cargue de facturas</a></li>
+                    <li><a href="{{url('/ingresen')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
                 </ul>
             </li>
             <!--Parámetros-->
@@ -52,7 +52,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/agencia')}}"><i class="fa fa-circle-o"></i> Agencias</a></li>
-                    <li><a href="{{url('/cargo')}}"><i class="fa fa-circle-o"></i> Usuarios</a></li>
+                    {{--  <li><a href="#"><i class="fa fa-circle-o"></i> Usuarios</a></li>  --}}
                 </ul>
             </li>
         </ul>

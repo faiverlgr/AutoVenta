@@ -1,4 +1,4 @@
-<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$agen->id}}">
+<div class="modal fade modal-slide-in-right" aria-hidden="true" role="dialog" tabindex="-1" id="modal-delete-{{$item->id}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,7 +7,7 @@
                 </button>
                 <h4 class="modal-title">Se va a cambiar el estado del registro</h4>
             </div>      
-            {{ Form::Open(['route' => ['agencia.destroy', $agen->id], 'method' => 'DELETE']) }}
+            {{ Form::Open(['route' => ['ingresen.destroy', $item->id], 'method' => 'DELETE']) }}
             {{ Form::token() }}    
             <div class="modal-body">
                     
