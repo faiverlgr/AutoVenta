@@ -1,13 +1,9 @@
 @extends ('layouts.admin')
 @section ('wrapper')
 <div id="app" class="wrapper">
-    <!-- Main Header // BARRA HORIZONTAL include('layouts.partials.header')-->
     @include('layouts.partials.home.header')
-    <!-- Main Header // BARRA VERTICAL include('layouts.partials.menu')-->
     @include('layouts.partials.home.menu')
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Ingresos</h1>
             @if (session('notification'))
@@ -25,8 +21,6 @@
                 </div>
             @endif
         </section>
-        <!-- /.Header (Page header) -->
-        <!-- Main content -->
         <section class="content container-fluid">
             <div class="box box-default">
                 <div class="box-header with-border">
@@ -39,7 +33,7 @@
                             <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
                                 <div class="form-group">    
                                     <label fr="codprov">Proveedor *</label>
-                                    <select name="idproveedor" id="idproveedor" class="form-control">
+                                    <select name="idproveedor" id="idproveedor" class="form-control selectpicker">
                                         @foreach($proveedores as $item)
                                         <option value="{{$item->id}}">{{$item->razons}}</option>
                                         @endforeach
@@ -59,7 +53,7 @@
                                     <div class="panel-body">
                                         <div class="form-group">    
                                             <label for="articulo">Articulo</label>
-                                            <select name="piarticulo" class="form-control" id="piarticulo">
+                                            <select name="piarticulo" id="piarticulo" class="form-control selectpicker" data-live-search="true"">
                                                 @foreach($articulos as $art)
                                                     <option value="{{ $art->id }}">{{ $art->nomartic }}</option>
                                                 @endforeach
