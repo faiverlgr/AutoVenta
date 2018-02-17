@@ -15,10 +15,10 @@ class CreateCategoriasTable extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('idprov', 2);
-            $table->string('idcate', 4)->primary();
-            $table->string('nomcate', 100)->required();
-            $table->boolean('estado')->default(1);
+            $table->string('codprov', 2)->required();
+            $table->string('codcate', 4)->required();
+            $table->string('nomcate', 80)->required();
+            $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });
     }

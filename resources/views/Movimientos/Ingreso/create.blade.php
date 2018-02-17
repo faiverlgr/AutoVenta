@@ -30,20 +30,32 @@
                         {!!Form::open(array('url'=>'ingreso','method'=>'POST','autocompleted'=>'off'))!!}
                         {{Form::token()}}
                         <div class="row">
-                            <div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                                 <div class="form-group">    
                                     <label fr="codprov">Proveedor *</label>
-                                    <select name="idproveedor" id="idproveedor" class="form-control selectpicker">
+                                    <select name="idproveedor" id="idproveedor" class="form-control select2-container">
                                         @foreach($proveedores as $item)
                                         <option value="{{$item->id}}">{{$item->razons}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
                                 <div class="form-group">    
                                     <label for="anoper">Periodo</label>
                                     <input readonly type="text" name="anoper" class="form-control" value="{{$periodos->anoper}}-{{$periodos->mesper}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                                <div class="form-group">    
+                                    <label for="fecha">Fecha</label>
+                                    <input id="datepicker" type="text" name="fecha" class="form-control" value="">
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                                <div class="form-group">    
+                                    <label for="numdoc">Documento</label>
+                                    <input type="text" name="numdoc" class="form-control" value="">
                                 </div>
                             </div>
                         </div>
@@ -51,9 +63,9 @@
                             <div class="col-lg-3 col-sm-3 col-md-3 col-xs-12">
                                 <div class="panel panel-primary">
                                     <div class="panel-body">
-                                        <div class="form-group">    
+                                        <div class="form-group">
                                             <label for="articulo">Articulo</label>
-                                            <select name="piarticulo" id="piarticulo" class="form-control selectpicker" data-live-search="true"">
+                                            <select name="piarticulo" id="piarticulo" class="form-control">
                                                 @foreach($articulos as $art)
                                                     <option value="{{ $art->id }}">{{ $art->nomartic }}</option>
                                                 @endforeach
@@ -74,4 +86,9 @@
     </div>
     @include('layouts.footer')
 </div>
+@section('scripts')
+    <script>
+        $('#datepicker').datepicker();
+    </script>
+@endsection
 @endsection

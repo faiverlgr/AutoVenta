@@ -1,15 +1,9 @@
 @extends ('layouts.admin')
 @section ('wrapper')
 <div id="app" class="wrapper">
-    <!-- Main Header // BARRA HORIZONTAL include('layouts.partials.header')-->
     @include('layouts.partials.home.header')
-    <!-- /.Main Header -->
-    <!-- Main Header // BARRA VERTICAL include('layouts.partials.menu')-->
     @include('layouts.partials.home.menu')
-    <!-- /.Main Header -->
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Articulos</h1>
             @if (session('notification'))
@@ -27,8 +21,6 @@
                 </div>
             @endif
         </section>
-        <!-- /.Header (Page header) -->
-        <!-- Main content -->
         <section class="content container-fluid">
             <div id="box-info" class="box box-info">   
                 <div class="box-header">
@@ -50,12 +42,12 @@
                             </thead>
                             <tbody>
                                 @foreach($gcodcates as $codcate)
-                                <tr class="hijo" onclick="comprime()">
-                                    <td style="width:10%">{{$codcate->codprov}}</td>
-                                    <td style="width:40%">{{$codcate->razons}}</td>
-                                    <td style="width:10%">{{$codcate->codcate}}</td>
-                                    <td style="width:40%">{{$codcate->nomcate}}</td>
-                                </tr>
+                                    <tr class="hijo" onclick="comprime()">
+                                        <td style="width:10%">{{$codcate->codprov}}</td>
+                                        <td style="width:40%">{{$codcate->razons}}</td>
+                                        <td style="width:10%">{{$codcate->codcate}}</td>
+                                        <td style="width:40%">{{$codcate->nomcate}}</td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -88,13 +80,13 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="codprov">Codcate</label>
-                                        <input id="codcate" readonly type="text" name="codcate" class="form-control" value="{{old('codcate')}}">
+                                        <input id="codcate" readonly type="text" name="codcate" class="numeric form-control" value="{{old('codcate')}}">
                                     </div>
                                 </div>
                                 <div class="col-md-10">
                                     <div class="form-group">
                                         <label class="control-label" for="nomcate">Nombre</label>
-                                        <input id="nombre" readonly type="text" name="nomcate" class="form-control" value="{{old('nomcate')}}" required>
+                                        <input id="nombre" readonly type="text" name="nomcate" class="text form-control" value="{{old('nomcate')}}" required>
                                     </div>
                                 </div>
                             </div>
@@ -102,13 +94,13 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label" for="codarti">Codigo *</label>
-                                        <input id="codarti" onchange="uneCodigo()" type="text" name="codarti" class="form-control" value="{{old('codarti')}}" required>
+                                        <input id="codarti" onchange="uneCodigo()" type="text" name="codarti" class="llena4 numeric form-control" value="{{old('codarti')}}" required>
                                     </div>
                                 </div>
                                 <div class="col col-md-10">
                                     <div class="form-group">
                                         <label class="control-label" for="nombre">Nombre*</label>
-                                        <input type="text" name="nomartic" class="form-control" value="{{old('nomartic')}}" required>
+                                        <input type="text" name="nomartic" class="text form-control" value="{{old('nomartic')}}" required>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +108,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label" for="nombrec">Nombre abreviado</label>
-                                        <input type="text" name="nomarti" class="form-control" value="{{old('nomarti')}}">
+                                        <input type="text" name="nomarti" class="text form-control" value="{{old('nomarti')}}">
                                     </div>
                                 </div>                            
                             </div>                            
@@ -162,19 +154,19 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="minimo">Mínimo *</label>
-                                        <input type="number" name="minimo" class="form-control" value="{{old('minimo')}}" required>
+                                        <input type="number" name="minimo" class="numeric form-control" value="{{old('minimo')}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="maximo">Máximo *</label>
-                                        <input type="number" name="maximo" class="form-control" value="{{old('maximo')}}" required>
+                                        <input type="number" name="maximo" class="numeric form-control" value="{{old('maximo')}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="embalaje">Embalaje *</label>
-                                        <input type="number" name="embalaje" class="form-control" value="{{old('embalaje')}}" required>
+                                        <input type="number" name="embalaje" class="numeric form-control" value="{{old('embalaje')}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -196,27 +188,36 @@
                             <input hidden name="validaArti" id="validaArti"></input>
                             {!!Form::close()!!}
                         </div>
-                        <!-- /.box-body -->
                     </div>
                 </div>
             </div>
-              <!-- /.box -->
         </section>
-        <!-- /.content -->
     </div>
-    <!-- Main Footer -->
     @include('layouts.footer')
-    <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
     @section('scripts')
     <script>    
+        //rellena ceros a la izquierda
+        $("input.llena4").blur(function(){
+            if  (this.value != ""){
+                var n = this.value.toString();
+                while(n.length < 4)
+                n = "0" + n;
+                this.value = n;
+                uneCodigo();
+            }
+        });
+        //convierte a mayúsculas
+        $(".text").keyup(function(){
+            this.value = this.value.toUpperCase();
+        });
+        //sólo permite números
+        $(".numeric").numeric();
 
         var hijos = document.querySelectorAll("table.padre > tbody > tr.hijo");
         for (unHijo of hijos) {
             unHijo.addEventListener("click", function(evt){
                 var hijo = evt.target;
-
                 //var valor1 = this.cells[2].innerText;
                 //alert("Texto del enlace: " + valor1);
                 document.getElementById('codprov').value = this.cells[0].innerText;
@@ -225,21 +226,17 @@
                 document.getElementById('nombre').value = this.cells[3].innerText;
             });
         };
-
         function comprime(){
             document.getElementById("box-info").className += " collapsed-box"
             document.getElementById("fa-fa").className = "fa fa-plus"
             //console.log("sale del box-info");
         };
-
         function uneCodigo(){
             var valor1 = document.getElementById('codprov').value;
             var valor2 = document.getElementById('codcate').value;
             var valor3 = document.getElementById('codarti').value;
             document.getElementById('validaArti').value = valor1+valor2+valor3;
         };
-     
     </script>
-    <!-- Select2 -->
     @endsection
 @endsection

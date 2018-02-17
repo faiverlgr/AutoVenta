@@ -1,15 +1,9 @@
 @extends ('layouts.admin')
 @section ('wrapper')
 <div id="app" class="wrapper">
-    <!-- Main Header // BARRA HORIZONTAL include('layouts.partials.header')-->
     @include('layouts.partials.home.header')
-    <!-- /.Main Header -->
-    <!-- Main Header // BARRA VERTICAL include('layouts.partials.menu')-->
     @include('layouts.partials.home.menu')
-    <!-- /.Main Header -->
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Categorias</h1>
             @if (session('notification'))
@@ -32,21 +26,19 @@
             </div>
             @endif
         </section>
-        <!-- /.Header (Page header) -->
-        <!-- Main content -->
-        <section class="content container-fluid">            
-            <div class="box box-info">
+        <section class="content container-fluid">
+            <div class="box box-default">
                 <div class="box-header with-border">
                     <h3>Nueva Categoria<a href="/categoria"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h3>
                 </div>
-                <div id="app" class="box-body">
-                    <div class="col col-md-6 col-md-offset-3">
+                <div class="box-body">
+                    <div class="col-md-8 col-md-offset-2">
                         {!!Form::open(array('name'=>'form', 'url'=>'categoria', 'method'=>'POST', 'autocompleted'=>'off'))!!}
                         {{Form::token()}}
-                        <div class="form-group">                        
-                            <label for="codprov">Proveedor *</label>
-                            <div class="row">
-                                <div class="col col-md-3">                            
+                        <div class="row">
+                            <div class="col col-md-3">
+                                <div class="form-group"> 
+                                    <label for="codprov">Proveedor *</label>
                                     <select class="form-control" name="codprov" id="selector" onchange="myFunction()">
                                         @foreach($proveedores as $prov)
                                         <option value="{{$prov->codprov}}">{{$prov->codprov}}</option>
@@ -54,45 +46,63 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col col-md-9">
+                            </div>
+                            <div class="col col-md-9">
+                                <div class="form-group">
+                                    <label for="codprov">Nombre</label>
                                     <input disabled id="detalle" class="form-control"type="text" value="">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="codcate">Categoria *</label>
-                            <input type="text" id="codcate" name="codcate" onchange="uneCodigo()" class="form-control" placeholder="Categoria.." value="{{old('codcate')}}">
+                        <div class="row">
+                            <div class="col col-md-12">
+                                <div class="form-group">
+                                    <label for="codcate">Codigo *</label>
+                                    <input type="text" id="codcate" name="codcate" class="llena4 numeric form-control" placeholder="Categoria.." value="{{old('codcate')}}" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nomcate">Nombre *</label>
+                                    <input type="text" name="nomcate" class="text form-control" value="{{old('nomcate')}}">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input readonly name="validaCate" id="validaCate"></input>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="nomcate">Nombre *</label>
-                            <input type="text" name="nomcate" class="form-control" value="{{old('nomcate')}}">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
-                        </div>
-                        <input name="validaCate" id="validaCate"></input>
                         {!!Form::close()!!}
                     </div>
                 </div>
-                <!-- /.box-body -->
             </div>
-            <!-- /.box -->
-            {{--  <pre>
-                @   {{ $proveedores }}
-            </pre>  --}}
         </section>
-        <!-- /.content -->
     </div>
-    <!-- Main Footer -->
     @include('layouts.footer')
-    <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
     @section('scripts')
     <script>
+        //rellena ceros a la izquierda
+        $("input.llena4").blur(function(){
+            if  (this.value != ""){
+                var n = this.value.toString();
+                while(n.length < 4)
+                n = "0" + n;
+                this.value = n;
+                uneCodigo();
+            }
+        });
+        //convierte a mayúsculas
+        $(".text").keyup(function(){
+            this.value = this.value.toUpperCase();
+        });
+        //sólo permite números
+        $(".numeric").numeric();
+        
         function myFunction(){
             desc=form.selector.options[form.selector.selectedIndex+1].value;
             $('#detalle').val(desc);
+            $('#codcate').val('');
         };
 
         function uneCodigo(){
@@ -102,6 +112,5 @@
         };
         
     </script>
-    <!-- Select2 -->
     @endsection
 @endsection

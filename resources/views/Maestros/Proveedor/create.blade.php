@@ -17,6 +17,11 @@
                     {{ session('notification') }}
                 </div>
             @endif
+            @if (session('danger'))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                </div>
+            @endif
             @if (count($errors)>0)
                 <div class="alert alert-danger">
                     <ul>
@@ -27,48 +32,46 @@
                 </div>
             @endif
         </section>
-        <!-- /.Header (Page header) -->
-        <!-- Main content -->
         <section class="content container-fluid">
             <div class="box box-default">
                 <div class="box-header with-border">
                     <h3>Nuevo<a href="/proveedor"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                 </div>
                     <div class="box-body">
-                        <div class="col col-md-4 col-md-offset-4">
+                        <div class="col-md-8 col-md-offset-2">
                             {!!Form::open(array('url'=>'proveedor','method'=>'POST','autocompleted'=>'off'))!!}
                             {{Form::token()}}
                             <div class="form-group">    
                                 <label for="codprov">Codigo *</label>
-                                <input tabindex="-1" type="text" name="codprov" class="form-control" placeholder="Codigo.." value="{{old('codprov')}}">
+                                <input onblur=pad(this.value,2) type="text" name="codprov" class="llena2 numeric form-control" value="{{old('codprov')}}" autofocus>
                             </div>
                             <div class="form-group">
                                 <label for="nit">Nit</label>
-                                <input type="text" name="nit" class="form-control" placeholder="Nit.." value="{{old('nit')}}">
+                                <input type="text" name="nit" class="numeric form-control" value="{{old('nit')}}">
                             </div>
                             <div class="form-group">
                                 <label for="razons">Razon Social *</label>
-                                <input type="text" name="razons" class="form-control" placeholder="Razon social.."value="{{old('razons')}}">
+                                <input type="text" name="razons" class="form-control" value="{{old('razons')}}">
                             </div>
                             <div class="form-group">
                                 <label for="sigla">Sigla</label>
-                                <input type="text" name="sigla" class="form-control" placeholder="Sigla.." value="{{old('sigla')}}">
+                                <input type="text" name="sigla" class="form-control" value="{{old('sigla')}}">
                             </div>
                             <div class="form-group">
                                 <label for="direccion">Dirección *</label>
-                                <input type="text" name="direccion" class="form-control" placeholder="Dirección.." value="{{old('direccion')}}">
+                                <input type="text" name="direccion" class="form-control" value="{{old('direccion')}}">
                             </div>
                             <div class="form-group">
                                 <label for="telefono1">Teléfono1</label>
-                                <input type="text" name="telefono1" class="form-control" placeholder="Teléfono1.." value="{{old('telefono1')}}">
+                                <input type="text" name="telefono1" class="numeric form-control" value="{{old('telefono1')}}">
                             </div>
                             <div class="form-group">
                                 <label for="telefono2">Teléfono2</label>
-                                <input type="text" name="telefono2" class="form-control" placeholder="Teléfono2.." value="{{old('telefono2')}}">
+                                <input type="text" name="telefono2" class="numeric form-control" value="{{old('telefono2')}}">
                             </div>
                             <div class="form-group">
                                 <label for="mail">Email</label>
-                                <input type="email" name="email" class="form-control" placeholder="Correo electrónico.." value="{{old('email')}}">
+                                <input type="email" name="email" class="form-control" value="{{old('email')}}">
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
@@ -87,5 +90,18 @@
     @include('layouts.footer')
     <!-- /.Main Footer -->
 </div>
-    <!-- /.content-wrapper -->
+@section('scripts')
+<script>
+    //campos tipo numérico
+    $(".numeric").numeric();
+    //rellena ceros a la izquierda
+    $("input.llena2").blur(function(){
+        var n = this.value.toString();
+        while(n.length < 2)
+            n = "0" + n;
+        this.value = n;
+    });
+
+</script>
+@endsection
 @endsection

@@ -92,7 +92,7 @@ class CategoriaController extends Controller
         $categoria = new categoria;
         $categoria->codprov     = $request->get('codprov');
         $categoria->codcate     = $request->get('codcate');
-        $categoria->nomcate      = $request->get('nombre');
+        $categoria->nomcate      = $request->get('nomcate');
         $categoria->estado      = '1';
         $categoria->save();
         return back()->with('notification', 'Registro guardado exitosamente.');

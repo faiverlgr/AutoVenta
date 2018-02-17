@@ -28,7 +28,7 @@ class ArticulosRequest extends FormRequest
             'codprov'   =>  'required | max:2',
             'codcate'   =>  'required | max:4',
             'codarti'   =>  'required | max:4',
-            'nomarti'   =>  'required | max:100',
+            'nomarti'   =>  'required | max:80',
             'nomartic'  =>  'max:50',
             'vcosto'    =>  'required | numeric',
             'pmargen'   =>  'required | numeric',
