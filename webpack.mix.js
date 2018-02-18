@@ -15,9 +15,17 @@ let mix = require('laravel-mix');
 
  mix.scripts([
      'resources/assets/js/jquery-3.3.1.js',
+     'resources/assets/js/jquery-ui.js',
      'resources/assets/js/bootstrap.js',
      'resources/assets/js/adminlte.js',
      'resources/assets/js/vmisoft.js',
     ], 'public/js/app.js')
- .sass('resources/assets/sass/app.scss', 'public/css');
-
+    .styles([
+    'resources/assets/css/bootstrap.css',
+    'resources/assets/css/font-awesome.css',
+    'resources/assets/css/ionicons.css',
+    'resources/assets/css/AdminLTE.css',
+    'resources/assets/css/_all-skins.css',
+    'resources/assets/css/jquery-ui.css',
+    'resources/assets/css/vmisoft.css'
+    ], 'public/css/app.css');

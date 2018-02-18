@@ -12,7 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <style>
         body {
-            background: #ffffff url("images/photo8.png") no-repeat center;
+            background: #ffffff url("img/photo5.jpg") no-repeat center;
             background-size: cover;
             -moz-background-size: cover;
             -webkit-background-size: cover;
