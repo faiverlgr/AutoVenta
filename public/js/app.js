@@ -32578,6 +32578,28 @@ throw new Error('AdminLTE requires jQuery')
 
 }(jQuery)
 
+/*
+*
+*
+*/
+$(document).ready(function() {
+	$('.datepicker').datepicker({
+		dateFormat: "yy/mm/dd",
+		firstDay: 1,
+		dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+		dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+		monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+		monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+	
+		onSelect: function(dateText){
+			$('#fecha').val(dateText);
+		}
+	});
+});
+/*
+*
+*
+*/
 function fvalor(){
     var vcos = document.getElementById('vcosto').value;
     var vmar = document.getElementById('pmargen').value;
@@ -32593,7 +32615,10 @@ function fvalor(){
         document.getElementById('valor').value = vcalculo.toFixed(2);
     }
 };
-
+/*
+*
+*
+*/
 function ftotal(){
     var vnet = document.getElementById('vneto').value;
     var viva = document.getElementById('piva').value;
@@ -32610,9 +32635,6 @@ function ftotal(){
         document.getElementById('vtotal').value = vcalculo.toFixed(2);
     }
 };
-
-
-
 //numeric
 /*
  *

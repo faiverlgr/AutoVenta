@@ -1,3 +1,8 @@
+
+/*
+*
+*
+*/
 function fvalor(){
     var vcos = document.getElementById('vcosto').value;
     var vmar = document.getElementById('pmargen').value;
@@ -13,7 +18,10 @@ function fvalor(){
         document.getElementById('valor').value = vcalculo.toFixed(2);
     }
 };
-
+/*
+*
+*
+*/
 function ftotal(){
     var vnet = document.getElementById('vneto').value;
     var viva = document.getElementById('piva').value;
@@ -30,9 +38,6 @@ function ftotal(){
         document.getElementById('vtotal').value = vcalculo.toFixed(2);
     }
 };
-
-
-
 //numeric
 /*
  *
