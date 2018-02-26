@@ -102,7 +102,7 @@
         function myFunction(){
             desc=form.selector.options[form.selector.selectedIndex+1].value;
             $('#detalle').val(desc);
-            $('#codcate').val('');
+            $('#codcate').val(''); //limpia codigo de categoria
         };
 
         function uneCodigo(){

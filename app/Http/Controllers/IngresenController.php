@@ -51,7 +51,7 @@ class IngresenController extends Controller
     {
         $articulos = DB::table('articulos as ar')
         ->where('ar.estado', '=', 1)
-        ->select('ar.id', 'ar.codprov', 'ar.codcate', 'ar.codarti', 'ar.nomartic')
+        ->select('ar.id', 'ar.codarti', 'ar.nomartic', 'ar.vcosto', 'ar.vneto', 'ar.piva', 'ar.pmargen')
         ->orderby('ar.codprov', 'ASC')
         ->get();
         
@@ -65,12 +65,15 @@ class IngresenController extends Controller
         ->where('estado', '=', 1)
         ->first();
 
+        //return Response()->json($articulos);
+
         return view('movimientos.ingreso.create', [
             "proveedores" => $proveedores,
             "periodos" => $periodos,
             "articulos" => $articulos
             ]
         );
+        //dd($proveedores);
     }
 
     /**

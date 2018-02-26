@@ -87,7 +87,8 @@ class ArticuloController extends Controller
         $articulo->cbarras     = $request->get('cbarras');
         $articulo->estado      = 1;
         $articulo->save();
-        return back()->with('notification', 'Registro guardado exitosamente.');
+        //return back()->with('notification', 'Registro guardado exitosamente.');
+        return Redirect::to('articulo');
     }
 
     /**
@@ -143,8 +144,9 @@ class ArticuloController extends Controller
         $articulo->unidad   = $request->get('unidad');
         $articulo->cbarras  = $request->get('cbarras');
         $articulo->update();
-        return back()->with('notification', 'Registro actualizado exitosamente.');
+        //return back()->with('notification', 'Registro actualizado exitosamente.');
         //dd($articulo);
+        return Redirect::to('articulo');
     }
 
     /**
