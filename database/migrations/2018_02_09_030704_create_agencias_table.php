@@ -25,6 +25,8 @@ class CreateAgenciasTable extends Migration
             $table->string('telefono1', 15)->nullable();
             $table->string('telefono2', 15)->nullable();
             $table->string('email', 80)->nullable();
+            $table->integer('idbodega')->required();
+            $table->integer('idlista')->required();
             $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });

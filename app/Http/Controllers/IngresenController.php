@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Entities\Periodo;
 use App\Entities\Ingresen;
 use App\Entities\Ingresde;
+use App\Entities\Kardex;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\IngresosRequest;
 use Illuminate\Support\Collection as Collection;
@@ -86,44 +87,71 @@ class IngresenController extends Controller
     {
         try{
             DB::beginTransaction();
-            $ingreso = New Ingresen;
-            $ingreso->idper     = $request->get('idper');
-            $ingreso->idprov    = $request->get('idprov');
-            $ingreso->numdoc    = $request->get('numdoc');
-            $mytime = Carbon::now('America/Bogota');
-            $ingreso->fecha     = $mytime->todDateTimeString();
-            $ingreso->fechav    = $request->get('fechav');
-            $ingreso->tcosto    = $request->get('tcosto');
-            $ingreso->tmargen   = $request->get('tmargen');
-            $ingreso->tventa    = $request->get('tventa');
-            $ingreso->tiva      = $request->get('tiva');
-            $ingreso->estado    = 1;
-            $ingreso->save();            
-            // detalle
-            $ingreso->idingresen = $request->get('idingresen');
-            $idbod      = $request->get('idbod');
-            $idarti     = $request->get('idarti');
-            $cantidad   = $request->get('cantidad');
-            $vcosto     = $request->get('vcosto');
-            $vneto      = $request->get('vneto');
-            $piva       = $request->get('piva');
-            $vtotal     = $request->get('vtotal');
-            $vtmarg     = $request->get('vtmarg');
-            $cont = 0;
-            while($cont < count($idarticulo)){
-                $detalle = new Ingresde();
-                $detalle->idingresen = $ingreso->idingresen;
-                $detalle->idbod      = $idbod[$cont];
-                $detalle->idarti     = $idarti[$cont];
-                $detalle->cantidad   = $cantidad[$cont];
-                $detalle->vcosto     = $vcosto[$cont];
-                $detalle->vneto      = $vneto[$cont];
-                $detalle->piva       = $piva[$cont];
-                $detalle->vtotal     = $vtotal[$cont];
-                $detalle->vtmarg     = $vtmarg[$cont];
-                $detalle->save();
-                $cont = $cont+1;
-            }
+                $ingreso = New Ingresen;
+                $ingreso->idper     = $request->get('idper');
+                $ingreso->idprov    = $request->get('idprov');
+                $ingreso->numdoc    = $request->get('numdoc');
+                $mytime = Carbon::now('America/Bogota');
+                $ingreso->fecha     = $mytime->todDateTimeString();
+                $ingreso->fechav    = $request->get('fechav');
+                $ingreso->tcosto    = $request->get('tcosto');
+                $ingreso->tmargen   = $request->get('tmargen');
+                $ingreso->tventa    = $request->get('tventa');
+                $ingreso->tiva      = $request->get('tiva');
+                $ingreso->estado    = 1;
+                $ingreso->save();            
+                // detalle
+                $ingreso->idingresen    = $request->get('idingresen');
+                $idbod                  = $request->get('idbod');
+                $idarti                 = $request->get('idarti');
+                $cantidad               = $request->get('cantidad');
+                $vcosto                 = $request->get('vcosto');
+                $vneto                  = $request->get('vneto');
+                $piva                   = $request->get('piva');
+                $vtotal                 = $request->get('vtotal');
+                $vtmarg                 = $request->get('vtmarg');
+                $cont                   = 0;
+                while($cont < count($idarticulo)){
+                    //detalle
+                    $detalle = new Ingresde();
+                    $detalle->idingresen = $ingreso->idingresen;
+                    $detalle->idbod      = 1;
+                    $detalle->idarti     = $idarti[$cont];
+                    $detalle->cantidad   = $cantidad[$cont];
+                    $detalle->vcosto     = $vcosto[$cont];
+                    $detalle->vneto      = $vneto[$cont];
+                    $detalle->piva       = $piva[$cont];
+                    $detalle->vtotal     = $vtotal[$cont];
+                    $detalle->vtmarg     = $vtmarg[$cont];
+                    $detalle->save();
+                    //kardex
+                    $kardex = 0; //revisa si existe en la tabla
+                    $kardex = DB::table('kardex')
+                        ->where('idbodega', $idbod[$cont])
+                        ->where('idperiodo', $request->get('idper'))
+                        ->where('idarticulo', $idarti[$cont])
+                        ->count();
+                        // si no existe crea el item para el periodo, bidega y artículo.
+                    if ($kardex = 0) {
+                        $new = new Kardex();
+                        $new->idbodega      = $idbod[$cont];
+                        $new->idperiodo     = $request->get('idper');
+                        $new->idarticulo    = $idarti[$cont];
+                        $new->inicial       = 0;
+                        $new->entradas      = $cantidad[$cont];
+                        $new->salidas       = 0;
+                        $new->vcosto        = $vcosto[$cont];
+                        $kardex->save();
+                        // si ya existe 
+                    } else {
+                        DB::table('kardex')
+                            ->where('idbodega', $idbod[$cont])
+                            ->where('idperiodo', $request->get('idper'))
+                            ->where('idarticulo', $idarti[$cont])
+                            ->increment('entradas', $cantidad[$cont]);
+                    }
+                    $cont = $cont+1;
+                }
             DB::commit();
         }catch(\Exception $e)
         {

@@ -33,7 +33,9 @@ class AgenciasRequest extends FormRequest
             'barrio'    =>  'required | max:80',
             'telefono1' =>  'max:15',
             'telefono2' =>  'max:15',
-            'email'     =>  'max:80'
+            'email'     =>  'max:80',
+            'idbodega'  =>  'required',
+            'idlista'   =>  'required'
         ];
     }
 }

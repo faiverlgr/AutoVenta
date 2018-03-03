@@ -113,7 +113,9 @@ class ArticuloController extends Controller
         $articulo = Articulo::findOrFail($id);
         $query = DB::table('articulos')
             ->join('proveedores', 'proveedores.codprov', '=', 'articulos.codprov')
-            ->join('categorias', [['categorias.codprov', '=', 'articulos.codprov'], ['categorias.codcate', '=', 'articulos.codcate']])
+            ->join('categorias', [
+                ['categorias.codprov', '=', 'articulos.codprov'],
+                ['categorias.codcate', '=', 'articulos.codcate']])
             ->select('articulos.*', 'proveedores.razons', 'categorias.nomcate')
             ->where('articulos.id', '=', $id)
             ->first();
