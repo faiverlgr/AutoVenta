@@ -24,7 +24,7 @@
         <section class="content container-fluid">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h3>Crear Ingreso<a href="/ingreso"><button class="btn btn-succes pull-right">Listado</button></a></h3>
+                    <h3>Crear Ingreso<a href="/ingresen"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                 </div>
                 {!!Form::open(array('url'=>'ingresen','method'=>'POST','autocompleted'=>'off'))!!}
                 {{Form::token()}}
@@ -33,7 +33,7 @@
                         <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
                             <div class="form-group">    
                                 <label fr="codprov">Proveedor *</label>
-                                <select name="idproveedor" id="idproveedor" class="form-control select2-container">
+                                <select name="idprov" id="idproveedor" class="form-control select2-container">
                                     @foreach($proveedores as $item)
                                     <option value="{{$item->id}}">{{$item->razons}}</option>
                                     @endforeach
@@ -43,22 +43,21 @@
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
                             <div class="form-group">    
                                 <label for="numdoc">Documento</label>
-                                <input type="text" name="numdoc" class="form-control" value="">
+                                <input type="text" id="numdoc" name="numdoc" class="form-control" value="">
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
                             <div class="form-group">
                                 <label for="anoper">Fecha</label>
                                 <div class="input-group">
-                                    <input id="fecha" type="text" name="fecha" class="datepicker form-control"/>
-                                    <label for="datepciker" class="input-group-addon generic_btn"><i class="fa fa-calendar" aria-hidden="true"></i></label>
+                                    <input type="date" id="fecha" name="fecha" class="form-control"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
                             <div class="form-group">
                                 <label for="idper">Periodo</label>
-                                <input type="hidden" name="idper" class="form-control" value="{{$periodos->id}}">
+                                <input type="hidden" id="idper" name="idper" class="form-control" value="{{$periodos->id}}">
                                 <input readonly type="text" class="form-control" value="{{$periodos->anoper}}-{{$periodos->mesper}}">
                             </div>
                         </div>
@@ -72,10 +71,10 @@
                                 <select id="selArticulo" class="form-control" name="selArticulo">
                                     @foreach($articulos as $art)
                                         <option value="{{ $art->id }}">{{ $art->codarti}}-{{ $art->nomartic}}</option>
-                                        <option name="vcosto" hidden value="{{ $art->vcosto }}"></option>
-                                        <option name="vneto" hidden value="{{ $art->vneto }}"></option>
-                                        <option name="piva" hidden value="{{ $art->piva }}"></option>
-                                        <option name="pmargen" hidden value="{{ $art->pmargen }}"></option>
+                                        <option hidden value="{{ $art->vcosto }}"></option>
+                                        <option hidden value="{{ $art->vneto }}"></option>
+                                        <option hidden value="{{ $art->piva }}"></option>
+                                        <option hidden value="{{ $art->pmargen }}"></option>
                                     @endforeach
                                 </select>
                             </div>
@@ -148,11 +147,11 @@
                                     </tr>
                                         <th>TOTALES</th>
                                         <th></th>
-                                        <th><input type="hidden" id="totalcosto"><input type="text" id="totalcostom" class="form-control" readonly value="$ 0.00"></th>
+                                        <th><input type="hidden" id="totalcosto" name="tcosto"><input type="text" id="totalcostom" class="form-control" readonly value="$ 0.00"></th>
+                                        <th><input type="hidden" id="totalneto" name="tneto"><input type="text" id="totalnetom" class="form-control" readonly value="$ 0.00"></th>
                                         <th></th>
-                                        <th></th>
-                                        <th><input type="hidden" id="totalneto"><input type="text" id="totalnetom" class="form-control" readonly value="$ 0.00"></th>
-                                        <th><input type="hidden" id="totalventa"><input type="text" id="totalventam" class="form-control" readonly value="$ 0.00"></th>
+                                        <th><input type="hidden" id="totaliva" name="tiva"><input type="text" id="totalivam" class="form-control" readonly value="$ 0.00"></th>
+                                        <th><input type="hidden" id="totalventa" name="tventa"><input type="text" id="totalventam" class="form-control" readonly value="$ 0.00"></th>
                                         <th></th>
                                     </tr>
                                 </tfoot>
@@ -165,6 +164,7 @@
                         <button type="submit" id="guardar" class="btn btn-sm btn-primary">Guardar</button>
                     </div>
                 </div>
+                <input type="hidden" id="totalmargen" name="tmargen">
                 {!!Form::close()!!}
             </div>
         </section>
@@ -188,20 +188,16 @@
         var acumCosto = 0;
         var acumNeto  = 0;
         var acumVenta = 0;
+        var acumMargen = 0;
+        var acumIva = 0;
         subTotalCosto = [];
         subTotalNeto = [];
         subTotalVenta = [];
+        subTotalMargen = [];
+        subTotalIva = [];
         ides = [];
-        
-        $("#guardar").hide();
-        $("#totalcostom").val("");
-        $("#totalnetom").val("");
-        $("#totalventam").val("");
-        $("#cantidadm").val("");
-        $("#vnetom").val("");
-        $("#pivam").val("");
-        $("#vventam").val("");
-        $("#vlrtotalm").val("");
+        //limpia campos
+        limpiar();
         
         // multiplica cantidad por valor venta
         $('#cantidadm').change(function(){
@@ -252,16 +248,16 @@
         }
         
         function agregar(){
-            idarticulo  = $('#selArticulo').val();
+            idarti  = $('#selArticulo').val();
             var nEncontro = 0;
             for(var i=0;i<ides.length;i++){
-                if (ides[i] == idarticulo) {
+                if (ides[i] == idarti) {
                     nEncontro = 1;
                 }
             };
             
             if (nEncontro == 0) {
-                articulo    = $('#selArticulo option:selected').text();
+                articulo  = $('#selArticulo option:selected').text();
                 cantidad    = parseFloat($('#cantidad').val());
                 vcosto      = parseFloat($('#vcosto').val());
                 vneto       = parseFloat($('#vneto').val());
@@ -269,43 +265,62 @@
                 vventa      = parseFloat($('#vventa').val());
                 vtotal      = parseFloat($('#vlrtotal').val());
                 // si existe un articulo
-                if (idarticulo != "" && cantidad != "" && vventa != ""){
-                    ides[cont] = idarticulo;
-                    var cantdItem  = cantidad.formatMoney(2,'.',',');
+                if (articulo != "" && cantidad != "" && vventa != ""){
+                    ides[cont] = idarti;
+                    var cantdItem  = cantidad.formatMoney(2,'.',','); //para mostrar en tabla
                     // iva
-                    var ivaItem   = piva.formatMoney(2,'.',',');
+                    var ivaItem   = piva.formatMoney(2,'.',','); //para mostrar en tabla
                     //costo
                     subTotalCosto[cont] = vcosto*cantidad;
-                    var costoItem = subTotalCosto[cont].formatMoney(2,'.',',');
+                    var costoItem = subTotalCosto[cont].formatMoney(2,'.',','); //para mostrar en tabla
                     if (cont>0) {
                         acumCosto = parseFloat($('#totalcosto').val()) + subTotalCosto[cont];
                     } else {
                         acumCosto = subTotalCosto[cont];
                     }
                     $('#totalcosto').val(acumCosto);
-                    $('#totalcostom').val(acumCosto.formatMoney(2,'.',','));
+                    $('#totalcostom').val(acumCosto.formatMoney(2,'.',',')); //para mostrar en totales
                     //neto
                     subTotalNeto[cont] = vneto*cantidad;
-                    var tNetoItem = subTotalNeto[cont].formatMoney(2,'.',',');
+                    var vNetoItem  = vneto.formatMoney(2,'.',','); //para mostrar en tabla
+                    var totalNetoItem = subTotalNeto[cont].formatMoney(2,'.',','); //para mostrar en tabla
                     if (cont>0) {
                         acumNeto = parseFloat($('#totalneto').val()) + subTotalNeto[cont];
                     } else {
                         acumNeto = subTotalNeto[cont];
                     }
                     $('#totalneto').val(acumNeto);
-                    $('#totalnetom').val(acumNeto.formatMoney(2,'.',','));
+                    $('#totalnetom').val(acumNeto.formatMoney(2,'.',',')); //para mostrar en totales
                     //venta
                     subTotalVenta[cont] = vtotal;
-                    var tVentaItem = vtotal.formatMoney(2,'.',',');
+                    var tVentaItem = vtotal.formatMoney(2,'.',','); //para mostrar en tabla
                     if (cont>0) {
                         acumVenta = parseFloat($('#totalventa').val()) + subTotalVenta[cont];
                     } else {
                         acumVenta = subTotalVenta[cont];
                     }
                     $('#totalventa').val(acumVenta);
-                    $('#totalventam').val(acumVenta.formatMoney(2,'.',','));
+                    $('#totalventam').val(acumVenta.formatMoney(2,'.',',')); //para mostrar en totales
+                    //iva
+                    subTotalIva[cont] = vtotal - subTotalNeto[cont];
+                    if (cont>0) {
+                        acumIva = parseFloat($('#totaliva').val()) + subTotalIva[cont];
+                    } else {
+                        acumIva = subTotalIva[cont];
+                    }
+                    $('#totaliva').val(acumIva);
+                    $('#totalivam').val(acumIva.formatMoney(2,'.',',')); //para mostrar en totales
+                    //margen
+                    subTotalMargen[cont] = acumNeto - acumCosto;
+                    if (cont>0) {
+                        acumMargen = parseFloat($('#totalmargen').val()) + subTotalMargen[cont];
+                    } else {
+                        acumMargen = subTotalMargen[cont];
+                    }
+                    $('#totalmargen').val(acumMargen);
 
-                    var fila = `<tr class="selected" id="fila` + cont + `"><td><input type="hidden" name="idarticulo[]" value="`+idarticulo+`">`+articulo+`</td><td>`+cantdItem+`</td><td>`+costoItem+`</td><td>`+tNetoItem+`</td><td>`+ivaItem+`</td><td>`+tNetoItem+`</td><td>`+tVentaItem+`</td><td><button type="button" class="btn btn-warning" onclick="eliminar(` + cont + `)"><span class="glyphicon glyphicon-trash"></span></button></td></tr>`;
+                    $('#totalmargen').val(acumMargen);
+                    var fila = `<tr class="selected" id="fila` + cont + `"><input type="hidden" name="vtmarg[]" value="`+subTotalMargen[cont]+`"></td><td><input type="hidden" name="idarti[]" value="`+idarti+`">`+articulo+`</td><td><input type="hidden" name="cantidad[]" value="`+cantidad+`">`+cantdItem+`</td><td><input type="hidden" name="vcosto[]" value="`+vcosto+`">`+costoItem+`</td><td><input type="hidden" name="vneto[]" value="`+vneto+`">`+vNetoItem+`</td><td><input type="hidden" name="piva[]" value="`+piva+`">`+ivaItem+`</td><td>`+totalNetoItem+`</td><td><input type="hidden" name="vtotal[]" value="`+vtotal+`">`+tVentaItem+`</td><td><button type="button" class="btn btn-warning" onclick="eliminar(`+cont+`)"><span class="glyphicon glyphicon-trash"></span></button></td><td></tr>`;
                     cont++;
                     limpiar();
                     $('#detalles').append(fila);
@@ -317,6 +332,8 @@
                 alert('El artículo ya se encuentra en la tabla.');
             }
         };
+            $("#fecha").val("");
+            $("#numdoc").val("");
         function limpiar(){
             $("#cantidadm").val("");
             $("#vnetom").val("");
@@ -335,6 +352,11 @@
             acumVenta = $("#totalventa").val() - subTotalVenta[ind];
             $("#totalventa").val(acumVenta);
             $("#totalventam").val("$" + acumVenta.formatMoney(2,'.',','));
+            acumIva = $("#totaliva").val() - subTotalIva[ind];
+            $("#totaliva").val(acumIva);
+            $("#totalivam").val("$" + acumIva.formatMoney(2,'.',','));
+            acumMargen = $("#totalmargen").val() - subTotalMargen[ind];
+            $("#totalmargen").val(acumMargen);
             $('#fila' + ind).remove();
             ides[ind] = "";
             ocultar_guardar();

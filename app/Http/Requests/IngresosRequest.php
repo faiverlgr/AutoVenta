@@ -28,23 +28,24 @@ class IngresosRequest extends FormRequest
             'idper'     =>  'required',
             'idprov'    =>  'required',
             'numdoc'    =>  'required | max:15',
-            'fecha'     =>  'required | max:8',
+            'fecha'     =>  'required',
             //'fechav'    =>  'max:8',
             //'tcosto'    =>  'required',
             //'tmargen'   =>  'required',
             //'tventa'    =>  'required',
             //'tiva'      =>  'required',
-            'estado'    =>  'required | max:1',
             // detalle
-            'idingresen'    =>  'required',
-            'idbod'         =>  'required',
-            'idarti'        =>  'required',
+            //'idingresen'    =>  'required',
+            //'idbod'         =>  'required',
+            //'idarti'        =>  'required',
+            /*
             'cantidad'      =>  'required',
             'vcosto'        =>  'required',
             'vneto'         =>  'required',
             'piva'          =>  'required',
             'vtotal'        =>  'required',
             'vtmarg'        =>  'required',
+            */
         ];
     }
 }

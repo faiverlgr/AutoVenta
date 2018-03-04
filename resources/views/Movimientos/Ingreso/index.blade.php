@@ -36,23 +36,27 @@
                         <table class="table table-condensed table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th style="width: 5%">Doc.</th>
-                                <th style="width: 20%">Fecha</th>
-                                <th style="width: 27%">Costo</th>
-                                <th style="width: 20%">Margen</th>
-                                <th style="width: 10%">Venta</th>
-                                <th style="width: 10%">Iva</th>
-                                <th style="width: 8%">.:.</th>
+                                <th style="width: 15px">Id.</th>
+                                <th style="width: 50px">Doc.</th>
+                                <th style="width: 100px">Proveedor</th>
+                                <th style="width: 35px">Fecha</th>
+                                <th style="width: 50px">Costo</th>
+                                <th style="width: 50px">Margen</th>
+                                <th style="width: 50px">Iva</th>
+                                <th style="width: 50px">Venta</th>
+                                <th style="width: 50px">.:.</th>
                             </tr>
                             </thead>
                             @foreach($ingresos as $item)
                                 <tr>
-                                    <td>{{ $item->numdoc }}</td>
-                                    <td>{{ $item->fecha }}</td>
-                                    <td>{{ $item->tcosto }}</td>
-                                    <td>{{ $item->tmargen }}</td>
-                                    <td>{{ $item->tventa }}</td>
-                                    <td>{{ $item->tiva }}</td>
+                                    <td>{{ $item->id}}</td>
+                                    <td>{{ $item->numdoc}}</td>
+                                    <td>{{ $item->razons}}</td>
+                                    <td>{{ $item->fecha}}</td>
+                                    <td>{{ $item->tcosto}}</td>
+                                    <td>{{ $item->tmargen}}</td>
+                                    <td>{{ $item->tiva}}</td>
+                                    <td>{{ $item->tventa}}</td>
                                     <td>
                                         @if($item->estado == 0)
                                             <a href="" data-target="#" data-toggle="modal">
@@ -66,7 +70,7 @@
                                                     <span aria-hidden="true" class="glyphicon glyphicon-eye-open"></span>
                                                 </button>
                                             </a>
-                                            <a data-target="#modal-delete-{{$agen->id}}" data-toggle="modal">
+                                            <a data-target="#modal-delete-{{$item->id}}" data-toggle="modal">
                                                 <button class="btn btn-xs btn-danger">
                                                     <span aria-hidden="true" class="glyphicon glyphicon-trash"></span>
                                                 </button>

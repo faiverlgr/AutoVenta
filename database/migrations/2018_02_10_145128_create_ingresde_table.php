@@ -14,7 +14,7 @@ class CreateIngresdeTable extends Migration
     public function up()
     {
         Schema::create('ingresde', function (Blueprint $table) {
-            $table->integer('idingresen')->required();
+            $table->integer('iden')->required();
             $table->integer('idbod')->required()->default(1);
             $table->integer('idarti')->required();
             $table->decimal('cantidad', 11, 2)->required();

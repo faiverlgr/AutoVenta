@@ -29,10 +29,9 @@ class IngresenController extends Controller
             $query=trim($request->get('searchText'));
             $ingresos=DB::table('ingresen as en')
                 ->join('proveedores as pr', 'en.idprov', '=', 'pr.id')
-                ->join('periodos as pe', 'en.idper', '=', 'pe.id')
-                ->join('ingresde as de', 'en.id', '=', 'de.idingresen')
                 ->select([
                     'pr.razons',
+                    'en.id',
                     'en.numdoc',
                     'en.idper',
                     'en.numdoc',
@@ -42,10 +41,7 @@ class IngresenController extends Controller
                     'en.tmargen',
                     'en.tventa',
                     'en.tiva',
-                    'en.estado',
-                    'pe.anoper',
-                    'pe.mesper',
-                    'pe.estado'])
+                    'en.estado'])
                 ->where('en.numdoc', 'LIKE', '%'.$query.'%')
                 ->orderBy('en.id', 'desc')
                 ->paginate(10);
@@ -114,7 +110,7 @@ class IngresenController extends Controller
                 $ingreso->estado    = 1;
                 $ingreso->save();            
                 // detalle
-                $ingreso->idingresen    = $request->get('idingresen');
+                $ingreso->iden          = $request->get('iden');
                 $idbod                  = $request->get('idbod');
                 $idarti                 = $request->get('idarti');
                 $cantidad               = $request->get('cantidad');
@@ -123,11 +119,13 @@ class IngresenController extends Controller
                 $piva                   = $request->get('piva');
                 $vtotal                 = $request->get('vtotal');
                 $vtmarg                 = $request->get('vtmarg');
+                // array de articulos
+                $idarti                 = $request->get('idarti');
                 $cont                   = 0;
-                while($cont < count($idarticulo)){
+                while($cont < count($idarti)){
                     //detalle
                     $detalle = new Ingresde();
-                    $detalle->idingresen = $ingreso->idingresen;
+                    $detalle->iden = $ingreso->id;
                     $detalle->idbod      = 1;
                     $detalle->idarti     = $idarti[$cont];
                     $detalle->cantidad   = $cantidad[$cont];
@@ -137,7 +135,6 @@ class IngresenController extends Controller
                     $detalle->vtotal     = $vtotal[$cont];
                     $detalle->vtmarg     = $vtmarg[$cont];
                     $detalle->save();
-                    
                     $cont = $cont+1;
                 }
             DB::commit();
@@ -145,7 +142,7 @@ class IngresenController extends Controller
         {
             DB::rollback();
         }
-        return Redirect::to('movimientos/ingreso/index');
+        return Redirect::to('/ingresen');
     }
 
     /**
