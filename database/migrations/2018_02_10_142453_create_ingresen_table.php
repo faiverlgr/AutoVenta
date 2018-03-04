@@ -20,10 +20,10 @@ class CreateIngresenTable extends Migration
             $table->string('numdoc', 15)->required();
             $table->date('fecha')->required();
             $table->date('fechav')->nullable();
-            $table->decimal('tcosto', 11, 2)->required();
-            $table->decimal('tmargen', 11, 2)->required();
-            $table->decimal('tventa', 11, 2)->required();
-            $table->decimal('tiva', 11, 2)->required();
+            $table->decimal('tcosto', 11, 2)->nullable();
+            $table->decimal('tmargen', 11, 2)->nullable();
+            $table->decimal('tventa', 11, 2)->nullable();
+            $table->decimal('tiva', 11, 2)->nullable();
             $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });

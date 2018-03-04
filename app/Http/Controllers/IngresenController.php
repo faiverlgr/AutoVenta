@@ -13,7 +13,7 @@ use App\Http\Requests\IngresosRequest;
 use Illuminate\Support\Collection as Collection;
 use DB;
 
-use Carbon\Carbon;
+use Carbon\Carbon; //Carbon::now('America/Bogota')->toDateTimeString();
 use Response;
 
 class IngresenController extends Controller
@@ -31,7 +31,21 @@ class IngresenController extends Controller
                 ->join('proveedores as pr', 'en.idprov', '=', 'pr.id')
                 ->join('periodos as pe', 'en.idper', '=', 'pe.id')
                 ->join('ingresde as de', 'en.id', '=', 'de.idingresen')
-                ->select('en.numdoc', 'pr.razons', 'en.idper', 'en.numdoc', 'en.fecha', 'en.fechav', 'en.tcosto', 'en.tmargen', 'en.tventa', 'en.tiva', 'en.estado', 'pe.anoper', 'pe.mesper', 'pe.estado')
+                ->select([
+                    'pr.razons',
+                    'en.numdoc',
+                    'en.idper',
+                    'en.numdoc',
+                    'en.fecha',
+                    'en.fechav',
+                    'en.tcosto',
+                    'en.tmargen',
+                    'en.tventa',
+                    'en.tiva',
+                    'en.estado',
+                    'pe.anoper',
+                    'pe.mesper',
+                    'pe.estado'])
                 ->where('en.numdoc', 'LIKE', '%'.$query.'%')
                 ->orderBy('en.id', 'desc')
                 ->paginate(10);
@@ -50,10 +64,10 @@ class IngresenController extends Controller
      */
     public function create()
     {
-        $articulos = DB::table('articulos as ar')
-        ->where('ar.estado', '=', 1)
-        ->select('ar.id', 'ar.codarti', 'ar.nomartic', 'ar.vcosto', 'ar.vneto', 'ar.piva', 'ar.pmargen')
-        ->orderby('ar.codprov', 'ASC')
+        $articulos = DB::table('articulos')
+        ->where('estado', '=', 1)
+        ->select('id', 'codarti', 'nomartic', 'vcosto', 'vneto', 'piva', 'pmargen')
+        ->orderby('codprov', 'ASC')
         ->get();
         
         $proveedores = DB::table('proveedores')
@@ -62,7 +76,7 @@ class IngresenController extends Controller
         ->get();
 
         $periodos = DB::table('periodos')
-        ->select('anoper', 'mesper')
+        ->select('id', 'anoper', 'mesper')
         ->where('estado', '=', 1)
         ->first();
 
@@ -91,9 +105,8 @@ class IngresenController extends Controller
                 $ingreso->idper     = $request->get('idper');
                 $ingreso->idprov    = $request->get('idprov');
                 $ingreso->numdoc    = $request->get('numdoc');
-                $mytime = Carbon::now('America/Bogota');
-                $ingreso->fecha     = $mytime->todDateTimeString();
-                $ingreso->fechav    = $request->get('fechav');
+                $ingreso->fecha     = $request->get('fecha');
+                $ingreso->fechav    = Carbon::now('America/Bogota')->toDateTimeString();
                 $ingreso->tcosto    = $request->get('tcosto');
                 $ingreso->tmargen   = $request->get('tmargen');
                 $ingreso->tventa    = $request->get('tventa');
@@ -124,32 +137,7 @@ class IngresenController extends Controller
                     $detalle->vtotal     = $vtotal[$cont];
                     $detalle->vtmarg     = $vtmarg[$cont];
                     $detalle->save();
-                    //kardex
-                    $kardex = 0; //revisa si existe en la tabla
-                    $kardex = DB::table('kardex')
-                        ->where('idbodega', $idbod[$cont])
-                        ->where('idperiodo', $request->get('idper'))
-                        ->where('idarticulo', $idarti[$cont])
-                        ->count();
-                        // si no existe crea el item para el periodo, bidega y artículo.
-                    if ($kardex = 0) {
-                        $new = new Kardex();
-                        $new->idbodega      = $idbod[$cont];
-                        $new->idperiodo     = $request->get('idper');
-                        $new->idarticulo    = $idarti[$cont];
-                        $new->inicial       = 0;
-                        $new->entradas      = $cantidad[$cont];
-                        $new->salidas       = 0;
-                        $new->vcosto        = $vcosto[$cont];
-                        $kardex->save();
-                        // si ya existe 
-                    } else {
-                        DB::table('kardex')
-                            ->where('idbodega', $idbod[$cont])
-                            ->where('idperiodo', $request->get('idper'))
-                            ->where('idarticulo', $idarti[$cont])
-                            ->increment('entradas', $cantidad[$cont]);
-                    }
+                    
                     $cont = $cont+1;
                 }
             DB::commit();

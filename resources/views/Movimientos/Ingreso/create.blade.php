@@ -26,7 +26,7 @@
                 <div class="box-header with-border">
                     <h3>Crear Ingreso<a href="/ingreso"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                 </div>
-                {!!Form::open(array('url'=>'ingreso','method'=>'POST','autocompleted'=>'off'))!!}
+                {!!Form::open(array('url'=>'ingresen','method'=>'POST','autocompleted'=>'off'))!!}
                 {{Form::token()}}
                 <div class="box-body">
                     <div class="row">
@@ -50,15 +50,16 @@
                             <div class="form-group">
                                 <label for="anoper">Fecha</label>
                                 <div class="input-group">
-                                    <input id="fecha" type="text" name="fecha" class="datepicker form-control" value=""/>
+                                    <input id="fecha" type="text" name="fecha" class="datepicker form-control"/>
                                     <label for="datepciker" class="input-group-addon generic_btn"><i class="fa fa-calendar" aria-hidden="true"></i></label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
-                            <div class="form-group">    
-                                <label for="anoper">Periodo</label>
-                                <input readonly type="text" name="anoper" class="form-control" value="{{$periodos->anoper}}-{{$periodos->mesper}}">
+                            <div class="form-group">
+                                <label for="idper">Periodo</label>
+                                <input type="hidden" name="idper" class="form-control" value="{{$periodos->id}}">
+                                <input readonly type="text" class="form-control" value="{{$periodos->anoper}}-{{$periodos->mesper}}">
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,7 @@
                                 <label for="articulo">Articulo</label>
                                 <select id="selArticulo" class="form-control" name="selArticulo">
                                     @foreach($articulos as $art)
-                                        <option value="{{ $art->id }}">{{ $art->nomartic }}</option>
+                                        <option value="{{ $art->id }}">{{ $art->codarti}}-{{ $art->nomartic}}</option>
                                         <option name="vcosto" hidden value="{{ $art->vcosto }}"></option>
                                         <option name="vneto" hidden value="{{ $art->vneto }}"></option>
                                         <option name="piva" hidden value="{{ $art->piva }}"></option>
@@ -82,32 +83,37 @@
                         <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
                             <div class="form-group">
                                 <label for="articulo">Cantidad</label>
-                                <input type="text" id="cantidad" class="numeric form-control" name="cantidad">
+                                <input type="text" id="cantidadm" class="numeric form-control" name="cantidad">
+                                <input type="hidden" id="cantidad">
+                                <input type="hidden" id="vcosto">
                             </div>
-                        </div>
+                        </div>                        
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
                             <div class="form-group">
                                 <label for="vneto">Valor Neto </label>
-                                <input type="text" id="vneto"  class="numeric form-control" name="vneto" readonly>
+                                <input type="text" id="vnetom"  class="form-control" name="vneto" readonly>
+                                <input type="hidden" id="vneto">
                             </div>
                         </div>
                         <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
                             <div class="form-group">
                                 <label for="piva">%Iva</label>
-                                <input type="text" id="piva"  class="numeric form-control" name="piva" readonly>
+                                <input type="text" id="pivam"  class="form-control" name="piva" readonly>
+                                <input type="hidden" id="piva">
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
                             <div class="form-group">
                                 <label for="vventa">Valor Venta</label>
-                                <input type="text" id="vventa"  class="numeric form-control" name="vventa" readonly>
+                                <input type="text" id="vventam"  class="form-control" name="vventa" readonly>
+                                <input type="hidden" id="vventa">
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
                             <div class="form-group">
                                 <label for="vlrtotal">Valor Total</label>
                                 <input type="text" id="vlrtotalm" class="form-control" readonly>
-                                <input hidden type="text" id="vlrtotal">
+                                <input type="hidden" id="vlrtotal">
                             </div>
                         </div>
                         <div hidden class="div">
@@ -131,8 +137,8 @@
                                         <th style="width: 15%">V/u.Costo</th>
                                         <th style="width: 15%">V/u.Neto</th>
                                         <th style="width: 5%">Iva</th>
-                                        <th style="width: 15%">V/u.Venta</th>
-                                        <th style="width: 15%">Vlr.Total</th>
+                                        <th style="width: 15%">Vlr.TNeto</th>
+                                        <th style="width: 15%">Vlr.TVenta</th>
                                         <th style="width: 5%">Borrar</th>
                                     </tr>
                                 </thead>
@@ -140,14 +146,14 @@
                                 </tbody>
                                 <tfoot>
                                     </tr>
-                                    <th>TOTAL</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th><h4 id="total">$ 0.00</h4></th>
-                                    <th></th>
+                                        <th>TOTALES</th>
+                                        <th></th>
+                                        <th><input type="hidden" id="totalcosto"><input type="text" id="totalcostom" class="form-control" readonly value="$ 0.00"></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th><input type="hidden" id="totalneto"><input type="text" id="totalnetom" class="form-control" readonly value="$ 0.00"></th>
+                                        <th><input type="hidden" id="totalventa"><input type="text" id="totalventam" class="form-control" readonly value="$ 0.00"></th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -178,128 +184,181 @@
             return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
         };
 
-        $(document).ready(function() {
-            // multiplica cantidad por valor venta
-            $('#cantidad').change(function(){
-                var objSel      = document.getElementById("selArticulo");
-                var index       = objSel.selectedIndex;
-                var objCant     = document.getElementById("cantidad"); 
-                var nCant       = parseFloat(objCant.value);
-                var vNeto       = parseFloat(objSel.options[index+2].value);
-                var pIva        = parseFloat(objSel.options[index+3].value);
-                var vVenta      = vNeto + ((vNeto * pIva)/100);
+        var cont = 0;
+        var acumCosto = 0;
+        var acumNeto  = 0;
+        var acumVenta = 0;
+        subTotalCosto = [];
+        subTotalNeto = [];
+        subTotalVenta = [];
+        ides = [];
+        
+        $("#guardar").hide();
+        $("#totalcostom").val("");
+        $("#totalnetom").val("");
+        $("#totalventam").val("");
+        $("#cantidadm").val("");
+        $("#vnetom").val("");
+        $("#pivam").val("");
+        $("#vventam").val("");
+        $("#vlrtotalm").val("");
+        
+        // multiplica cantidad por valor venta
+        $('#cantidadm').change(function(){
+            valorizar();
+        }); 
+        
+        // calcula valor de venta para mostrar en el campo valor venta
+        $("#selArticulo").change(function(){
+            valorizar();
+        });
+
+        $('#add').click(function(){
+            agregar();
+        });
+
+        function valorizar(){
+            var objSel      = document.getElementById("selArticulo");
+            var index       = objSel.selectedIndex;
+            var objvCosto   = document.getElementById("vcosto");
+            objvCosto.value = parseFloat(objSel.options[index+1].value);
+            var objvNetom   = document.getElementById("vnetom");
+            var objvNeto    = document.getElementById("vneto");
+            var vNeto       = parseFloat(objSel.options[index+2].value);
+            objvNeto.value  = vNeto;
+            objvNetom.value = vNeto.formatMoney(2,'.',',');
+            var objvpIvam   = document.getElementById("pivam");
+            var objvpIva    = document.getElementById("piva");
+            var pIva        = parseFloat(objSel.options[index+3].value);
+            objvpIva.value  = pIva;
+            objvpIvam.value = pIva.formatMoney(2,'.',',');
+            var objVentam   = document.getElementById("vventam");
+            var objVenta    = document.getElementById("vventa");
+            var vVenta      = vNeto + ((vNeto * pIva)/100);
+            objVenta.value  = vVenta;
+            objVentam.value = vVenta.formatMoney(2,'.',',');
+            var objCantm    = document.getElementById("cantidadm");
+            var objCant     = document.getElementById("cantidad");
+            var nCant       = parseFloat($('#cantidadm').val());
+            if (nCant > 0) {
+                objCantm.value  = nCant.formatMoney(2,'.',',');
+                objCant.value   = nCant;                    
                 var objVtotm    = document.getElementById("vlrtotalm");
-                var objVtot    = document.getElementById("vlrtotal");
-                if (vVenta > 0) {
-                    var nTotal      = vVenta * nCant;
-                    objVtotm.value   = nTotal.formatMoney(2,'.',',');
-                    objVtot.value   = nTotal;
-                }
-            }); 
-            
-            // calcula valor de venta para mostrar en el campo valor venta
-            $("#selArticulo").change(function(){
-                var objSel      = document.getElementById("selArticulo");
-                var index       = objSel.selectedIndex;
-                var objCant     = document.getElementById("cantidad");
-                var objVenta    = document.getElementById("vventa");
                 var objVtot     = document.getElementById("vlrtotal");
-                var objVtotm    = document.getElementById("vlrtotalm");
-                var vCosto      = parseFloat(objSel.options[index+1].value);
-                var vNeto       = parseFloat(objSel.options[index+2].value);
-                var pIva        = parseFloat(objSel.options[index+3].value);
-                //var vMargen     = parseFloat(objSel.options[index+4].value);
-                document.getElementById("vcosto").value = vCosto.formatMoney(2,'.',',');
-                document.getElementById("vneto").value = vNeto.formatMoney(2,'.',',');
-                document.getElementById("piva").value = pIva.formatMoney(2,'.',',');
-                var vVenta      = vNeto + ((vNeto * pIva)/100);
-                objVenta.value  = vVenta.formatMoney(2,'.',',');
-                var nCant       = parseFloat(objCant.value);
-                if (nCant > 0) {
-                    var nTotal      = vVenta * nCant;
-                    objVtotm.value   = nTotal.formatMoney(2,'.',',');
-                    objVtot.value   = nTotal;
+                var vTotalItem  = nCant * vVenta  
+                objVtotm.value  = vTotalItem.formatMoney(2,'.',',');
+                objVtot.value   = vTotalItem;
+            }
+        }
+        
+        function agregar(){
+            idarticulo  = $('#selArticulo').val();
+            var nEncontro = 0;
+            for(var i=0;i<ides.length;i++){
+                if (ides[i] == idarticulo) {
+                    nEncontro = 1;
                 }
-                //alert(vCosto);
-            });
-
-            $('#add').click(function(){
-                agregar();
-            });
-
-            var cont = 0;
-            var total = 0;
-            var totalm = 0;
-            subtotal = [];
-            $("#guardar").hide();
+            };
             
-            function agregar(){
-                idarticulo  = $('#selArticulo').val();
+            if (nEncontro == 0) {
                 articulo    = $('#selArticulo option:selected').text();
-                cantidad    = $('#cantidad').val();
-                vcosto      = $('#vcosto').val();
-                vneto       = $('#vneto').val();
-                piva        = $('#piva').val();
-                vventa      = $('#vventa').val();
-                vtotal      = $('#vlrtotal').val();
+                cantidad    = parseFloat($('#cantidad').val());
+                vcosto      = parseFloat($('#vcosto').val());
+                vneto       = parseFloat($('#vneto').val());
+                piva        = parseFloat($('#piva').val());
+                vventa      = parseFloat($('#vventa').val());
+                vtotal      = parseFloat($('#vlrtotal').val());
+                // si existe un articulo
                 if (idarticulo != "" && cantidad != "" && vventa != ""){
-                    subtotal[cont] = parseFloat(vtotal);
-                    submost = subtotal[cont].formatMoney(2,'.',',');
-                    total = total + subtotal[cont];
-                    totalm = total.formatMoney(2,'.',',');
-                    
-                    //alert(total);
-                    var fila = `<tr class="selected" id="fila` + cont + `"><td><input type="hidden" name="idarticulo[]" value="`+idarticulo+`">`+articulo+`</td><td>`+cantidad+`</td><td>`+vcosto+`</td><td>`+vneto+`</td><td>`+piva+`</td><td>`+vventa+`</td><td>`+submost+`</td><td><button type="button" class="btn btn-warning" onclick="borrar(`+cont+`)"><span class="glyphicon glyphicon-trash"></span></button></td></tr>`;
+                    ides[cont] = idarticulo;
+                    var cantdItem  = cantidad.formatMoney(2,'.',',');
+                    // iva
+                    var ivaItem   = piva.formatMoney(2,'.',',');
+                    //costo
+                    subTotalCosto[cont] = vcosto*cantidad;
+                    var costoItem = subTotalCosto[cont].formatMoney(2,'.',',');
+                    if (cont>0) {
+                        acumCosto = parseFloat($('#totalcosto').val()) + subTotalCosto[cont];
+                    } else {
+                        acumCosto = subTotalCosto[cont];
+                    }
+                    $('#totalcosto').val(acumCosto);
+                    $('#totalcostom').val(acumCosto.formatMoney(2,'.',','));
+                    //neto
+                    subTotalNeto[cont] = vneto*cantidad;
+                    var tNetoItem = subTotalNeto[cont].formatMoney(2,'.',',');
+                    if (cont>0) {
+                        acumNeto = parseFloat($('#totalneto').val()) + subTotalNeto[cont];
+                    } else {
+                        acumNeto = subTotalNeto[cont];
+                    }
+                    $('#totalneto').val(acumNeto);
+                    $('#totalnetom').val(acumNeto.formatMoney(2,'.',','));
+                    //venta
+                    subTotalVenta[cont] = vtotal;
+                    var tVentaItem = vtotal.formatMoney(2,'.',',');
+                    if (cont>0) {
+                        acumVenta = parseFloat($('#totalventa').val()) + subTotalVenta[cont];
+                    } else {
+                        acumVenta = subTotalVenta[cont];
+                    }
+                    $('#totalventa').val(acumVenta);
+                    $('#totalventam').val(acumVenta.formatMoney(2,'.',','));
+
+                    var fila = `<tr class="selected" id="fila` + cont + `"><td><input type="hidden" name="idarticulo[]" value="`+idarticulo+`">`+articulo+`</td><td>`+cantdItem+`</td><td>`+costoItem+`</td><td>`+tNetoItem+`</td><td>`+ivaItem+`</td><td>`+tNetoItem+`</td><td>`+tVentaItem+`</td><td><button type="button" class="btn btn-warning" onclick="eliminar(` + cont + `)"><span class="glyphicon glyphicon-trash"></span></button></td></tr>`;
                     cont++;
                     limpiar();
-                    $('#total').html("$" + totalm);
-                    ocultar_guardar();
                     $('#detalles').append(fila);
-                }
-                else{
+                    ocultar_guardar();
+                } else{
                     alert('Error al ingresar el detalle del ingreso, revise los datos del artículo');
                 }
-            };
-
-            function limpiar(){
-                $("#cantidad").val("");
-                $("#vcosto").val("");
-                $("#vneto").val("");
-                $("#piva").val("");
-                $("#vventa").val("");
-                $("#vlrtotalm").val("");
-            };
-
-            function ocultar_guardar(){
-                if (total>0){
-                    $("#guardar").show();
-                }
-                else{
-                    $("#guardar").hide();
-                }
-            };
-
-            // Datepicker
-            $('.datepicker').datepicker({
-                dateFormat: "yy/mm/dd",
-                firstDay: 1,
-                dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-                dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
-                monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-                monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-                onSelect: function(dateText){
-                    $('#fecha').val(dateText);
-                }
-            });
-            //*********
-        });
-        function borrar(ind){
-            total = total - subtotal[ind];
-            $('#total').html("$" + total);
-            $('#fila' + ind).remove();
-            ocultar_guardar();
-            alert('hola');
+            } else {
+                alert('El artículo ya se encuentra en la tabla.');
+            }
         };
+        function limpiar(){
+            $("#cantidadm").val("");
+            $("#vnetom").val("");
+            $("#pivam").val("");
+            $("#vventam").val("");
+            $("#vlrtotalm").val("");
+        };
+        
+        function eliminar(ind){
+            acumCosto = $("#totalcosto").val() - subTotalCosto[ind];
+            $("#totalcosto").val(acumCosto);
+            $("#totalcostom").val("$" + acumCosto.formatMoney(2,'.',','));
+            acumNeto = $("#totalneto").val() - subTotalNeto[ind];
+            $("#totalneto").val(acumNeto);
+            $("#totalnetom").val("$" + acumNeto.formatMoney(2,'.',','));
+            acumVenta = $("#totalventa").val() - subTotalVenta[ind];
+            $("#totalventa").val(acumVenta);
+            $("#totalventam").val("$" + acumVenta.formatMoney(2,'.',','));
+            $('#fila' + ind).remove();
+            ides[ind] = "";
+            ocultar_guardar();
+        };
+        function ocultar_guardar(){
+            if ($("#totalventa").val()>0){
+                $("#guardar").show();
+            }
+            else{
+                $("#guardar").hide();
+            }
+        };
+
+        $('.datepicker').datepicker({
+            dateFormat: "yy/mm/dd",
+            firstDay: 1,
+            dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+            dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sá"],
+            monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+            onSelect: function(dateText){
+                $('#fecha').val(dateText);
+            }
+        });
     </script>
 @endsection
 @endsection
