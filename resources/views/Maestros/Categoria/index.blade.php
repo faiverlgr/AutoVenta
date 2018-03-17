@@ -38,8 +38,8 @@
                                 <tr>
                                     <th style="width: 5%">Prov</th>
                                     <th style="width: 5%">Categoria</th>
-                                    <th style="width: 80%">Nombre</th>
-                                    <th style="width: 10%">.:.</th>
+                                    <th style="width: 75%">Nombre</th>
+                                    <th style="width: 15%">.:.</th>
                                 </tr>
                             </thead>
                             <tbody>

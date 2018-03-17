@@ -50,7 +50,7 @@
                             <div class="col col-md-9">
                                 <div class="form-group">
                                     <label for="codprov">Nombre</label>
-                                    <input disabled id="detalle" class="form-control"type="text" value="">
+                                    <input disabled id="detalle" class="form-control" type="text" value="">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input readonly name="validaCate" id="validaCate"></input>
+                                <input type="hidden" name="validaCate" id="validaCate">
                             </div>
                         </div>
                         {!!Form::close()!!}

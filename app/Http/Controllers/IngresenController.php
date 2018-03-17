@@ -110,15 +110,15 @@ class IngresenController extends Controller
                 $ingreso->estado    = 1;
                 $ingreso->save();            
                 // detalle
-                $ingreso->iden          = $request->get('iden');
-                $idbod                  = $request->get('idbod');
-                $idarti                 = $request->get('idarti');
-                $cantidad               = $request->get('cantidad');
-                $vcosto                 = $request->get('vcosto');
-                $vneto                  = $request->get('vneto');
-                $piva                   = $request->get('piva');
-                $vtotal                 = $request->get('vtotal');
-                $vtmarg                 = $request->get('vtmarg');
+                $ingreso->iden   = $request->get('iden');
+                $idbod           = $request->get('idbod');
+                $idarti          = $request->get('idarti');
+                $cantidad        = $request->get('cantidad');
+                $vcosto          = $request->get('vcosto');
+                $vneto           = $request->get('vneto');
+                $piva            = $request->get('piva');
+                $vtotal          = $request->get('vtotal');
+                $vtmarg          = $request->get('vtmarg');
                 // array de articulos
                 $idarti                 = $request->get('idarti');
                 $cont                   = 0;
