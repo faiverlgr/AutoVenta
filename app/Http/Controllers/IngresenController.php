@@ -19,6 +19,21 @@ use Response;
 class IngresenController extends Controller
 {
     /**
+     * Responde a solicitud ajax para buscar artículos de un proveedor.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function selectArt($codprov){
+        $articulos=DB::table('articulos')
+        ->select('id', 'codcate', 'codarti', 'nomartic', 'vcosto', 'vneto', 'piva', 'pmargen')
+        ->where('estado', '=', 1)
+        ->where('codprov', '=', $codprov)
+        ->orderby('codprov', 'ASC')
+        ->get();
+        return Response::json($articulos);
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -60,12 +75,6 @@ class IngresenController extends Controller
      */
     public function create()
     {
-        $articulos = DB::table('articulos')
-        ->where('estado', '=', 1)
-        ->select('id', 'codarti', 'nomartic', 'vcosto', 'vneto', 'piva', 'pmargen')
-        ->orderby('codprov', 'ASC')
-        ->get();
-        
         $proveedores = DB::table('proveedores')
         ->select('id', 'codprov', 'razons')
         ->where('estado', '=', 1)
@@ -80,8 +89,7 @@ class IngresenController extends Controller
 
         return view('movimientos.ingreso.create', [
             "proveedores" => $proveedores,
-            "periodos" => $periodos,
-            "articulos" => $articulos
+            "periodos" => $periodos
             ]
         );
         //dd($proveedores);
@@ -125,16 +133,43 @@ class IngresenController extends Controller
                 while($cont < count($idarti)){
                     //detalle
                     $detalle = new Ingresde();
-                    $detalle->iden = $ingreso->id;
-                    $detalle->idbod      = 1;
-                    $detalle->idarti     = $idarti[$cont];
-                    $detalle->cantidad   = $cantidad[$cont];
-                    $detalle->vcosto     = $vcosto[$cont];
-                    $detalle->vneto      = $vneto[$cont];
-                    $detalle->piva       = $piva[$cont];
-                    $detalle->vtotal     = $vtotal[$cont];
-                    $detalle->vtmarg     = $vtmarg[$cont];
+                    $detalle->iden      = $ingreso->id;
+                    $detalle->idbod     = 1;
+                    $detalle->idarti    = $idarti[$cont];
+                    $detalle->cantidad  = $cantidad[$cont];
+                    $detalle->vcosto    = $vcosto[$cont];
+                    $detalle->vneto     = $vneto[$cont];
+                    $detalle->piva      = $piva[$cont];
+                    $detalle->vtotal    = $vtotal[$cont];
+                    $detalle->vtmarg    = $vtmarg[$cont];
                     $detalle->save();
+                    //kardex
+                    $existe = DB::table('kardex')
+                            ->where('idarticulo', '=', $detalle->idarti)
+                            ->where('idperiodo', '=', $ingreso->idper)
+                            ->where('idbodega', '=', $detalle->idbod)
+                            ->first();
+                    //valida existencia y crea en kardex caso negativo
+                    if ($existe = 0) {
+                        $kardex = new Kardex();
+                        $kardex->idbodega   =   $detalle->idbod;
+                        $kardex->idperiodo  =   $ingreso->idper;
+                        $kardex->idarticulo =   $detalle->idarti;
+                        $kardex->inicial    =   0;
+                        $kardex->entradas   =   0;
+                        $kardex->salidas    =   0;
+                        $kardex->conteo1    =   0;
+                        $kardex->conteo2    =   0;
+                        $kardex->conteo3    =   0;
+                        $kardex->vcosto     =   0;
+                        $kardex->save();
+                    }
+                    //incrementa el valor con la cantidad
+                    DB::table('kardex')
+                        ->increment('entradas', $detalle->cantidad)
+                        ->where('idarticulo', '=', $detalle->idarti)
+                        ->where('idperiodo', '=', $ingreso->idper)
+                        ->where('idbodega', '=', $detalle->idbod);
                     $cont = $cont+1;
                 }
             DB::commit();

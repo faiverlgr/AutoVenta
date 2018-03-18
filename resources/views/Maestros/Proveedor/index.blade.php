@@ -103,7 +103,7 @@
                         {{ Form::open() }}
                             <select name="select1" id="select1">
                                 @foreach($proveedores as $item)
-                                    <option>{{ $item->codprov }}</option>
+                            <option value={{ $item->id }}>{{ $item->codprov }}</option>
                                 @endforeach
                             </select>
                             <select name="select2" id="select2">
@@ -126,9 +126,6 @@
                 var conca = val.concat(cadena);
                 var options = [];
                 $sel.find('option').not(':first').remove();
-                
-                console.time( &#8220;Peticion AJAX&#8221; );
-
                 $.ajax({
                     url: conca,
                     type: 'GET',
@@ -140,17 +137,8 @@
                         });
                         $sel.append(options);
                     },
-                    console.timeEnd( &#8220;Peticion AJAX&#8221; );
                     complete: function(){$('div.loading').removeClass("loading")}
                 });
-                /*
-                $.get(conca, function(data) {
-                    $('#select2').empty();
-                    $.each(data, function(key, element){
-                        $('#select2').append("<option value='" + key + "'>" + element + "</option>");
-                    });
-                });
-                */
             });
         });
     </script>

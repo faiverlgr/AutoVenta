@@ -25,6 +25,9 @@ Route::get('/cargos', function () {
 //Ruta usada por ajax para econtrar categorías según los proveedores
 Route::get('categoriasm/{codprov}', 'CategoriaController@select');
 
+//Ruta usada por ajax para econtrar articulos según los proveedores
+Route::get('articulosp/{codprov}', 'IngresenController@selectArt');
+
 Route::resource('ingresen', 'IngresenController');
 Route::resource('agencia', 'AgenciaController');
 Route::resource('articulo', 'ArticuloController');

@@ -20,10 +20,10 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function select($codprov){
+    public function select($idprov){
         $categorias=DB::table('categorias')
         ->select('id','nomcate')
-        ->where('codprov', '=', $codprov)
+        ->where('idprov', '=', $idprov)
         ->where('estado', '=', 1)
         ->get();
         return Response::json($categorias);
@@ -40,9 +40,11 @@ class CategoriaController extends Controller
         if ($request) {
             $query=trim($request->get('searchText'));
             
-            $categorias=DB::table('categorias')->where('nomcate', 'LIKE', '%'.$query.'%')
-            ->orderBy('codprov', 'asc')
-            ->orderBy('codcate', 'asc')
+            $categorias=DB::table('categorias as c')
+            ->join('proveedores as p', 'p.id', '=', 'c.idprov')
+            ->where('c.nomcate', 'LIKE', '%'.$query.'%')
+            ->orderBy('c.idprov', 'asc')
+            ->orderBy('c.codcate', 'asc')
             ->paginate(10);
             return view('maestros.categoria.index', [
                 "categorias" => $categorias,
@@ -61,7 +63,7 @@ class CategoriaController extends Controller
     {
         $proveedores = DB::table('proveedores')
             ->where('estado', '=', 1)
-            ->select('codprov', 'razons')
+            ->select('id', 'codprov', 'razons')
             ->get();
     
         // dd($proveedores);
@@ -81,24 +83,14 @@ class CategoriaController extends Controller
      */
     public function store(CategoriasRequest $request)
     {
-/*
-        $input = request()->validate([
-            'validaCate' => [
-                'required',
-                new valCate()]
-            ]
-        );       
-*/
         $categoria = new categoria;
-        $categoria->codprov     = $request->get('codprov');
-        $categoria->codcate     = $request->get('codcate');
-        $categoria->nomcate      = $request->get('nomcate');
-        $categoria->estado      = '1';
+        $categoria->idprov   = $request->get('idprov');
+        $categoria->codcate   = $request->get('codcate');
+        $categoria->nomcate  = $request->get('nomcate');
+        $categoria->estado   = '1';
         $categoria->save();
         return back()->with('notification', 'Registro guardado exitosamente.');
         //return Redirect::to('categoria');
-
-
     }
 
     /**
@@ -121,10 +113,10 @@ class CategoriaController extends Controller
     public function edit($id)
     {
         $categoria = Categoria::findOrFail($id);
-        $categ = DB::table('categorias')
-            ->join('proveedores', 'categorias.codprov', '=', 'proveedores.codprov')
-            ->select('categorias.*', 'proveedores.razons')
-            ->where('categorias.id', '=', $id)
+        $categ = DB::table('categorias as c')
+            ->join('proveedores as p', 'p.id', '=', 'c.idprov')
+            ->select('c.*', 'p.codprov', 'p.razons')
+            ->where('c.id', '=', $id)
             ->first();
         
         //dd($categ);

@@ -15,8 +15,8 @@ class CreateArticulosTable extends Migration
     {
         Schema::create('articulos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('codprov', 2)->required();
-            $table->string('codcate', 4)->required();
+            $table->integer('idprov')->required();
+            $table->integer('idcate')->required();
             $table->string('codarti', 4)->required();
             $table->string('nomarti', 80)->required();
             $table->string('nomartic', 50)->nullable();

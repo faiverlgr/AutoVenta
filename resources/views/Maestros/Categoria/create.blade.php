@@ -39,9 +39,9 @@
                             <div class="col col-md-3">
                                 <div class="form-group"> 
                                     <label for="codprov">Proveedor *</label>
-                                    <select class="form-control" name="codprov" id="selector" onchange="myFunction()">
+                                    <select class="form-control" name="idprov" id="selector" onchange="myFunction()">
                                         @foreach($proveedores as $prov)
-                                        <option value="{{$prov->codprov}}">{{$prov->codprov}}</option>
+                                        <option value="{{$prov->id}}">{{$prov->codprov}}</option>
                                         <option hidden value="{{$prov->razons}}">{{$prov->razons}}</option>
                                         @endforeach
                                     </select>
@@ -108,7 +108,7 @@
         function uneCodigo(){
             var valor1 = document.getElementById('selector').value;
             var valor2 = document.getElementById('codcate').value;
-            document.getElementById('validaCate').value = valor1+valor2;
+            document.getElementById('validaCate').value = valor1+'-'+valor2;
         };
         
     </script>

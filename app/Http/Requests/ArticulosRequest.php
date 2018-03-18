@@ -25,8 +25,8 @@ class ArticulosRequest extends FormRequest
     public function rules()
     {
         return [
-            'codprov'   =>  'required | max:2',
-            'codcate'   =>  'required | max:4',
+            'idprov'   =>  'required',
+            'idcate'   =>  'required',
             'codarti'   =>  'required | max:4',
             'nomarti'   =>  'required | max:80',
             'nomartic'  =>  'max:50',

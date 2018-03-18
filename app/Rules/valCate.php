@@ -27,12 +27,22 @@ class valCate implements Rule
      */
     public function passes($attribute, $valor)
     {
-        $codfpro = substr($valor, 0, 2);
-        $codfcat = substr($valor, 2);
+        $codfpro = 0;
+        $cCade="";     
+        for ($i=0; $i < strlen($valor) ; $i++) { 
+            $Letra = substr($valor,$i,1);
+            if ($Letra <> "-") {
+                $cCade = $cCade . $Letra;
+            } else {
+                $codfpro = (int)$cCade;
+                $codfcat = substr($valor, $i+1);
+                break;
+            }
+        }
         
         unset($codigo); 
         $codigo = DB::table('categorias')
-            ->where('codprov', '=', $codfpro)
+            ->where('idprov', '=', $codfpro)
             ->where('codcate', '=', $codfcat)
             ->first();
         

@@ -28,8 +28,8 @@ class ArticuloController extends Controller
             $articulos=DB::table('articulos')
                 ->select('articulos.*', DB::raw('round(vneto + ((vneto*piva)/100),2) as pventa'), 'estado')
                 ->where('nomarti', 'LIKE', '%'.$query.'%')
-                ->orderBy('codprov', 'desc')
-                ->orderBy('codcate', 'desc')
+                ->orderBy('idprov', 'desc')
+                ->orderBy('idcate', 'desc')
                 ->orderBy('codarti', 'desc')
                 ->paginate(10);
                 //dd($articulos);
@@ -49,10 +49,10 @@ class ArticuloController extends Controller
     public function create()
     {
         $gcodcates = DB::table('categorias as c')
-        ->join("proveedores as p", "c.codprov", "=", "p.codprov")
+        ->join("proveedores as p", "c.idprov", "=", "p.id")
         ->where('c.estado', '=', 1)
-        ->select('c.codprov', 'p.razons', 'c.codcate', 'c.nomcate')
-        ->orderby('c.codprov', 'ASC')
+        ->select('p.id', 'p.codprov', 'p.razons', 'c.id', 'c.codcate', 'c.nomcate')
+        ->orderby('c.idprov', 'ASC')
         ->get();
 
         //dd($gcodcates);
@@ -71,8 +71,8 @@ class ArticuloController extends Controller
     public function store(ArticulosRequest $request)
     {
         $articulo = new articulo;
-        $articulo->codprov     = $request->get('codprov');
-        $articulo->codcate     = $request->get('codcate');
+        $articulo->idprov      = $request->get('idprov');
+        $articulo->idcate      = $request->get('idcate');
         $articulo->codarti     = $request->get('codarti');
         $articulo->nomarti     = $request->get('nomarti');
         $articulo->nomartic    = $request->get('nomartic');
@@ -111,13 +111,13 @@ class ArticuloController extends Controller
     public function edit($id)
     {
         $articulo = Articulo::findOrFail($id);
-        $query = DB::table('articulos')
-            ->join('proveedores', 'proveedores.codprov', '=', 'articulos.codprov')
-            ->join('categorias', [
-                ['categorias.codprov', '=', 'articulos.codprov'],
-                ['categorias.codcate', '=', 'articulos.codcate']])
-            ->select('articulos.*', 'proveedores.razons', 'categorias.nomcate')
-            ->where('articulos.id', '=', $id)
+        $query = DB::table('articulos as a')
+            ->join('proveedores as p', 'p.idv', '=', 'a.idprov')
+            ->join('categorias as c', [
+                ['c.idprov', '=', 'a.idprov'],
+                ['c.id', '=', 'a.idcate']])
+            ->select('a.*', 'p.razons', 'c.nomcate')
+            ->where('a.id', '=', $id)
             ->first();
         //dd($query);
         return view('maestros.articulo.edit', compact(['query', 'articulo']));

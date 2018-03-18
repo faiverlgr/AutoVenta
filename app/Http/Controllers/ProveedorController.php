@@ -28,7 +28,9 @@ class ProveedorController extends Controller
             $proveedores=DB::table('proveedores')->where('razons', 'LIKE', '%'.$query.'%')
             ->orderBy('codprov', 'desc')
             ->paginate(10);
+            
             $categorias=DB::table('categorias')->where('id', '=', '1')->get();
+            
             return view('maestros.proveedor.index', [
                 'proveedores'   =>$proveedores,
                 'searchText'    =>$query,

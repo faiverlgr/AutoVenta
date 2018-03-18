@@ -231,11 +231,13 @@
             document.getElementById("fa-fa").className = "fa fa-plus"
             //console.log("sale del box-info");
         };
+        
+        //prepara código para valicadación e ingreso
         function uneCodigo(){
             var valor1 = document.getElementById('codprov').value;
             var valor2 = document.getElementById('codcate').value;
             var valor3 = document.getElementById('codarti').value;
-            document.getElementById('validaArti').value = valor1+valor2+valor3;
+            document.getElementById('validaArti').value = valor1+'-'+valor2+'-'+valor3;
         };
     </script>
     @endsection

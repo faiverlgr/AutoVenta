@@ -15,7 +15,7 @@ class CreateCategoriasTable extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('codprov', 2)->required();
+            $table->integer('idprov')->required();
             $table->string('codcate', 4)->required();
             $table->string('nomcate', 80)->required();
             $table->tinyInteger('estado')->default(1);

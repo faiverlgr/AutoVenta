@@ -27,6 +27,19 @@ class valArti implements Rule
      */
     public function passes($attribute, $value)
     {
+        $codfpro = 0;
+        $cCade="";     
+        for ($i=0; $i < strlen($valor) ; $i++) { 
+            $Letra = substr($valor,$i,1);
+            if ($Letra <> "-") {
+                $cCade = $cCade . $Letra;
+            } else {
+                $codfpro = (int)$cCade;
+                $codfcat = substr($valor, $i+1);
+                break;
+            }
+        }
+        
         $codfpro = substr($value, 0, 2);
         $codfcat = substr($value, 2,4);
         $codfart = substr($value, 6);
