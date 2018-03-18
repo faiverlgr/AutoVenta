@@ -69,7 +69,6 @@
                                 <div class="form-group">
                                     <label for="articulo">Articulo</label>
                                     <select id="selArticulo" class="form-control" name="selArticulo">
-                                        
                                     </select>
                                 </div>
                             </div>

@@ -22,7 +22,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">  
-                    <div class="col col-md-10 col-md-offset-1">                    
+                    <div class="col col-md-10 col-md-offset-1">
                         {!! Form::open(array('url'=>'/articulo','method'=>'GET','autocomplete'=>'off','role'=>'search')) !!}
                         <div class="form-group">
                             <div class="input-group">

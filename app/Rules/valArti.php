@@ -28,26 +28,34 @@ class valArti implements Rule
     public function passes($attribute, $value)
     {
         $codfpro = 0;
+        $codfcat = 0;
         $cCade="";     
-        for ($i=0; $i < strlen($valor) ; $i++) { 
-            $Letra = substr($valor,$i,1);
-            if ($Letra <> "-") {
-                $cCade = $cCade . $Letra;
-            } else {
-                $codfpro = (int)$cCade;
-                $codfcat = substr($valor, $i+1);
-                break;
+        for ($i=0; $i < strlen($value) ; $i++) { 
+            $Letra = substr($value,$i,1);
+            switch ($Letra) {
+                case '-':
+                    $codfpro = (int)$cCade;
+                    $cCade = "";
+                    break 1;
+                case '=':
+                    $codfcat = (int)$cCade;
+                    $cCade = "";
+                    break 1;
+                default:
+                    $cCade = $cCade . $Letra;
             }
         }
-        
+        $codfart = $cCade;
+
+        /*
         $codfpro = substr($value, 0, 2);
         $codfcat = substr($value, 2,4);
         $codfart = substr($value, 6);
-        
+        */
         unset($codigo); 
         $codigo = DB::table('articulos')
-            ->where('codprov', '=', $codfpro)
-            ->where('codcate', '=', $codfcat)
+            ->where('idprov', '=', $codfpro)
+            ->where('idcate', '=', $codfcat)
             ->where('codarti', '=', $codfart)
             ->first();
         

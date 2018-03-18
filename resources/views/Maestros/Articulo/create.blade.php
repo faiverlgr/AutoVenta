@@ -22,38 +22,7 @@
             @endif
         </section>
         <section class="content container-fluid">
-            <div id="box-info" class="box box-info">   
-                <div class="box-header">
-                    <h3 class="box-title">Seleccione una de las categorias disponibles</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i id="fa-fa" class="fa fa-minus"></i></button>
-                    </div>
-                </div>
-                <div class="box-body">
-                    <div class="row col col-md-10 col-md-offset-1">
-                        <table class="table table-condensed table-hover table-bordered padre">
-                            <thead>
-                                <tr>
-                                    <th>Prov</th>
-                                    <th>Razons</th>
-                                    <th>Cate</th>
-                                    <th>Nombre</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($gcodcates as $codcate)
-                                    <tr class="hijo" onclick="comprime()">
-                                        <td style="width:10%">{{$codcate->codprov}}</td>
-                                        <td style="width:40%">{{$codcate->razons}}</td>
-                                        <td style="width:10%">{{$codcate->codcate}}</td>
-                                        <td style="width:40%">{{$codcate->nomcate}}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>            
+            
             <div id="box-default" class="box box-default">
                 <div class="box-header with-border">
                     <h3>Nuevo Articulo<a href="/articulo"><button class="btn btn-succes pull-right">Listado</button></a></h3>
@@ -62,31 +31,26 @@
                         <div class="col col-sm-10 col-sm-offset-1">
                             {!!Form::open(array('url'=>'articulo','method'=>'POST','autocompleted'=>'off'))!!}
                             {{Form::token()}}
+                            
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="codprov">codprov</label>
-                                        <input id="codprov" readonly type="text" name="codprov" class="form-control" value="{{old('codprov')}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <label for="#">Nombre</label>
-                                        <input id="razons" readonly type="text" name="razons" class="form-control" value="{{old('razons')}}">
+                                        <label class="control-label" for="codarti">Seleccione un Proveedor *</label>
+                                        <select id="idprov" name="idprov" class="form-control">
+                                            @foreach($proveedores as $prov)
+                                                <option value="{{$prov->id}}">{{$prov->codprov}}-{{$prov->razons}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="codprov">Codcate</label>
-                                        <input id="codcate" readonly type="text" name="codcate" class="numeric form-control" value="{{old('codcate')}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <label class="control-label" for="nomcate">Nombre</label>
-                                        <input id="nombre" readonly type="text" name="nomcate" class="text form-control" value="{{old('nomcate')}}" required>
+                                        <label class="control-label" for="codarti">Seleccione una Categoria *</label>
+                                        <select id="idcate" name="idcate" class="form-control" >
+                                            <option>--</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +58,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label class="control-label" for="codarti">Codigo *</label>
-                                        <input id="codarti" onchange="uneCodigo()" type="text" name="codarti" class="llena4 numeric form-control" value="{{old('codarti')}}" required>
+                                        <input id="codarti" type="text" name="codarti" class="llena4 numeric form-control" value="{{old('codarti')}}" required>
                                     </div>
                                 </div>
                                 <div class="col col-md-10">
@@ -185,7 +149,7 @@
                             <div class="form-group">
                                 <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
                             </div>
-                            <input hidden name="validaArti" id="validaArti"></input>
+                            <input name="validaArti" id="validaArti"></input>
                             {!!Form::close()!!}
                         </div>
                     </div>
@@ -196,7 +160,29 @@
     @include('layouts.footer')
 </div>
     @section('scripts')
-    <script>    
+    <script>
+        $('#idprov').change(function(){
+            var $sel = $(idcate);
+            var cadena = `/ajaxCate/${this.value}`;
+            var val = "{{url("")}}";
+            var conca = val.concat(cadena);
+            var options = [];
+            $sel.find('option').not(':first').remove();
+            $.ajax({
+                url: conca,
+                type: 'GET',
+                dataType: "json",
+                beforeSend: function () {$('#load').addClass("loading")},
+                success: function(data){
+                    $.each(data, function(index, item){
+                        options.push(`<option value= "${item.id}">${item.codcate}-${item.nomcate}</option>`);
+                    });
+                    $sel.append(options);
+                },
+                complete: function(){$('div.loading').removeClass("loading")}
+            }); 
+        });
+
         //rellena ceros a la izquierda
         $("input.llena4").blur(function(){
             if  (this.value != ""){
@@ -213,7 +199,7 @@
         });
         //sólo permite números
         $(".numeric").numeric();
-
+        /*
         var hijos = document.querySelectorAll("table.padre > tbody > tr.hijo");
         for (unHijo of hijos) {
             unHijo.addEventListener("click", function(evt){
@@ -231,13 +217,24 @@
             document.getElementById("fa-fa").className = "fa fa-plus"
             //console.log("sale del box-info");
         };
-        
-        //prepara código para valicadación e ingreso
+        */
+        //prepara código para validación e ingreso
+        $('#idprov').change(function(){
+            uneCodigo();
+        });
+
+        $('#idcate').change(function(){
+            uneCodigo();
+        });
+        $('#codarti').change(function(){
+            uneCodigo();
+        });
+
         function uneCodigo(){
-            var valor1 = document.getElementById('codprov').value;
-            var valor2 = document.getElementById('codcate').value;
+            var valor1 = document.getElementById('idprov').value;
+            var valor2 = document.getElementById('idcate').value;
             var valor3 = document.getElementById('codarti').value;
-            document.getElementById('validaArti').value = valor1+'-'+valor2+'-'+valor3;
+            document.getElementById('validaArti').value = valor1+'-'+valor2+'='+valor3;
         };
     </script>
     @endsection

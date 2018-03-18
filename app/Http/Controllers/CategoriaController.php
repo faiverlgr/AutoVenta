@@ -20,9 +20,9 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function select($idprov){
+    public function ajaxCate($idprov){
         $categorias=DB::table('categorias')
-        ->select('id','nomcate')
+        ->select('id', 'codcate', 'nomcate')
         ->where('idprov', '=', $idprov)
         ->where('estado', '=', 1)
         ->get();

@@ -121,7 +121,7 @@
         $(document).ready(function(){
             $('#select1').change(function(){
                 var $sel = $(select2);
-                var cadena = `/categoriasm/${this.value}`;
+                var cadena = `/ajaxCate/${this.value}`;
                 var val = "{{url("")}}";
                 var conca = val.concat(cadena);
                 var options = [];

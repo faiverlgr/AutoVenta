@@ -15,6 +15,20 @@ use DB;
 
 class ArticuloController extends Controller
 {
+        /**
+     * Responde a solicitud ajax para buscar caegorias de un proveedor.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ajaxCate($idprov){
+        $Categorias=DB::table('categorias')
+        ->select('id', 'codcate', 'nomcate')
+        ->where('estado', '=', 1)
+        ->where('idprov', '=', $idprov)
+        ->orderby('id', 'ASC')
+        ->get();
+        return Response::json($Categorias);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +39,10 @@ class ArticuloController extends Controller
         if ($request) {
             $query=trim($request->get('searchText'));
             
-            $articulos=DB::table('articulos')
-                ->select('articulos.*', DB::raw('round(vneto + ((vneto*piva)/100),2) as pventa'), 'estado')
+            $articulos=DB::table('articulos as a')
+                ->join("proveedores as p", "a.idprov", "=", "p.id")
+                ->join("categorias as c", "a.idcate", "=", "c.id")
+                ->select('c.codcate', 'p.codprov', 'a.*', DB::raw('round(a.vneto + ((a.vneto*a.piva)/100),2) as pventa'), 'a.estado')
                 ->where('nomarti', 'LIKE', '%'.$query.'%')
                 ->orderBy('idprov', 'desc')
                 ->orderBy('idcate', 'desc')
@@ -48,10 +64,23 @@ class ArticuloController extends Controller
      */
     public function create()
     {
+        
+        $proveedores = DB::table('proveedores')
+            ->where('estado', '=', 1)
+            ->select('id', 'codprov', 'razons')
+            ->get();
+    
+        // dd($proveedores);
+        
+         return view('maestros.articulo.create', [
+            "proveedores" => $proveedores
+            ]
+        );
+        /*
         $gcodcates = DB::table('categorias as c')
         ->join("proveedores as p", "c.idprov", "=", "p.id")
         ->where('c.estado', '=', 1)
-        ->select('p.id', 'p.codprov', 'p.razons', 'c.id', 'c.codcate', 'c.nomcate')
+        ->select('p.id as idprov', 'p.codprov', 'p.razons', 'c.id as idcate', 'c.codcate', 'c.nomcate')
         ->orderby('c.idprov', 'ASC')
         ->get();
 
@@ -60,6 +89,7 @@ class ArticuloController extends Controller
             "gcodcates" => $gcodcates
             ]
         );
+        */
     }
 
     /**
