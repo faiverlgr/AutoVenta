@@ -69,6 +69,13 @@
                                 <div class="form-group">
                                     <label for="articulo">Articulo</label>
                                     <select id="selArticulo" class="form-control" name="selArticulo">
+                                        @foreach($articulos as $item)
+                                            <option value= "{{$item->id}}">{{$item->codcate}}{{$item->codarti}}-{{$item->nomartic}}</option>
+                                            <option hidden value="{{$item->vcosto}}"></option>
+                                            <option hidden value="{{$item->vneto}}"></option>
+                                            <option hidden value="{{$item->piva}}"></option>
+                                            <option hidden value="{{$item->pmargen}}"></option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -79,7 +86,7 @@
                                     <input type="hidden" id="cantidad">
                                     <input type="hidden" id="vcosto">
                                 </div>
-                            </div>                        
+                            </div>
                             <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
                                 <div class="form-group">
                                     <label for="vneto">Valor Neto </label>
@@ -167,8 +174,13 @@
     @section('scripts')
         <script>
             $('#idproveedor').change(function(){
+                ajaxArticulo(this.value);
+                $(selArticulo).empty();
+            });
+
+            function ajaxArticulo($parametro){
                 var $sel = $(selArticulo);
-                var cadena = `/articulosp/${this.value}`;
+                var cadena = `/articulosIngreso/`+$parametro;
                 var val = "{{url("")}}";
                 var conca = val.concat(cadena);
                 var options = [];
@@ -191,7 +203,7 @@
                     },
                     complete: function(){$('div.loading').removeClass("loading")}
                 }); 
-            });
+            };
 
             Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
                 var n = this,

@@ -28,6 +28,9 @@ Route::get('ajaxCate/{codprov}', 'CategoriaController@ajaxCate');
 //Ruta usada por ajax para econtrar articulos según los proveedores
 Route::get('articulosp/{codprov}', 'IngresenController@selectArt');
 
+//Ruta usada por ajax para econtrar articulos según los proveedores en el Ingreso
+Route::get('articulosIngreso/{codprov}', 'IngresenController@articulosIngreso');
+
 Route::resource('ingresen', 'IngresenController');
 Route::resource('agencia', 'AgenciaController');
 Route::resource('articulo', 'ArticuloController');

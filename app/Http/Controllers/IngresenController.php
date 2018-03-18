@@ -18,21 +18,22 @@ use Response;
 
 class IngresenController extends Controller
 {
-    /**
+        /**
      * Responde a solicitud ajax para buscar artículos de un proveedor.
      *
      * @return \Illuminate\Http\Response
      */
-    public function selectArt($codprov){
-        $articulos=DB::table('articulos')
-        ->select('id', 'codcate', 'codarti', 'nomartic', 'vcosto', 'vneto', 'piva', 'pmargen')
-        ->where('estado', '=', 1)
-        ->where('codprov', '=', $codprov)
-        ->orderby('codprov', 'ASC')
+    public function articulosIngreso($codprov){
+        $articulos=DB::table('articulos as a')
+        ->join('proveedores as p', 'a.idprov', 'p.id')
+        ->join('categorias as c', 'a.idcate', 'c.id')
+        ->select('a.id', 'c.id','c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
+        ->where('a.estado', '=', 1)
+        ->where('a.idprov', '=', $codprov)
+        ->orderby('a.idprov', 'ASC')
         ->get();
         return Response::json($articulos);
     }
-    
     /**
      * Display a listing of the resource.
      *
@@ -87,9 +88,29 @@ class IngresenController extends Controller
 
         //return Response()->json($articulos);
 
+        //busca el id del primer  proveedor activo
+        $idProvActivo = DB::table('proveedores')
+        ->select('id')
+        ->take(1)
+        ->where('estado', '=', 1)
+        ->first();
+        
+        $param = $idProvActivo->id;
+
+        //selecciona por defecto los items del proveedor activo cargado
+        $articulos=DB::table('articulos as a')
+        ->join('proveedores as p', 'a.idprov', 'p.id')
+        ->join('categorias as c', 'a.idcate', 'c.id')
+        ->select('a.id', 'c.id','c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
+        ->where('a.estado', '=', 1)
+        ->where('a.idprov', '=', $param)
+        ->orderby('a.idprov', 'ASC')
+        ->get();
+
         return view('movimientos.ingreso.create', [
-            "proveedores" => $proveedores,
-            "periodos" => $periodos
+            "proveedores"   => $proveedores,
+            "periodos"      => $periodos,
+            "articulos"     => $articulos
             ]
         );
         //dd($proveedores);

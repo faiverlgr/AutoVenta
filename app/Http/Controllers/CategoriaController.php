@@ -46,6 +46,7 @@ class CategoriaController extends Controller
             ->orderBy('c.idprov', 'asc')
             ->orderBy('c.codcate', 'asc')
             ->paginate(10);
+            
             return view('maestros.categoria.index', [
                 "categorias" => $categorias,
                 "searchText" => $query

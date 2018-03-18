@@ -15,20 +15,7 @@ use DB;
 
 class ArticuloController extends Controller
 {
-        /**
-     * Responde a solicitud ajax para buscar caegorias de un proveedor.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function ajaxCate($idprov){
-        $Categorias=DB::table('categorias')
-        ->select('id', 'codcate', 'nomcate')
-        ->where('estado', '=', 1)
-        ->where('idprov', '=', $idprov)
-        ->orderby('id', 'ASC')
-        ->get();
-        return Response::json($Categorias);
-    }
+
     /**
      * Display a listing of the resource.
      *
