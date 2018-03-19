@@ -36,9 +36,11 @@ class ArticuloController extends Controller
                 ->orderBy('codarti', 'desc')
                 ->paginate(10);
                 //dd($articulos);
-                return view('maestros.articulo.index', [
-                    "articulos" => $articulos,
-                    "searchText" => $query
+                
+                
+            return view('maestros.articulo.index', [
+                "articulos" => $articulos,
+                "searchText" => $query
                 ]
             );
         }
@@ -51,32 +53,36 @@ class ArticuloController extends Controller
      */
     public function create()
     {
-        
         $proveedores = DB::table('proveedores')
             ->where('estado', '=', 1)
             ->select('id', 'codprov', 'razons')
             ->get();
-    
-        // dd($proveedores);
-        
-         return view('maestros.articulo.create', [
-            "proveedores" => $proveedores
-            ]
-        );
-        /*
-        $gcodcates = DB::table('categorias as c')
-        ->join("proveedores as p", "c.idprov", "=", "p.id")
+
+        //busca el id del primer proveedor activo
+        $idProvActivo = DB::table('proveedores')
+        ->select('id')
+        ->take(1)
+        ->where('estado', '=', 1)
+        ->first();
+
+        //guarda id en variable que se usará como parámetro
+        $param = $idProvActivo->id;
+
+        //selecciona por defecto los items del proveedor activo cargado
+        $categorias=DB::table('categorias as c')
+        ->join('proveedores as p', 'c.idprov', 'p.id')
+        ->select('c.id', 'c.codcate', 'c.nomcate')
         ->where('c.estado', '=', 1)
-        ->select('p.id as idprov', 'p.codprov', 'p.razons', 'c.id as idcate', 'c.codcate', 'c.nomcate')
-        ->orderby('c.idprov', 'ASC')
+        ->where('c.idprov', '=', $param)
+        ->orderby('c.codcate', 'ASC')
         ->get();
 
-        //dd($gcodcates);
+        //devuelve datos
         return view('maestros.articulo.create', [
-            "gcodcates" => $gcodcates
+            "proveedores" => $proveedores,
+            "categorias" => $categorias
             ]
         );
-        */
     }
 
     /**
@@ -129,18 +135,15 @@ class ArticuloController extends Controller
     {
         $articulo = Articulo::findOrFail($id);
         $query = DB::table('articulos as a')
-            ->join('proveedores as p', 'p.idv', '=', 'a.idprov')
-            ->join('categorias as c', [
-                ['c.idprov', '=', 'a.idprov'],
-                ['c.id', '=', 'a.idcate']])
-            ->select('a.*', 'p.razons', 'c.nomcate')
+            ->join('proveedores as p', 'p.id', '=', 'a.idprov')
+            ->join('categorias as c', 'c.id', '=', 'a.idcate')
+            ->select('a.*', 'c.codcate', 'p.codprov', 'p.razons', 'c.nomcate')
             ->where('a.id', '=', $id)
             ->first();
-        //dd($query);
-        return view('maestros.articulo.edit', compact(['query', 'articulo']));
-    }
-
-    /**
+            return view('maestros.articulo.edit', compact(['query', 'articulo']));
+        }
+        
+        /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

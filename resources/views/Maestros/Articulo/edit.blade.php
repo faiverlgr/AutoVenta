@@ -86,8 +86,8 @@
                                     <label class="control-label" for="nombrec">Nombre abreviado</label>
                                     <input type="text" name="nomarti" class="form-control" value="{{$query->nomarti}}">
                                 </div>
-                            </div>                            
-                        </div>                            
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-2">
                                 <div class="form-group">

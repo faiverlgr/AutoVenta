@@ -35,7 +35,7 @@
                                     <label fr="codprov">Proveedor *</label>
                                     <select name="idprov" id="idproveedor" class="form-control select2-container">
                                         @foreach($proveedores as $item)
-                                        <option value="{{$item->id}}">{{$item->razons}}</option>
+                                            <option value="{{$item->id}}">{{$item->razons}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -175,17 +175,15 @@
         <script>
             $('#idproveedor').change(function(){
                 ajaxArticulo(this.value);
-                $(selArticulo).empty();
             });
-
             function ajaxArticulo($parametro){
                 var $sel = $(selArticulo);
                 var cadena = `/articulosIngreso/`+$parametro;
                 var val = "{{url("")}}";
                 var conca = val.concat(cadena);
                 var options = [];
+                $sel.empty();
                 $sel.find('option').not(':first').remove();
-                
                 $.ajax({
                     url: conca,
                     type: 'GET',
@@ -215,7 +213,6 @@
                     j = (j = i.length) > 3 ? j % 3 : 0;
                 return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
             };
-
             var cont = 0;
             var acumCosto = 0;
             var acumNeto  = 0;
@@ -228,11 +225,22 @@
             subTotalMargen = [];
             subTotalIva = [];
             ides = [];
-            //limpia campos
+            //limpia campos al carrgar
             limpiar();
+            ocultar_guardar();
             $("#fecha").val("");
             $("#numdoc").val("");
-
+            //totales tabla mostrados
+            $("#totalcostom").val("");
+            $("#totalnetom").val("");
+            $("#totalivam").val("");
+            $("#totalventam").val("");
+            //totales tabla ocultos
+            $("#totalcosto").val("");
+            $("#totalneto").val("");
+            $("#totaliva").val("");
+            $("#totalventa").val("");
+            //limpia campos de registro
             function limpiar(){
                 $("#cantidadm").val("");
                 $("#vnetom").val("");
@@ -240,12 +248,10 @@
                 $("#vventam").val("");
                 $("#vlrtotalm").val("");
             };
-            
             // multiplica cantidad por valor venta
             $('#cantidadm').change(function(){
                 valorizar();
             }); 
-            
             // calcula valor de venta para mostrar en el campo valor venta
             $("#selArticulo").change(function(){
                 valorizar();
@@ -254,7 +260,9 @@
             $('#add').click(function(){
                 agregar();
             });
+            //agrega item a la tabla
             function agregar(){
+                //revisa si el item ya fue ingresado
                 idarti  = $('#selArticulo').val();
                 var nEncontro = 0;
                 for(var i=0;i<ides.length;i++){
@@ -262,15 +270,14 @@
                         nEncontro = 1;
                     }
                 };
-                
                 if (nEncontro == 0) {
                     articulo  = $('#selArticulo option:selected').text();
-                    cantidad    = parseFloat($('#cantidad').val());
-                    vcosto      = parseFloat($('#vcosto').val());
-                    vneto       = parseFloat($('#vneto').val());
-                    piva        = parseFloat($('#piva').val());
-                    vventa      = parseFloat($('#vventa').val());
-                    vtotal      = parseFloat($('#vlrtotal').val());
+                    cantidad  = parseFloat($('#cantidad').val());
+                    vcosto    = parseFloat($('#vcosto').val());
+                    vneto     = parseFloat($('#vneto').val());
+                    piva      = parseFloat($('#piva').val());
+                    vventa    = parseFloat($('#vventa').val());
+                    vtotal    = parseFloat($('#vlrtotal').val());
                     // si existe un articulo
                     if (articulo != "" && cantidad != "" && vventa != ""){
                         ides[cont] = idarti;
@@ -339,7 +346,6 @@
                     alert('El artículo ya se encuentra en la tabla.');
                 }
             };
-
             //valoriza cantidad ingresada
             function valorizar(){
                 var objSel      = document.getElementById("selArticulo");
@@ -395,12 +401,15 @@
                 ocultar_guardar();
             };
             //valida items para mostrar botón de guardar
+            
             function ocultar_guardar(){
                 if ($("#totalventa").val()>0){
                     $("#guardar").show();
+                    $("#idproveedor").attr('readonly', true);
                 }
                 else{
                     $("#guardar").hide();
+                    $("#idproveedor").attr('readonly', false);
                 }
             };
             //clase de calendario para selección de fecha

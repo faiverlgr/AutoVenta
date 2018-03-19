@@ -27,7 +27,7 @@ class IngresenController extends Controller
         $articulos=DB::table('articulos as a')
         ->join('proveedores as p', 'a.idprov', 'p.id')
         ->join('categorias as c', 'a.idcate', 'c.id')
-        ->select('a.id', 'c.id','c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
+        ->select('a.id', 'c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
         ->where('a.estado', '=', 1)
         ->where('a.idprov', '=', $codprov)
         ->orderby('a.idprov', 'ASC')
@@ -39,8 +39,7 @@ class IngresenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         if ($request) {
             $query=trim($request->get('searchText'));
             $ingresos=DB::table('ingresen as en')
@@ -68,14 +67,12 @@ class IngresenController extends Controller
             );
         }
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $proveedores = DB::table('proveedores')
         ->select('id', 'codprov', 'razons')
         ->where('estado', '=', 1)
@@ -99,12 +96,13 @@ class IngresenController extends Controller
 
         //selecciona por defecto los items del proveedor activo cargado
         $articulos=DB::table('articulos as a')
-        ->join('proveedores as p', 'a.idprov', 'p.id')
-        ->join('categorias as c', 'a.idcate', 'c.id')
-        ->select('a.id', 'c.id','c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
+        ->join('proveedores as p' , 'p.id', 'a.idprov')
+        ->join('categorias as c', 'c.id', 'a.idcate')
+        ->select('a.id', 'c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
         ->where('a.estado', '=', 1)
         ->where('a.idprov', '=', $param)
-        ->orderby('a.idprov', 'ASC')
+        ->orderby('c.codcate', 'ASC')
+        ->orderby('a.codarti', 'ASC')
         ->get();
 
         return view('movimientos.ingreso.create', [
@@ -122,82 +120,83 @@ class IngresenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngresosRequest $request)
-    {
+    public function store(IngresosRequest $request){
         try{
             DB::beginTransaction();
                 $ingreso = New Ingresen;
-                $ingreso->idper     = $request->get('idper');
-                $ingreso->idprov    = $request->get('idprov');
-                $ingreso->numdoc    = $request->get('numdoc');
-                $ingreso->fecha     = $request->get('fecha');
-                $ingreso->fechav    = Carbon::now('America/Bogota')->toDateTimeString();
-                $ingreso->tcosto    = $request->get('tcosto');
-                $ingreso->tmargen   = $request->get('tmargen');
-                $ingreso->tventa    = $request->get('tventa');
-                $ingreso->tiva      = $request->get('tiva');
-                $ingreso->estado    = 1;
+                $ingreso->idper   = (int)$request->get('idper');
+                $ingreso->idprov  = (int)$request->get('idprov');
+                $ingreso->numdoc  = $request->get('numdoc');
+                $ingreso->fecha   = $request->get('fecha');
+                $ingreso->fechav  = Carbon::now('America/Bogota')->toDateTimeString();
+                $ingreso->tcosto  = $request->get('tcosto');
+                $ingreso->tmargen = $request->get('tmargen');
+                $ingreso->tventa  = $request->get('tventa');
+                $ingreso->tiva    = $request->get('tiva');
+                $ingreso->estado  = 1;
                 $ingreso->save();            
                 // detalle
-                $ingreso->iden   = $request->get('iden');
-                $idbod           = $request->get('idbod');
-                $idarti          = $request->get('idarti');
-                $cantidad        = $request->get('cantidad');
-                $vcosto          = $request->get('vcosto');
-                $vneto           = $request->get('vneto');
-                $piva            = $request->get('piva');
-                $vtotal          = $request->get('vtotal');
-                $vtmarg          = $request->get('vtmarg');
+                $ingreso->iden = (int)$request->get('iden');
+                $idbod         = $request->get('idbod');
+                $idarti        = $request->get('idarti');
+                $cantidad      = $request->get('cantidad');
+                $vcosto        = $request->get('vcosto');
+                $vneto         = $request->get('vneto');
+                $piva          = $request->get('piva');
+                $vtotal        = $request->get('vtotal');
+                $vtmarg        = $request->get('vtmarg');
                 // array de articulos
-                $idarti                 = $request->get('idarti');
-                $cont                   = 0;
-                while($cont < count($idarti)){
+                $cont          = 0;
+                $nItemsArray = count($idarti);
+                while($cont < $nItemsArray){
                     //detalle
                     $detalle = new Ingresde();
-                    $detalle->iden      = $ingreso->id;
-                    $detalle->idbod     = 1;
-                    $detalle->idarti    = $idarti[$cont];
-                    $detalle->cantidad  = $cantidad[$cont];
-                    $detalle->vcosto    = $vcosto[$cont];
-                    $detalle->vneto     = $vneto[$cont];
-                    $detalle->piva      = $piva[$cont];
-                    $detalle->vtotal    = $vtotal[$cont];
-                    $detalle->vtmarg    = $vtmarg[$cont];
+                    $detalle->iden     = $ingreso->id;
+                    $detalle->idbod    = 1;
+                    $detalle->idarti   = (int)$idarti[$cont];
+                    $detalle->cantidad = (int)$cantidad[$cont];
+                    $detalle->vcosto   = $vcosto[$cont];
+                    $detalle->vneto    = $vneto[$cont];
+                    $detalle->piva     = $piva[$cont];
+                    $detalle->vtotal   = $vtotal[$cont];
+                    $detalle->vtmarg   = $vtmarg[$cont];
                     $detalle->save();
                     //kardex
                     $existe = DB::table('kardex')
-                            ->where('idarticulo', '=', $detalle->idarti)
-                            ->where('idperiodo', '=', $ingreso->idper)
-                            ->where('idbodega', '=', $detalle->idbod)
-                            ->first();
-                    //valida existencia y crea en kardex caso negativo
-                    if ($existe = 0) {
-                        $kardex = new Kardex();
-                        $kardex->idbodega   =   $detalle->idbod;
-                        $kardex->idperiodo  =   $ingreso->idper;
-                        $kardex->idarticulo =   $detalle->idarti;
-                        $kardex->inicial    =   0;
-                        $kardex->entradas   =   0;
-                        $kardex->salidas    =   0;
-                        $kardex->conteo1    =   0;
-                        $kardex->conteo2    =   0;
-                        $kardex->conteo3    =   0;
-                        $kardex->vcosto     =   0;
-                        $kardex->save();
-                    }
-                    //incrementa el valor con la cantidad
-                    DB::table('kardex')
-                        ->increment('entradas', $detalle->cantidad)
                         ->where('idarticulo', '=', $detalle->idarti)
                         ->where('idperiodo', '=', $ingreso->idper)
-                        ->where('idbodega', '=', $detalle->idbod);
+                        ->where('idbodega', '=', $detalle->idbod)
+                        ->first();
+                    //valida existencia y crea en kardex caso negativo
+                    if (empty($existe)) {
+                        $kardex = new Kardex();
+                        $kardex->idbodega   = $detalle->idbod;
+                        $kardex->idperiodo  = $ingreso->idper;
+                        $kardex->idarticulo = $detalle->idarti;
+                        $kardex->inicial    = 0;
+                        $kardex->entradas   = $detalle->cantidad;
+                        $kardex->salidas    = 0;
+                        $kardex->conteo1    = 0;
+                        $kardex->conteo2    = 0;
+                        $kardex->conteo3    = 0;
+                        $kardex->vcosto     = 0;
+                        $kardex->save();
+                    }
+                    else{
+                        //incrementa el valor con la cantidad
+                        DB::table('kardex')
+                        ->where('idarticulo', '=', $detalle->idarti)
+                        ->where('idperiodo', '=', $ingreso->idper)
+                        ->where('idbodega', '=', $detalle->idbod)
+                        ->increment('entradas', $detalle->cantidad);
+                    }
                     $cont = $cont+1;
                 }
             DB::commit();
         }catch(\Exception $e)
         {
             DB::rollback();
-        }
+                    }
         return Redirect::to('/ingresen');
     }
 
@@ -210,23 +209,30 @@ class IngresenController extends Controller
     public function show($id)
     {
         $ingreso=DB::table('ingresen as en')
-        ->join('proveedores as pr', 'en.idprov', '=', 'pr.id')
-        ->join('periodos as pe', 'en.idper', '=', 'pe.id')
-        ->select('en.numdoc', 'pr.razons', 'en.idper', 'en.numdoc', 'en.fecha', 'en.fechav', 'en.tcosto', 'en.tmargen', 'en.tventa', 'en.tiva', 'en.estado', 'pe.anoper', 'pe.mesper', 'pe.estado')
+        ->join('proveedores as p', 'p.id', '=', 'en.idprov')
+        ->join('periodos as pe', 'pe.id', '=', 'en.idper')
+        ->select('en.numdoc', 'p.razons', 'en.numdoc', 'en.fecha', 'en.fechav', 'en.tcosto', 'en.tventa', DB::raw('(en.tventa - en.tiva) as tneto'), 'en.tiva', 'en.estado', 'pe.anoper', 'pe.mesper')
         ->where('en.id', '=', $id)
         ->first();
         //detalle
         $detalle=DB::table('ingresde as de')
-        ->join('ingresen as en', 'de.idingresen', '=', 'en.id')
-        ->join('articulos as ar', 'de.idarti', '=', 'ar.id')
-        ->where('de.idingresen', '=', $id)
-        ->select('ar.codprov', 'ar.codcate', 'ar.codarti', 'ar.nomartic', 'de.cantidad', 'de.vcosto', 'de.vneto', 'de.piva', 'de.vtotal' , 'de.vtmargen')
+        ->join('ingresen as en', 'en.id', '=', 'de.iden')
+        ->join('articulos as a', 'a.id', '=', 'de.idarti')
+        ->join('categorias as c', 'c.id', '=', 'a.idcate')
+        ->join('proveedores as p', 'p.id', '=', 'a.idprov')
+        ->where('de.iden', '=', $id)
+        ->select('p.codprov', 'c.codcate', 'a.codarti', 'a.nomartic', 'de.cantidad', 'de.vcosto', 'de.vneto', 'de.piva', 'de.vtotal', DB::raw('(de.vneto * de.cantidad) as vtneto'))
         ->get();
+        
+        
+        //dd($detalle);
+        
         return view('movimientos.ingreso.show', [
-            '$ingreso'   =>$ingreso,
-            '$detalle'   =>$detalle
+            'ingreso' => $ingreso,
+            'detalle' => $detalle
             ]
         );
+        
     }
 
     /**
@@ -247,8 +253,7 @@ class IngresenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         //
     }
 

@@ -20,8 +20,7 @@ Route::get('/cargos', function () {
         // return view('welcome');
     }
 );
-
-
+    
 //Ruta usada por ajax para econtrar categorías según los proveedores
 Route::get('ajaxCate/{codprov}', 'CategoriaController@ajaxCate');
 

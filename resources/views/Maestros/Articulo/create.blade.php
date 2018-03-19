@@ -48,8 +48,10 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label" for="codarti">Seleccione una Categoria *</label>
-                                        <select id="idcate" name="idcate" class="form-control" >
-                                            <option>--</option>
+                                        <select id="idcate" name="idcate" class="form-control">
+                                            @foreach($categorias as $item)
+                                                <option value="{{$item->id}}">{{$item->codcate}}-{{$item->nomcate}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -167,6 +169,7 @@
             var val = "{{url("")}}";
             var conca = val.concat(cadena);
             var options = [];
+            $sel.empty()
             $sel.find('option').not(':first').remove();
             $.ajax({
                 url: conca,
@@ -199,25 +202,7 @@
         });
         //sólo permite números
         $(".numeric").numeric();
-        /*
-        var hijos = document.querySelectorAll("table.padre > tbody > tr.hijo");
-        for (unHijo of hijos) {
-            unHijo.addEventListener("click", function(evt){
-                var hijo = evt.target;
-                //var valor1 = this.cells[2].innerText;
-                //alert("Texto del enlace: " + valor1);
-                document.getElementById('codprov').value = this.cells[0].innerText;
-                document.getElementById('razons').value = this.cells[1].innerText;
-                document.getElementById('codcate').value = this.cells[2].innerText;
-                document.getElementById('nombre').value = this.cells[3].innerText;
-            });
-        };
-        function comprime(){
-            document.getElementById("box-info").className += " collapsed-box"
-            document.getElementById("fa-fa").className = "fa fa-plus"
-            //console.log("sale del box-info");
-        };
-        */
+        
         //prepara código para validación e ingreso
         $('#idprov').change(function(){
             uneCodigo();
