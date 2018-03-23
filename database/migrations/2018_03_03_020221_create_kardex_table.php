@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKardexesTable extends Migration
+class CreateKardexTable extends Migration
 {
     /**
      * Run the migrations.
@@ -24,6 +24,8 @@ class CreateKardexesTable extends Migration
             $table->decimal('conteo2', 11, 2)->nullable();
             $table->decimal('conteo3', 11, 2)->nullable();
             $table->decimal('vcosto', 11, 2)->required();
+            $table->index('idarticulo');
+            $table->foreign('idarticulo')->references('id')->on('articulos');
         });
     }
 

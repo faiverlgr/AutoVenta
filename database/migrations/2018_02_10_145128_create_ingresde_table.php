@@ -23,6 +23,9 @@ class CreateIngresdeTable extends Migration
             $table->decimal('piva', 5, 2)->required();
             $table->decimal('vtotal', 11, 2)->required();
             $table->decimal('vtmarg', 11, 2)->required();
+            $table->index('idarti');
+            $table->index(['idbod', 'idarti']);
+            $table->foreign('idarti')->references('id')->on('articulos');
         });
     }
 

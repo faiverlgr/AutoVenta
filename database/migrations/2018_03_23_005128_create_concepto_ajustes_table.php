@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePeriodosTable extends Migration
+class CreateConceptoAjustesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePeriodosTable extends Migration
      */
     public function up()
     {
-        Schema::create('periodos', function (Blueprint $table) {
+        Schema::create('concepto_ajustes', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->string('anoper', 4)->required();
-            $table->string('mesper', 4)->required();
-            $table->date('fechai')->required();
-            $table->date('fechaf')->required();
+            $table->string('nombre', 30);
+            $table->tinyInteger('tipo');
             $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ class CreatePeriodosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periodos');
+        Schema::dropIfExists('concepto_ajustes');
     }
 }

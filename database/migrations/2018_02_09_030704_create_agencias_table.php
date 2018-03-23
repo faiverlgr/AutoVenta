@@ -28,6 +28,7 @@ class CreateAgenciasTable extends Migration
             $table->integer('idbodega')->required();
             $table->integer('idlista')->required();
             $table->tinyInteger('estado')->default(1);
+            $table->index('idx_codage');
             $table->timestamps();
         });
     }
