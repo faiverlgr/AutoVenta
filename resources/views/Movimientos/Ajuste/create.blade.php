@@ -30,23 +30,21 @@
                     {{Form::token()}}
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
                                 <div class="form-group">    
                                     <label fr="codprov">Tipo *</label>
                                     <select name="idtipo" id="idtipo" class="form-control select2-container">
+                                        <option>Seleccione tipo</option>
                                         @foreach($tipo as $item)
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
                                 <div class="form-group">    
                                     <label fr="codprov">Concepto *</label>
                                     <select id="selconcepto" name="idconcepto"  class="form-control select2-container">
-                                        @foreach($conceptos as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -69,10 +67,11 @@
                     </div>
                     <div class="box-body" style="border-top:0.5px; border-left: 0px; border-right: 0px; border-bottom: 0.5px; border-style: solid; border-color: #A9D0F5; ">
                         <div class="row">
-                            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3" style="padding-right:3px">
+                            <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3" style="padding-right:3px; width: 35%">
                                 <div class="form-group">
                                     <label for="articulo">Articulo</label>
                                     <select id="selArticulo" class="form-control" name="selArticulo">
+                                        <option>Seleccione articulo</option>
                                         @foreach($articulos as $item)
                                             <option value= "{{$item->id}}">{{$item->codcate}}{{$item->codarti}}-{{$item->nomartic}}</option>
                                             <option hidden value="{{$item->vcosto}}"></option>
@@ -83,58 +82,58 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px; width: 10%">
                                 <div class="form-group">
                                     <label for="articulo">Cantidad</label>
                                     <input type="text" id="cantidadm" class="numeric form-control" name="cantidad">
                                     <input type="hidden" id="cantidad">
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px; width: 10%">
                                     <div class="form-group">
                                         <label for="Stock">Stock</label>
                                         <input type="text" id="stockm" class="numeric form-control" readonly>
                                         <input type="hidden" id="stock" name="stock">
                                     </div>
                                 </div>
-                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px; width: 11%">
                                 <div class="form-group">
-                                    <label for="vcosto">Valor Costo </label>
+                                    <label for="vcosto">Valor Costo</label>
                                     <input type="text" id="vcostom"  class="form-control" name="vcostom" readonly>
                                     <input type="hidden" id="vcosto" name="vcosto">
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px; width: 11%">
                                 <div class="form-group">
                                     <label for="vneto">Valor Neto </label>
                                     <input type="text" id="vnetom"  class="form-control" name="vnetom" readonly>
                                     <input type="hidden" id="vneto" name="vneto">
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px; width: 7%">
                                 <div class="form-group">
-                                    <label for="piva">%Iva</label>
+                                    <label for="piva">Iva</label>
                                     <input type="text" id="pivam"  class="form-control" name="pivam" readonly>
                                     <input type="hidden" id="piva" name="piva">
                                 </div>
                             </div>
-                            <div class="hidden col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
+                            <div class="hidden col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px width: 11%">
                                 <div class="form-group">
                                     <label for="vventa">Valor Venta</label>
                                     <input type="text" id="vventam"  class="form-control" name="vventam" readonly>
                                     <input type="hidden" id="vventa" name="vventa">
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px; width: 11%">
                                 <div class="form-group">
-                                    <label for="vlrtotal">Valor Total</label>
+                                    <label for="vlrtotal">Total a la venta</label>
                                     <input type="text" id="vlrtotalm" class="form-control" readonly>
                                     <input type="hidden" id="vlrtotal">
                                 </div>
                             </div>
-                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
+                            <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px; width: 5px">
                                 <div class="form-group">
-                                    <button type="button" id="add" class="btn btn-primary">Agregar</button>
+                                    <button type="button" id="add" class="btn btn-primary">+</button>
                                 </div>
                             </div>
                         </div>
@@ -213,17 +212,20 @@
                     complete: function(){$('div.loading').removeClass("loading")}
                 }); 
             };
-            //formato de número
-            Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
-                var n = this,
-                    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-                    decSeparator = decSeparator == undefined ? "." : decSeparator,
-                    thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-                    sign = n < 0 ? "-" : "",
-                    i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+            
+            //formato de número 2 (numero, decimales, signo, sep miles, sep decimal)
+            function formatMoney1(number, places, symbol, thousand, decimal) {
+                number = number || 0;
+                places = !isNaN(places = Math.abs(places)) ? places : 2;
+                symbol = symbol !== undefined ? symbol : "$";
+                thousand = thousand || ",";
+                decimal = decimal || ".";
+                var negative = number < 0 ? "-" : "",
+                    i = parseInt(number = Math.abs(+number || 0).toFixed(places), 10) + "",
                     j = (j = i.length) > 3 ? j % 3 : 0;
-                return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-            };
+                return symbol + negative + (j ? i.substr(0, j) + thousand : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "");
+            }
+            
             var cont = 0;
             var acumCosto = 0;
             var acumNeto  = 0;
@@ -240,6 +242,10 @@
             limpiar();
             ocultar_guardar();
             $("#fecha").val("");
+            $("#selconcepto").attr('enabled', true);
+            $("#idtipo").attr('enabled', true);
+            document.getElementById("idtipo").selectedIndex=0;
+            document.getElementById("selArticulo").selectedIndex=0;
             //totales tabla mostrados
             $("#totalcostom").val("");
             $("#totalnetom").val("");
@@ -254,14 +260,14 @@
             function limpiar(){
                 $("#cantidadm").val("");
                 $("#stockm").val("");
-                $("#costom").val("");
+                $("#vcostom").val("");
                 $("#vnetom").val("");
                 $("#pivam").val("");
                 $("#vventam").val("");
                 $("#vlrtotalm").val("");
             };
             // multiplica cantidad por valor venta
-            $('#cantidadm').change(function(){
+            $('#cantidadm').change(function(){               
                 valorizar();
             }); 
             // calcula valor de venta para mostrar en el campo valor venta
@@ -281,47 +287,64 @@
                 var objstock     = document.getElementById("stock");
                 var stock        = parseFloat(objSel.options[index+4].value);
                 objstock.value   = stock;
-                objstockm.value  = stock.formatMoney(2,'.',',');
+                objstockm.value  = formatMoney1(stock,2,'',',','.');
                 //costo
                 var objvCostom   = document.getElementById("vcostom");
                 var objvCosto    = document.getElementById("vcosto");
                 var vCosto       = parseFloat(objSel.options[index+1].value);
                 objvCosto.value  = vCosto;
-                objvCostom.value = vCosto.formatMoney(2,'.',',');
+                objvCostom.value = formatMoney1(vCosto,2,'',',','.');
                 //neto
                 var objvNetom    = document.getElementById("vnetom");
                 var objvNeto     = document.getElementById("vneto");
                 var vNeto        = parseFloat(objSel.options[index+2].value);
                 objvNeto.value   = vNeto;
-                objvNetom.value  = vNeto.formatMoney(2,'.',',');
+                objvNetom.value  = formatMoney1(vNeto,2,'',',','.');
                 //iva 
                 var objvpIvam    = document.getElementById("pivam");
                 var objvpIva     = document.getElementById("piva");
                 var pIva         = parseFloat(objSel.options[index+3].value);
                 objvpIva.value   = pIva;
-                objvpIvam.value  = pIva.formatMoney(2,'.',',');
+                objvpIvam.value  = formatMoney1(pIva,2,'',',','.');
                 //venta 
                 var objVentam    = document.getElementById("vventam");
                 var objVenta     = document.getElementById("vventa");
                 var vVenta       = vNeto + ((vNeto * pIva)/100);
                 objVenta.value   = vVenta;
-                objVentam.value  = vVenta.formatMoney(2,'.',',');
+                objVentam.value  = formatMoney1(vVenta,2,'',',','.');
                 //cantidad 
                 var objCantm     = document.getElementById("cantidadm");
                 var objCant      = document.getElementById("cantidad");
-                var nCant        = parseFloat($('#cantidadm').val());
+                var nCant        = parseFloat(objCantm.value.replace(/[^0-9-.]/g, ''));
+                objCant.value    = nCant;
+                objCantm.value   = formatMoney1(nCant,2,'',',','.');
+
                 if (nCant > 0) {
-                    objCantm.value  = nCant.formatMoney(2,'.',',');
-                    objCant.value   = nCant;                    
                     var objVtotm    = document.getElementById("vlrtotalm");
                     var objVtot     = document.getElementById("vlrtotal");
-                    var vTotalItem  = nCant * vVenta  
-                    objVtotm.value  = vTotalItem.formatMoney(2,'.',',');
+                    var objVenta    = document.getElementById("vventa");
+                    var vTotalItem  = nCant * objVenta.value 
+                    objVtotm.value  = formatMoney1(vTotalItem,2,'',',','.');
                     objVtot.value   = vTotalItem;
                 }
             }
-            //agrega item a la tabla
+            //valida stock
             function agregar(){
+                //si es una salida y la cantidad no puede ser mayor al stock
+                if (idtipo.selectedIndex == 2) {
+                    cantidad  = parseFloat($('#cantidad').val());
+                    stocky    = parseFloat($('#stock').val());
+                    if (cantidad > stocky || isNaN(stocky)) {
+                        alert('La cantidad supera el stock.');
+                    } else {
+                       agregar1()
+                    }
+                }else{
+                    agregar1()
+                }
+            }
+            //agrega item a la tabla
+            function agregar1(){
                 //revisa si el item ya fue ingresado
                 idarti  = $('#selArticulo').val();
                 var nEncontro = 0;
@@ -338,65 +361,61 @@
                     piva      = parseFloat($('#piva').val());
                     vventa    = parseFloat($('#vventa').val());
                     vtotal    = parseFloat($('#vlrtotal').val());
-                    stocky    = parseFloat($('#stock').val());
-                    tipo      = parseFloat($('#idtipo').val()); 
+                    tipo      = parseFloat($('#idtipo').val());
                     // si existe un articulo
-                    if (articulo != "" && cantidad != "" && vventa != ""){
-                        //si es una salida y la cantidad no puede ser mayor al stock
-                        if (tipo = 2 && cantidad > stocky || isNaN(stocky)) {
-                            alert('La cantidad supera el stock.');
+                    if (articulo != "" && cantidad != "" && vventa != "" && idtipo.selectedIndex != 0){
+
+                        ides[cont] = idarti;
+                        var cantdItem  = formatMoney1(cantidad,2,'',',','.'); //para mostrar en tabla
+                        // iva
+                        var ivaItem   = formatMoney1(piva,2,'',',','.'); //para mostrar en tabla
+                        //costo
+                        subTotalCosto[cont] = vcosto*cantidad;
+                        var costoItem = formatMoney1(subTotalCosto[cont],2,'',',','.'); //para mostrar en tabla
+                        if (cont>0) {
+                            acumCosto = parseFloat($('#totalcosto').val()) + subTotalCosto[cont];
                         } else {
-                            ides[cont] = idarti;
-                            var cantdItem  = cantidad.formatMoney(2,'.',','); //para mostrar en tabla
-                            // iva
-                            var ivaItem   = piva.formatMoney(2,'.',','); //para mostrar en tabla
-                            //costo
-                            subTotalCosto[cont] = vcosto*cantidad;
-                            var costoItem = subTotalCosto[cont].formatMoney(2,'.',','); //para mostrar en tabla
-                            if (cont>0) {
-                                acumCosto = parseFloat($('#totalcosto').val()) + subTotalCosto[cont];
-                            } else {
-                                acumCosto = subTotalCosto[cont];
-                            }
-                            $('#totalcosto').val(acumCosto);
-                            $('#totalcostom').val(acumCosto.formatMoney(2,'.',',')); //para mostrar en totales
-                            //neto
-                            subTotalNeto[cont] = vneto*cantidad;
-                            var vNetoItem  = vneto.formatMoney(2,'.',','); //para mostrar en tabla
-                            var totalNetoItem = subTotalNeto[cont].formatMoney(2,'.',','); //para mostrar en tabla
-                            if (cont>0) {
-                                acumNeto = parseFloat($('#totalneto').val()) + subTotalNeto[cont];
-                            } else {
-                                acumNeto = subTotalNeto[cont];
-                            }
-                            $('#totalneto').val(acumNeto);
-                            $('#totalnetom').val(acumNeto.formatMoney(2,'.',',')); //para mostrar en totales
-                            //venta
-                            subTotalVenta[cont] = vtotal;
-                            var tVentaItem = vtotal.formatMoney(2,'.',','); //para mostrar en tabla
-                            if (cont>0) {
-                                acumVenta = parseFloat($('#totalventa').val()) + subTotalVenta[cont];
-                            } else {
-                                acumVenta = subTotalVenta[cont];
-                            }
-                            $('#totalventa').val(acumVenta);
-                            $('#totalventam').val(acumVenta.formatMoney(2,'.',',')); //para mostrar en totales
-                            //iva
-                            subTotalIva[cont] = vtotal - subTotalNeto[cont];
-                            if (cont>0) {
-                                acumIva = parseFloat($('#totaliva').val()) + subTotalIva[cont];
-                            } else {
-                                acumIva = subTotalIva[cont];
-                            }
-                            $('#totaliva').val(acumIva);
-                            $('#totalivam').val(acumIva.formatMoney(2,'.',',')); //para mostrar en totales
-                            //pinta
-                            var fila = `<tr class="selected" id="fila` + cont + `"><td><input type="hidden" name="idarti[]" value="`+idarti+`">`+articulo+`</td><td><input type="hidden" name="cantidad[]" value="`+cantidad+`">`+cantdItem+`</td><td><input type="hidden" name="vcosto[]" value="`+vcosto+`">`+costoItem+`</td><td><input type="hidden" name="vneto[]" value="`+vneto+`">`+vNetoItem+`</td><td><input type="hidden" name="piva[]" value="`+piva+`">`+ivaItem+`</td><td>`+totalNetoItem+`</td><td><input type="hidden" name="vtotal[]" value="`+vtotal+`">`+tVentaItem+`</td><td><button type="button" class="btn btn-warning" onclick="eliminar(`+cont+`)"><span class="glyphicon glyphicon-trash"></span></button></td><td></tr>`;
-                            cont++;
-                            limpiar();
-                            $('#detalles').append(fila);
-                            ocultar_guardar();
+                            acumCosto = subTotalCosto[cont];
                         }
+                        $('#totalcosto').val(acumCosto);
+                        $('#totalcostom').val(formatMoney1(acumCosto,2,'',',','.')); //para mostrar en totales
+                        //neto
+                        subTotalNeto[cont] = vneto*cantidad;
+                        var vNetoItem  = formatMoney1(vneto,2,'',',','.'); //para mostrar en tabla
+                        var totalNetoItem = formatMoney1(subTotalNeto[cont],2,'',',','.'); //para mostrar en tabla
+                        if (cont>0) {
+                            acumNeto = parseFloat($('#totalneto').val()) + subTotalNeto[cont];
+                        } else {
+                            acumNeto = subTotalNeto[cont];
+                        }
+                        $('#totalneto').val(acumNeto);
+                        $('#totalnetom').val(formatMoney1(acumNeto,2,'',',','.')); //para mostrar en totales
+                        //venta
+                        subTotalVenta[cont] = vtotal;
+                        var tVentaItem = formatMoney1(vtotal,2,'',',','.'); //para mostrar en tabla
+                        if (cont>0) {
+                            acumVenta = parseFloat($('#totalventa').val()) + subTotalVenta[cont];
+                        } else {
+                            acumVenta = subTotalVenta[cont];
+                        }
+                        $('#totalventa').val(acumVenta);
+                        $('#totalventam').val(formatMoney1(acumVenta,2,'',',','.')); //para mostrar en totales
+                        //iva
+                        subTotalIva[cont] = vtotal - subTotalNeto[cont];
+                        if (cont>0) {
+                            acumIva = parseFloat($('#totaliva').val()) + subTotalIva[cont];
+                        } else {
+                            acumIva = subTotalIva[cont];
+                        }
+                        $('#totaliva').val(acumIva);
+                        $('#totalivam').val(formatMoney1(acumIva,2,'',',','.')); //para mostrar en totales
+                        //pinta
+                        var fila = `<tr class="selected" id="fila` + cont + `"><td><input type="hidden" name="idarti[]" value="`+idarti+`">`+articulo+`</td><td><input type="hidden" name="cantidad[]" value="`+cantidad+`">`+cantdItem+`</td><td><input type="hidden" name="vcosto[]" value="`+vcosto+`">`+costoItem+`</td><td><input type="hidden" name="vneto[]" value="`+vneto+`">`+vNetoItem+`</td><td><input type="hidden" name="piva[]" value="`+piva+`">`+ivaItem+`</td><td>`+totalNetoItem+`</td><td><input type="hidden" name="vtotal[]" value="`+vtotal+`">`+tVentaItem+`</td><td><button type="button" class="btn btn-warning" onclick="eliminar(`+cont+`)"><span class="glyphicon glyphicon-trash"></span></button></td><td></tr>`;
+                        cont++;
+                        limpiar();
+                        $('#detalles').append(fila);
+                        ocultar_guardar();
+                        
                     } else{
                         alert('Error al ingresar el detalle del ingreso, revise los datos del artículo');
                     }
@@ -408,34 +427,39 @@
             function eliminar(ind){
                 acumCosto = $("#totalcosto").val() - subTotalCosto[ind];
                 $("#totalcosto").val(acumCosto);
-                $("#totalcostom").val("$" + acumCosto.formatMoney(2,'.',','));
+                $("#totalcostom").val(formatMoney1(acumCosto,2,'$',',','.'));
                 acumNeto = $("#totalneto").val() - subTotalNeto[ind];
                 $("#totalneto").val(acumNeto);
-                $("#totalnetom").val("$" + acumNeto.formatMoney(2,'.',','));
+                $("#totalnetom").val(formatMoney1(acumNeto,2,'$',',','.'));
                 acumIva = $("#totaliva").val() - subTotalIva[ind];
                 $("#totaliva").val(acumIva);
-                $("#totalivam").val("$" + acumIva.formatMoney(2,'.',','));
+                $("#totalivam").val(formatMoney1(acumIva,2,'$',',','.'));
                 acumVenta = $("#totalventa").val() - subTotalVenta[ind];
                 $("#totalventa").val(acumVenta);
-                $("#totalventam").val("$" + acumVenta.formatMoney(2,'.',','));
+                $("#totalventam").val(formatMoney1(acumVenta,2,'$',',','.'));
                 //remueve
                 $('#fila' + ind).remove();
+                cont--;
                 ides[ind] = "";
                 ocultar_guardar();
             };
             //valida items para mostrar botón de guardar
             function ocultar_guardar(){
-                if ($("#totalventa").val()>0){
+                if (cont > 0){
                     $("#guardar").show();
-                    $("#selconcepto").attr('readonly', true);
-                    $("#idtipo").attr('readonly', true);
+                    $("#selconcepto").prop('disabled', true);
+                    $("#idtipo").prop('disabled', true);
                 }
                 else{
                     $("#guardar").hide();
-                    $("#selconcepto").attr('readonly', false);
-                    $("#idtipo").attr('readonly', false);
+                    $("#selconcepto").prop('disabled', false);
+                    $("#idtipo").prop('disabled', false);
                 }
             };
+            $("#guardar").click(function(){
+                $("#selconcepto").prop('disabled', false);
+                $("#idtipo").prop('disabled', false);
+            });
         </script>
     @endsection
 @endsection

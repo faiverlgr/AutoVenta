@@ -79,6 +79,7 @@ class AjustenController extends Controller
         ->where('ta.estado', '=', 1)
         ->get();
 
+        /*
         //busca el primer tipo activo para con base en ese buscar la lista de conceptos a cargar con la pantalla
         $tip_act = $tipo->first();
 
@@ -89,6 +90,7 @@ class AjustenController extends Controller
         ->where('co.tipo', '=', $tip_act->id)
         ->where('co.estado', '=', 1)
         ->get();
+        */
 
         //busca período actual
         $periodo = DB::table('periodos as pe')
@@ -109,7 +111,6 @@ class AjustenController extends Controller
         //dd($articulos);
         return view('movimientos.ajuste.create',[
             'tipo'      => $tipo,
-            'conceptos' => $conceptos,
             'periodo'   => $periodo,
             'articulos' => $articulos
             ]
@@ -181,16 +182,16 @@ class AjustenController extends Controller
                             $kardex->salidas    = $detalle->cantidad;
                             $kardex->entradas = 0;
                         }
-                        $kardex->conteo1    = 0;
-                        $kardex->conteo2    = 0;
-                        $kardex->conteo3    = 0;
-                        $kardex->vcosto     = 0;
+                        $kardex->conteo1 = 0;
+                        $kardex->conteo2 = 0;
+                        $kardex->conteo3 = 0;
+                        $kardex->vcosto  = 0;
                         $kardex->save();
                     }
                     else{
                         //incrementa el valor con la cantidad
                         // si es entrada o salida
-                        if ($encabezado->tipo = 1) {
+                        if ($encabezado->idtipo == 1) {
                             DB::table('kardex')
                             ->where('idarticulo', '=', $detalle->idarti)
                             ->where('idperiodo', '=', $encabezado->idper)
@@ -223,7 +224,7 @@ class AjustenController extends Controller
     public function show($id)
     {
         $encabezado=DB::table('ajusten as en')
-        ->join('tipoajustes as ta', 'en.tipo', '=', 'ta.id')
+        ->join('tipoajustes as ta', 'en.idtipo', '=', 'ta.id')
         ->join('periodos as pe', 'en.idper', '=', 'pe.id')
         ->join('conceptos as co', 'en.idconcepto', '=', 'co.id')
         ->select('ta.nombre as nomtipo', 'co.nombre as concepto', 'en.fecha', 'pe.anoper', 'pe.mesper', 'en.tcosto', DB::raw('(en.tventa - en.tiva) as tneto'), 'en.tiva', 'en.tventa', 'en.estado')
@@ -232,7 +233,7 @@ class AjustenController extends Controller
         //detalle
         $detalle=DB::table('ajustde as de')
         ->join('ajusten as en', 'de.idajen', '=', 'en.id')
-        ->join('articulos as a', 'de.idarti', '=', 'en.idarti')
+        ->join('articulos as a', 'de.idarti', '=', 'a.id')
         ->join('proveedores as p', 'a.idprov', '=', 'p.id')
         ->join('categorias as c', 'a.idcate', '=', 'c.id')
         ->where('de.idajen', '=', $id)
@@ -240,8 +241,8 @@ class AjustenController extends Controller
         ->get();
         //dd($detalle);
         
-        return view('movimientos.ingreso.show', [
-            'encabizado' => encabezado,
+        return view('movimientos.ajuste.show', [
+            'encabezado' => $encabezado,
             'detalle'    => $detalle
             ]
         );
