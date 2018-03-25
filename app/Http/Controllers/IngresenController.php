@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\IngresosRequest;
 use Illuminate\Support\Collection as Collection;
 use DB;
-
 use Carbon\Carbon; //Carbon::now('America/Bogota')->toDateTimeString();
 use Response;
 
@@ -23,7 +22,8 @@ class IngresenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function articulosIngreso($codprov){
+    public function articulosIngreso($codprov)
+    {
         $articulos=DB::table('articulos as a')
         ->join('proveedores as p', 'a.idprov', 'p.id')
         ->join('categorias as c', 'a.idcate', 'c.id')
@@ -39,7 +39,8 @@ class IngresenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         if ($request) {
             $query=trim($request->get('searchText'));
             $ingresos=DB::table('ingresen as en')
@@ -72,35 +73,30 @@ class IngresenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
+    public function create()
+    {
+        //busca proveedores activos para la lista
         $proveedores = DB::table('proveedores')
         ->select('id', 'codprov', 'razons')
         ->where('estado', '=', 1)
         ->get();
 
+        //busca el periodo activo
         $periodos = DB::table('periodos')
         ->select('id', 'anoper', 'mesper')
         ->where('estado', '=', 1)
         ->first();
 
-        //return Response()->json($articulos);
-
-        //busca el id del primer  proveedor activo
-        $idProvActivo = DB::table('proveedores')
-        ->select('id')
-        ->take(1)
-        ->where('estado', '=', 1)
-        ->first();
-        
-        $param = $idProvActivo->id;
+        //busca el id del primer proveedor activo
+        $param = $proveedores->first();
 
         //selecciona por defecto los items del proveedor activo cargado
-        $articulos=DB::table('articulos as a')
+        $articulos = DB::table('articulos as a')
         ->join('proveedores as p' , 'p.id', 'a.idprov')
         ->join('categorias as c', 'c.id', 'a.idcate')
         ->select('a.id', 'c.codcate', 'a.codarti', 'a.nomartic', 'a.vcosto', 'a.vneto', 'a.piva', 'a.pmargen')
         ->where('a.estado', '=', 1)
-        ->where('a.idprov', '=', $param)
+        ->where('a.idprov', '=', $param->id)
         ->orderby('c.codcate', 'ASC')
         ->orderby('a.codarti', 'ASC')
         ->get();
@@ -111,7 +107,6 @@ class IngresenController extends Controller
             "articulos"     => $articulos
             ]
         );
-        //dd($proveedores);
     }
 
     /**
@@ -120,7 +115,8 @@ class IngresenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IngresosRequest $request){
+    public function store(IngresosRequest $request)
+    {
         try{
             DB::beginTransaction();
                 $ingreso = New Ingresen;
@@ -223,8 +219,6 @@ class IngresenController extends Controller
         ->where('de.iden', '=', $id)
         ->select('p.codprov', 'c.codcate', 'a.codarti', 'a.nomartic', 'de.cantidad', 'de.vcosto', 'de.vneto', 'de.piva', 'de.vtotal', DB::raw('(de.vneto * de.cantidad) as vtneto'))
         ->get();
-        
-        
         //dd($detalle);
         
         return view('movimientos.ingreso.show', [
@@ -232,7 +226,6 @@ class IngresenController extends Controller
             'detalle' => $detalle
             ]
         );
-        
     }
 
     /**

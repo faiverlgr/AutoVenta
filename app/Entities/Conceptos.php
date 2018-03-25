@@ -4,25 +4,19 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ajustde extends Model
+class Conceptos extends Model
 {
     //use Notifiable;
-    protected $table='ajustde';
-    public $timestamps=false;
+    protected $table='conceptos';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'idajen',
-        'idbod',
-        'idarti',
-        'cantidad',
-        'vcosto',
-        'vneto',
-        'piva',
-        'vtotal'
+        'nombre',
+        'tipo',
+        'estado'
     ];
 
     /**

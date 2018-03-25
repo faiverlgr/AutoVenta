@@ -151,7 +151,7 @@
                             <div class="form-group">
                                 <button class="btn btn-sm btn-primary" type="submit">Guardar</button>
                             </div>
-                            <input name="validaArti" id="validaArti"></input>
+                            <input type="hidden" name="validaArti" id="validaArti"></input>
                             {!!Form::close()!!}
                         </div>
                     </div>

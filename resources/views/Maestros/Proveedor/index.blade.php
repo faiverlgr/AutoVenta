@@ -94,53 +94,8 @@
                     </div>
                     {{$proveedores->render()}}
                 </div>
-                <div class="box box-info">
-                    <div id="load" class="box-header with-border">
-                        <h3>Categorias</h3>
-                    </div>
-                    {{--  <div id="alert" class="alert alert-info"></div>  --}}
-                    <div class="box-body">
-                        {{ Form::open() }}
-                            <select name="select1" id="select1">
-                                @foreach($proveedores as $item)
-                            <option value={{ $item->id }}>{{ $item->codprov }}</option>
-                                @endforeach
-                            </select>
-                            <select name="select2" id="select2">
-                                    <option>Escoja un proveedor</option>
-                            </select>
-                        {{ Form::close() }}
-                    </div>
-                </div>
             </section>
         </div>
         @include('layouts.footer')
     </div>
-    @section('scripts')
-    <script>
-        $(document).ready(function(){
-            $('#select1').change(function(){
-                var $sel = $(select2);
-                var cadena = `/ajaxCate/${this.value}`;
-                var val = "{{url("")}}";
-                var conca = val.concat(cadena);
-                var options = [];
-                $sel.find('option').not(':first').remove();
-                $.ajax({
-                    url: conca,
-                    type: 'GET',
-                    dataType: "json",
-                    beforeSend: function () {$('#load').addClass("loading")},
-                    success: function(data){
-                        $.each(data, function(index, item){
-                            options.push(`<option value= "${item.id}">${item.nomcate}</option>`);
-                        });
-                        $sel.append(options);
-                    },
-                    complete: function(){$('div.loading').removeClass("loading")}
-                });
-            });
-        });
-    </script>
-    @endsection
 @endsection

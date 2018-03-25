@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateConceptoAjustesTable extends Migration
+class CreateTipoAjustesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateConceptoAjustesTable extends Migration
      */
     public function up()
     {
-        Schema::create('concepto_ajustes', function (Blueprint $table) {
-            $table->increments('id')->unique();
-            $table->string('nombre', 30);
-            $table->tinyInteger('tipo');
+        Schema::create('tipoajustes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre', 20)->required();
             $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ class CreateConceptoAjustesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('concepto_ajustes');
+        Schema::dropIfExists('tipoajustes');
     }
 }

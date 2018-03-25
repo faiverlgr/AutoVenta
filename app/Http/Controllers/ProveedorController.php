@@ -69,10 +69,10 @@ class ProveedorController extends Controller
         $proveedor->email       = $request->get('email');
         $proveedor->estado      = '1';
         $proveedor->save();
-        return back()->with('notification', 'Registro guardado exitosamente.');
+        //return back()->with('notification', 'Registro guardado exitosamente.');
         
-        // return Redirect::to('proveedor')
-        //     ->with('notification', 'Registro guardado exitosamente.');
+        return Redirect::to('proveedor')
+          ->with('notification', 'Registro guardado exitosamente.');
     }
     
     /**

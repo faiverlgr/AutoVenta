@@ -40,6 +40,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/ingresen')}}"><i class="fa fa-circle-o"></i> Ingresos</a></li>
+                    <li><a href="{{url('/ajusten')}}"><i class="fa fa-circle-o"></i> Ajustes</a></li>
                 </ul>
             </li>
             <!--Parámetros-->

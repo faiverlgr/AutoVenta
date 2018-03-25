@@ -14,10 +14,9 @@ class CreateAjustdeTable extends Migration
     public function up()
     {
         Schema::create('ajustde', function (Blueprint $table) {
-            $table->increments('id');
-            $table->Integer('idajusten')->unsigned();
-            $table->Integer('idbod')->required();
-            $table->Integer('idarti')->unsigned();
+            $table->integer('idajen')->unsigned();
+            $table->integer('idbod')->required();
+            $table->integer('idarti')->unsigned();
             $table->integer('cantidad')->required();
             $table->decimal('vcosto',11,2)->required();
             $table->decimal('vneto',11,2)->required();
@@ -28,10 +27,11 @@ class CreateAjustdeTable extends Migration
         
         //Schema::disableForeignKeyConstraints();
         Schema::table('ajustde', function (Blueprint $table) {
-            $table->index('idajusten');
+            $table->index('idajen');
+            $table->index('idarti');
             $table->index(['idbod', 'idarti']);
-            //$table->foreign('idajusten')->references('id')->on('ajusten');
-            //$table->foreign('idarti')->references('id')->on('articulos');
+            $table->foreign('idajusten')->references('id')->on('ajusten');
+            $table->foreign('idarti')->references('id')->on('articulos');
         });
     }
 

@@ -18,6 +18,7 @@ class Ajusten extends Model
         'idper',
         'fecha',
         'tcosto',
+        'tneto',
         'tventa',
         'tiva',
         'estado'

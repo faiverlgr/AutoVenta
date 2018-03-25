@@ -25,7 +25,7 @@ class CreateKardexTable extends Migration
             $table->decimal('conteo3', 11, 2)->nullable();
             $table->decimal('vcosto', 11, 2)->required();
             $table->index('idarticulo');
-            $table->foreign('idarticulo')->references('id')->on('articulos');
+            //$table->foreign('idarticulo')->references('id')->on('articulos');
         });
     }
 

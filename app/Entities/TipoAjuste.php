@@ -4,10 +4,10 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ConceptoAjuste extends Model
+class TipoAjuste extends Model
 {
     //use Notifiable;
-    protected $table='concepto_ajustes';
+    protected $table='tipoajustes';
     /**
      * The attributes that are mass assignable.
      *
@@ -15,7 +15,6 @@ class ConceptoAjuste extends Model
      */
     protected $fillable = [
         'nombre',
-        'tipo',
         'estado'
     ];
 

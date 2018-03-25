@@ -35,10 +35,7 @@ class ArticuloController extends Controller
                 ->orderBy('idcate', 'desc')
                 ->orderBy('codarti', 'desc')
                 ->paginate(10);
-                //dd($articulos);
-                
-                
-            return view('maestros.articulo.index', [
+                return view('maestros.articulo.index', [
                 "articulos" => $articulos,
                 "searchText" => $query
                 ]
@@ -57,17 +54,14 @@ class ArticuloController extends Controller
             ->where('estado', '=', 1)
             ->select('id', 'codprov', 'razons')
             ->get();
-
         //busca el id del primer proveedor activo
         $idProvActivo = DB::table('proveedores')
         ->select('id')
         ->take(1)
         ->where('estado', '=', 1)
         ->first();
-
         //guarda id en variable que se usará como parámetro
         $param = $idProvActivo->id;
-
         //selecciona por defecto los items del proveedor activo cargado
         $categorias=DB::table('categorias as c')
         ->join('proveedores as p', 'c.idprov', 'p.id')
@@ -76,7 +70,6 @@ class ArticuloController extends Controller
         ->where('c.idprov', '=', $param)
         ->orderby('c.codcate', 'ASC')
         ->get();
-
         //devuelve datos
         return view('maestros.articulo.create', [
             "proveedores" => $proveedores,
