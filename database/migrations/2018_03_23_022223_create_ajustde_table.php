@@ -31,7 +31,6 @@ class CreateAjustdeTable extends Migration
             $table->index('idajusten');
             $table->index(['idbod', 'idarti']);
             //$table->foreign('idajusten')->references('id')->on('ajusten');
-            //$table->foreign('idarti')->references('id')->on('articulos');
         });
     }
 
