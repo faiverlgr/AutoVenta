@@ -24,34 +24,34 @@
             <section class="content container-fluid">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3>Ver Ajuste<a href="/ingresen"><button class="btn btn-succes pull-right">Listado</button></a></h3>
+                        <h3>Ver Ajuste<a href="/ajusten"><button class="btn btn-succes pull-right">Listado</button></a></h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
                                 <div class="form-group">    
                                     <label fr="codprov">Tipo</label>
-                                    <input readonly type="text" id="tipo" class="form-control" value="{{$ajuste->nomtipo}}">
+                                    <input readonly type="text" id="tipo" class="form-control" value="{{$encabezado->nomtipo}}">
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4 col-xs-4">
                                 <div class="form-group">    
                                     <label for="numdoc">Concepto</label>
-                                    <input readonly type="text" id="numdoc" class="form-control" value="{{$ajuste->concepto}}">
+                                    <input readonly type="text" id="numdoc" class="form-control" value="{{$encabezado->concepto}}">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
                                 <div class="form-group">
                                     <label for="anoper">Fecha</label>
                                     <div class="input-group">
-                                        <input readonly type="text" id="fecha" class="form-control" value="{{$ajuste->fecha}}">
+                                        <input readonly type="text" id="fecha" class="form-control" value="{{$encabezado->fecha}}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
                                 <div class="form-group">
                                     <label for="idper">Periodo</label>
-                                    <input readonly type="text" id="idper" class="form-control" value="{{$ajuste->anoper}}-{{$ajuste->mesper}}">
+                                    <input readonly type="text" id="idper" class="form-control" value="{{$encabezado->anoper}}-{{$encabezado->mesper}}">
                                 </div>
                             </div>
                         </div>
@@ -61,26 +61,26 @@
                             <div class="col-lg-3 col-sm-3 col-md-3 col-xs-3" style="padding-right:3px">
                                 <div class="form-group">
                                     <label for="tcosto">Total Costo</label>
-                                    <input readonly type="text" id="totalcostom" class="form-control" value="{{$ajuste->tcosto}}">
+                                    <input readonly type="text" id="totalcostom" class="form-control" value="{{$encabezado->tcosto}}">
                                 </div>
                             </div>
                             <div class="col-lg-1 col-sm-1 col-md-1 col-xs-1" style="padding-left:3px; padding-right:3px">
                                 <div class="form-group">
                                     <label for="tneto">Total Neto</label>
-                                    <input readonly type="text" id="totalneto" class="form-control" value="{{$ajuste->tneto}}">
+                                    <input readonly type="text" id="totalneto" class="form-control" value="{{$encabezado->tneto}}">
                                 </div>
                             </div>
                             <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
                                 <div class="form-group">
                                     <label for="tiva">Total Iva</label>
-                                    <input readonly type="text" id="totaliva" class="form-control" value="{{$ajuste->tiva}}">
+                                    <input readonly type="text" id="totaliva" class="form-control" value="{{$encabezado->tiva}}">
                                 </div>
                             </div>
                             
                             <div class="col-lg-2 col-sm-2 col-md-2 col-xs-2" style="padding-left:3px; padding-right:3px">
                                 <div class="form-group">
                                     <label for="tventa">Total a la venta</label>
-                                    <input readonly type="text" id="totaventa" class="form-control" value="{{$ajuste->tventa}}">
+                                    <input readonly type="text" id="totaventa" class="form-control" value="{{$encabezado->tventa}}">
                                 </div>
                             </div>
                         </div>
@@ -91,13 +91,13 @@
                                 <table id="detalles" class="table table-striped table-bordered table-condensed table-hover">
                                     <thead style="background-color:#A9D0F5">
                                         <tr>
-                                            <th style="width: 25%">Artículo</th>
+                                            <th style="width: 35%">Artículo</th>
                                             <th style="width: 5%">Cant.</th>
-                                            <th style="width: 15%">V/u.Costo</th>
-                                            <th style="width: 15%">V/u.Neto</th>
+                                            <th style="width: 10%">V/u.Costo</th>
+                                            <th style="width: 10%">V/u.Neto</th>
                                             <th style="width: 5%">Iva</th>
-                                            <th style="width: 15%">Vlr.TNeto</th>
-                                            <th style="width: 15%">Vlr.TVenta</th>
+                                            <th style="width: 10%">Vlr.TNeto</th>
+                                            <th style="width: 10%">Vlr.TVenta</th>
                                         </tr>
                                     </thead>
                                     <tbody>

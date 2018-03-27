@@ -11,7 +11,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Ajsutes</h1>
+            <h1>Ajustes</h1>
         </section>
         <!-- /.Header (Page header) -->
         <!-- Main content -->
@@ -63,7 +63,7 @@
                                                 </button>
                                             </a>
                                         @else
-                                            <a href="{{ URL::action('IngresenController@show', $item->id) }}">
+                                            <a href="{{ URL::action('AjustenController@show', $item->id) }}">
                                                 <button class="btn btn-xs btn-success">
                                                     <span aria-hidden="true" class="glyphicon glyphicon-eye-open"></span>
                                                 </button>
