@@ -67,7 +67,7 @@ class ProveedorController extends Controller
         $proveedor->telefono1   = $request->get('telefono1');
         $proveedor->telefono2   = $request->get('telefono2');
         $proveedor->email       = $request->get('email');
-        $proveedor->estado      = '1';
+        $proveedor->estado      = 1;
         $proveedor->save();
         //return back()->with('notification', 'Registro guardado exitosamente.');
         

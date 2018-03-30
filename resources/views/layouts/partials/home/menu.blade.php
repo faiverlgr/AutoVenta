@@ -28,6 +28,7 @@
                     <li><a href="{{url('/proveedor')}}"><i class="fa fa-circle-o"></i>Proveedores</a></li>
                     <li><a href="{{url('/categoria')}}"><i class="fa fa-circle-o"></i>Categorias</a></li>
                     <li><a href="{{url('/articulo')}}"><i class="fa fa-circle-o"></i>Articulos</a></li>
+                    <li><a href="{{url('/cliente')}}"><i class="fa fa-circle-o"></i>Clientes</a></li>
                 </ul>
             </li>
             <!--Parámetros-->
