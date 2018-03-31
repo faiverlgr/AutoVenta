@@ -27,7 +27,7 @@
         <section class="content container-fluid">
             <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3>Editar Proveedor<a href="/proveedor"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h3>
+                    <h3>Editar Cliente<a href="/proveedor"><button class="btn btn-md btn-succes pull-right">Listado</button></a></h3>
                 </div>
                 <div class="box-body">
                     <div class="col col-md-6 col-md-offset-3">

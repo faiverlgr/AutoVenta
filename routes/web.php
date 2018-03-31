@@ -30,6 +30,7 @@ Route::get('articulosp/{codprov}', 'IngresenController@selectArt');
 //Ruta usada por ajax para econtrar articulos según los proveedores en el Ingreso
 Route::get('articulosIngreso/{codprov}', 'IngresenController@articulosIngreso');
 
+Route::resource('cliente', 'ClienteController');
 Route::resource('ajusten', 'AjustenController');
 Route::resource('ingresen', 'IngresenController');
 Route::resource('agencia', 'AgenciaController');

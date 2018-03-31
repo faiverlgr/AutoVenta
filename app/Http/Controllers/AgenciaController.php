@@ -22,7 +22,8 @@ class AgenciaController extends Controller
         //return view('Maestros.Proveedor.Index');
         if ($request) {
             $query=trim($request->get('searchText'));
-            $agencias=DB::table('agencias')->where('nombre', 'LIKE', '%'.$query.'%')
+            $agencias=DB::table('agencias')
+            ->where('nombre', 'LIKE', '%'.$query.'%')
             ->orderBy('codage', 'desc')
             ->paginate(10);
             return view('parametros.agencia.index', [

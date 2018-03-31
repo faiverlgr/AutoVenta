@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 //add
+use App\Http\Controllers\Controller;
+use App\Entities\Cliente;
 use App\Http\Requests\ClientesRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Collection as Collection;
@@ -18,23 +20,24 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request )
+    public function index(Request $request)
     {
         if ($request) {
             $query=trim($request->get('searchText'));
-            $clientes=DB::table('clientes')
+            
+            $clientes = DB::table('clientes')
             ->where('razons', 'LIKE', '%'.$query.'%')
-            ->where('nombres', 'LIKE', '%'.$query.'%')
             ->orderBy('id', 'desc')
             ->paginate(10);
             
-            $clientes=DB::table('clientes')->where('id', '=', '1')->get();
-            
+            //dd($clientes);
+
             return view('maestros.cliente.index', [
-                'clientes'   =>$clientes,
-                'searchText' =>$query,
+                'clientes'   => $clientes,
+                'searchText' => $query
                 ]
             );
+            
         };
     }
 
@@ -54,18 +57,18 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CienteRequest $request)
+    public function store(ClientesRequest $request)
     {
         $cliente=new Cliente;
         $cliente->tipdoc     = $request->get('tipdoc');
-        $cliente->documento  = $request->get('documento');
+        $cliente->nrodoc     = $request->get('nrodoc');
         $cliente->nombres    = $request->get('nombres');
         $cliente->apellidos  = $request->get('apellidos');
         $cliente->razons     = $request->get('razons');
         $cliente->direccion  = $request->get('direccion');
-        $cliente->idpto      = $request->get('idpto');
         $cliente->idciudad   = $request->get('idciudad');
-        $cliente->telefonos  = $request->get('telefonos');
+        $cliente->telefono1  = $request->get('telefono1');
+        $cliente->telefono2  = $request->get('telefono2');
         $cliente->email      = $request->get('email');
         $cliente->estado     = 1;
         $cliente->save();

@@ -24,17 +24,16 @@ class ClientesRequest extends FormRequest
     public function rules()
     {
         return [
-            'tipdoc'    =>  'required | max:2 | numeric',
-            'documento' =>  'required | max:15 | numeric',
+            'tipdoc'    =>  'required | numeric',
+            'nrodoc'    =>  'required | max:15',
             'nombres'   =>  'required | max:25',
-            'apellidos' =>  'required | max:20',
-            'razons'    =>  'max:30',
+            'apellidos' =>  'required | max:25',
+            'razons'    =>  'required | max:30',
             'direccion' =>  'required | max:45',
-            'idepto'    =>  'required | numeric',
             'idciudad'  =>  'required | numeric',
-            'telefonos' =>  'max:25 | numeric',
-            'email'     =>  'max:25',
-            'estado'    =>  'required'
+            'telefono1' =>  'required | max:15',
+            'telefono2' =>  'max:15',
+            'email'     =>  'required | max:30',
         ];
     }
 }

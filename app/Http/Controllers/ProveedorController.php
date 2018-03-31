@@ -25,16 +25,17 @@ class ProveedorController extends Controller
         //return view('Maestros.Proveedor.Index');
         if ($request) {
             $query=trim($request->get('searchText'));
-            $proveedores=DB::table('proveedores')->where('razons', 'LIKE', '%'.$query.'%')
+            $proveedores=DB::table('proveedores')
+            ->where('razons', 'LIKE', '%'.$query.'%')
             ->orderBy('codprov', 'desc')
             ->paginate(10);
             
             $categorias=DB::table('categorias')->where('id', '=', '1')->get();
             
             return view('maestros.proveedor.index', [
-                'proveedores'   =>$proveedores,
-                'searchText'    =>$query,
-                'categorias'    =>$categorias
+                'proveedores'   => $proveedores,
+                'searchText'    => $query,
+                'categorias'    => $categorias
                 ]
             );
         };

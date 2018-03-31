@@ -16,14 +16,14 @@ class CreateClientesTable extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('tipdoc', 2)->required()->default('13');
-            $table->string('documento', 15)->required();
+            $table->string('nrodoc', 15)->required();
             $table->string('nombres', 25)->nullable();
             $table->string('apellidos', 25)->nullable();
             $table->string('razons', 30)->required();
             $table->string('direccion', 45)->required();
-            $table->integer('idepto')->required();
             $table->integer('idciudad')->required();
-            $table->string('telefonos', 25)->required();
+            $table->string('telefono1', 15)->required();
+            $table->string('telefono2', 15)->required();
             $table->string('email', 25)->nullable();
             $table->tinyInteger('estado')->required()->default(1);
             $table->timestamps();

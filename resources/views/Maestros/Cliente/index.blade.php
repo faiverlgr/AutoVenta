@@ -27,7 +27,7 @@
             <section class="content container-fluid">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3>Listado<a href="proveedor/create"><button class="btn btn-succes pull-right">Crear un nuevo item</button></a></h3>
+                        <h3>Listado<a href="cliente/create"><button class="btn btn-succes pull-right">Crear un nuevo item</button></a></h3>
                     </div>
                     <div class="box-body">
                         <div class="col col-md-10 col-md-offset-1">
@@ -44,22 +44,22 @@
                             <table class="table table-condensed table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%">Cod.</th>
-                                        <th style="width: 15%">Nit</th>
+                                        <th style="width: 5%">Id</th>
+                                        <th style="width: 15%">Documento</th>
                                         <th style="width: 38%">Razon Social</th> 
-                                        <th style="width: 12%">Sigla</th>
-                                        <th style="width: 15%">Telefono</th>
+                                        <th style="width: 15%">Dirección</th>
+                                        <th style="width: 12%">Teléfono</th>
                                         <th style="width: 15%">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($clientes as $item)
                                         <tr>
-                                            <td>{{ $item->codprov }}</td>
-                                            <td>{{ $item->nit }}</td>
-                                            <td>{{ $item->razons }}</td>
-                                            <td>{{ $item->sigla }}</td>
-                                            <td>{{ $item->telefono1 }}</td>
+                                            <td>{{ $item->id}}</td>
+                                            <td>{{ $item->nrodoc}}</td>
+                                            <td>{{ $item->razons}}</td>
+                                            <td>{{ $item->direccion}}</td>
+                                            <td>{{ $item->telefono1}}</td>
                                             <td>
                                                 @if($item->estado == 0)
                                                     <a href="" data-target="#modal-delete-{{$item->id}}" data-toggle="modal">
@@ -68,7 +68,7 @@
                                                         </button>
                                                     </a>
                                                 @else
-                                                    <a href="{{URL::action('ProveedorController@edit', $item->id)}}">
+                                                    <a href="{{URL::action('ClienteController@edit', $item->id)}}">
                                                         <button class="btn btn-xs btn-success">
                                                             <span aria-hidden="true" class="glyphicon glyphicon-pencil"></span>
                                                         </button>
@@ -79,20 +79,20 @@
                                                         </button>
                                                     </a>
                                                 @endif
-                                                <a href="{{URL::action('ProveedorController@show', $item->id)}}" class="btn-delete">
+                                                <a href="{{URL::action('ClienteController@show', $item->id)}}" class="btn-delete">
                                                     <button class="btn btn-xs btn-info">
                                                         <span aria-hidden="true" class="glyphicon glyphicon-search"></span>
                                                     </button>
                                                 </a>
                                             </td>
                                         </tr>
-                                        @include('maestros.proveedor.modal')
+                                        @include('maestros.cliente.modal')
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    {{$clientes->render()}}
+                    {{ $clientes->render() }}
                 </div>
             </section>
         </div>

@@ -20,9 +20,9 @@ class Cliente extends Model
         'apellidos',
         'razons',
         'direccion',
-        'idepto',
         'idciudad',
-        'telefonos',
+        'telefono1',
+        'telefono2',
         'email',
         'estado'
     ];
