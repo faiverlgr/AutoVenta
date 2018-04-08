@@ -54,7 +54,9 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{url('/agencia')}}"><i class="fa fa-circle-o"></i> Agencias</a></li>
-                    {{--  <li><a href="#"><i class="fa fa-circle-o"></i> Usuarios</a></li>  --}}
+                    <li><a href="{{url('/red')}}"><i class="fa fa-circle-o"></i> Redes</a></li>
+                    <li><a href="{{url('/zona')}}"><i class="fa fa-circle-o"></i> Zonas</a></li>
+                    <li><a href="{{url('/localidad')}}"><i class="fa fa-circle-o"></i> Localidades</a></li>
                 </ul>
             </li>
         </ul>

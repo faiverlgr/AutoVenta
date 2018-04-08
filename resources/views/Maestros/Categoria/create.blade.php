@@ -85,10 +85,7 @@
         //rellena ceros a la izquierda
         $("input.llena4").blur(function(){
             if  (this.value != ""){
-                var n = this.value.toString();
-                while(n.length < 4)
-                n = "0" + n;
-                this.value = n;
+                this.value = ('0000' + this.value).slice (-4);
                 uneCodigo();
             }
         });

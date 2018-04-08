@@ -134,7 +134,7 @@ class ArticuloController extends Controller
             ->where('a.id', '=', $id)
             ->first();
             return view('maestros.articulo.edit', compact(['query', 'articulo']));
-        }
+    }
         
         /**
      * Update the specified resource in storage.
