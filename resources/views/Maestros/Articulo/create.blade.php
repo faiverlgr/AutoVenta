@@ -163,6 +163,9 @@
 </div>
     @section('scripts')
     <script>
+        /**
+        *Función ajax para devolver las categorías de un proveedor
+        */
         $('#idprov').change(function(){
             var $sel = $(idcate);
             var cadena = `/ajaxCate/${this.value}`;
@@ -175,7 +178,7 @@
                 url: conca,
                 type: 'GET',
                 dataType: "json",
-                beforeSend: function () {$('#load').addClass("loading")},
+                beforeSend: function() {$('#load').addClass("loading")},
                 success: function(data){
                     $.each(data, function(index, item){
                         options.push(`<option value= "${item.id}">${item.codcate}-${item.nomcate}</option>`);

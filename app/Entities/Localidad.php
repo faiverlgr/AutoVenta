@@ -4,10 +4,10 @@ namespace App\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Zona extends Model
+class Localidad extends Model
 {
     //use Notifiable;
-    protected $table='zonas';
+    protected $table='localidades';
     /**
      * The attributes that are mass assignable.
      *
@@ -15,9 +15,10 @@ class Zona extends Model
      */
     protected $fillable = [
         'idred',
-        'codzon',
-        'nomzon',
-        'deszon',
+        'idzon',
+        'codloc',
+        'nomloc',
+        'desloc',
         'estado'
     ];
 

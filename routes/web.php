@@ -21,6 +21,10 @@ Route::get('/cargos', function () {
     }
 );
 
+//Ruta usada por ajax para validar si el código de la localidad existe
+Route::get('AjaxTraeZona/{red}', 'LocalidadController@traeZonas');
+//Ruta usada por ajax para validar si el código de la localidad existe
+Route::get('AjaxLocalidad/{red}/{zona}/{loca}', 'LocalidadController@validaEx');
 //Ruta usada por ajax para validar si el código de la zona existe
 Route::get('AjaxZona/{red}/{zona}', 'ZonaController@validaEx');
 //Ruta usada por ajax para econtrar conceptos según rl tipo de ajuste
@@ -32,6 +36,7 @@ Route::get('articulosp/{codprov}', 'IngresenController@selectArt');
 //Ruta usada por ajax para econtrar articulos según los proveedores en el Ingreso
 Route::get('articulosIngreso/{codprov}', 'IngresenController@articulosIngreso');
 
+Route::resource('localidad', 'LocalidadController');
 Route::resource('zona', 'ZonaController');
 Route::resource('red', 'RedController');
 Route::resource('cliente', 'ClienteController');

@@ -176,6 +176,10 @@
             $('#idproveedor').change(function(){
                 ajaxArticulo(this.value);
             });
+
+            /**
+            * Función ajax que devuelve valores de un artículo
+            */
             function ajaxArticulo($parametro){
                 var $sel = $(selArticulo);
                 var cadena = `/articulosIngreso/`+$parametro;
