@@ -62,7 +62,7 @@
                                             <td>{{ $item->telefono1}}</td>
                                             <td>
                                                 @if($item->estado == 0)
-                                                    <a href="" data-target="#modal-delete-{{$item->id}}" data-toggle="modal">
+                                                    <a data-target="#modal-delete-{{$item->id}}" data-toggle="modal">
                                                         <button class="btn btn-xs btn-warning">
                                                             <span aria-hidden="true" class="glyphicon glyphicon-check"></span>
                                                         </button>

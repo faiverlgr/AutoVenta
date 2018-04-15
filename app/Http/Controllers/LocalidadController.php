@@ -14,14 +14,29 @@ use Response;
 class LocalidadController extends Controller
 {
     /**
+     * Devuelve las localidades de una red y zona dados
+     * @return \Illuminate\Http\Response
+     */
+    public function traeLocalidades($red, $zon)
+    {
+        $data = DB::table('localidades')
+        ->select('id', 'codloc', 'nomloc')
+        ->where('idred', '=', $red)
+        ->where('idzon', '=', $zon)
+        ->where('estado', '=', 1)
+        ->get();
+        return Response::json($data);
+    }
+
+    /**
      * Busca zonas activas para la red seleccionada
      *
      * @return \Illuminate\Http\Response
      */
     public function traeZonas($red)
     {
-        $data = DB::table('zonas as z')
-        ->select('z.id', 'z.codzon', 'z.nomzon')
+        $data = DB::table('zonas')
+        ->select('id', 'codzon', 'nomzon')
         ->where('idred', '=', $red)
         ->where('estado', '=', 1)
         ->get();

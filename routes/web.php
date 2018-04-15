@@ -20,7 +20,10 @@ Route::get('/cargos', function () {
         // return view('welcome');
     }
 );
-
+//Ruta usada por ajax para devolver las localidades de una red y una zona
+Route::get('AjaxNegocios/{cliente}', 'NegocioController@traeNegocios');
+//Ruta usada por ajax para devolver las localidades de una red y una zona
+Route::get('AjaxTraeLocalidades/{red}/{zona}', 'LocalidadController@traeLocalidades');
 //Ruta usada por ajax para validar si el código de la localidad existe
 Route::get('AjaxTraeZona/{red}', 'LocalidadController@traeZonas');
 //Ruta usada por ajax para validar si el código de la localidad existe
@@ -36,6 +39,9 @@ Route::get('articulosp/{codprov}', 'IngresenController@selectArt');
 //Ruta usada por ajax para econtrar articulos según los proveedores en el Ingreso
 Route::get('articulosIngreso/{codprov}', 'IngresenController@articulosIngreso');
 
+Route::get('crearnegoc/{cliente}', 'NegocioController@crearneg');
+
+Route::resource('negocio', 'NegocioController');
 Route::resource('localidad', 'LocalidadController');
 Route::resource('zona', 'ZonaController');
 Route::resource('red', 'RedController');

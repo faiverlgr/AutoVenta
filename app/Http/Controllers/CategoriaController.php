@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 //add
-use App\Entities\Categoria; 
+use App\Entities\Categoria;
 use App\Entities\Proveedor;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CategoriasRequest;

@@ -25,7 +25,7 @@ class ProveedoresRequest extends FormRequest
     {
         return [
             // el primero es el nombre en del campo en el formulario
-            'codprov'=>' required | max:2 | unique:proveedores,codprov',
+            'codprov'=>'required | max:2 | unique:proveedores,codprov',
             'nit'=>'max:20',
             'razons'=>'required | max:80',
             'sigla'=>'max:50',

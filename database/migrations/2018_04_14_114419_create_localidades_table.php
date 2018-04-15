@@ -20,7 +20,7 @@ class CreateLocalidadesTable extends Migration
             $table->string('codloc', 3)->required();
             $table->string('nomloc', 35)->required();
             $table->string('desloc', 190)->nullable();
-            $table->tinyInteger('estado')->default(1);            
+            $table->tinyInteger('estado')->default(1);
             $table->timestamps();
         });
 
