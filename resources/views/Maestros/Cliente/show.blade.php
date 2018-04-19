@@ -24,7 +24,7 @@
             <section class="content container-fluid">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3>Lista de Negocios<a href="/crearnegoc/{{$cliente->id}}"><button class="btn btn-succes pull-right">Nuevo</button></a></h3>
+                        <h3>Lista de Negocios<a href="/cliente/"><button class="btn btn-succes">Volver</button></a><a href="/crearnegoc/{{$cliente->id}}"><button class="btn btn-succes pull-right">Nuevo</button></a></h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
@@ -53,18 +53,18 @@
                                             <th style="width: 5%">Zona</th>
                                             <th style="width: 5%">Loc</th>
                                             <th style="width: 25%">Negocio</th> 
-                                            <th style="width: 15%">Dirección</th>
+                                            <th style="width: 25%">Dirección</th>
                                             <th style="width: 10%">Teléfono</th>
-                                            <th style="width: 15%">Acción</th>
+                                            <th style="width: 5%">Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($negocios as $item)
                                             <tr>
                                                 <td>{{$item->id}}</td>
-                                                <td>{{$item->idred}}</td>
-                                                <td>{{$item->idzon}}</td>
-                                                <td>{{$item->idloc}}</td>
+                                                <td>{{$item->codred}}</td>
+                                                <td>{{$item->codzon}}</td>
+                                                <td>{{$item->codloc}}</td>
                                                 <td>{{$item->nomneg}}</td>
                                                 <td>{{$item->direccion}}</td>
                                                 <td>{{$item->telefono}}</td>

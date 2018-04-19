@@ -21,7 +21,11 @@ class NegocioController extends Controller
     public function traeNegocios($cliente)
     {
         $data = DB::table('negocios as n')
-        ->join('clientes as c', 'n.idcli', 'c.id')
+        ->join('redes as r', 'n.idred', '=', 'r.id')
+        ->join('zonas as z', 'n.idzon', '=', 'z.id')
+        ->join('localidades as l', 'n.idloc', '=', 'l.id')
+        ->join('clientes as c', 'n.idcli', '=', 'c.id')
+        ->select('n.*', 'r.codred', 'r.desred', 'z.codzon', 'z.nomzon', 'l.codloc', 'l.nomloc', 'c.nrodoc', 'c.razons')
         ->where('idcli', '=', $cliente)
         ->where('n.estado', '=', 1)
         ->get();
@@ -160,8 +164,9 @@ class NegocioController extends Controller
         $data->email        = $request->get('email');
         $data->tipneg       = $request->get('tipneg');
         $data->estado       = 1;
-        $data->save();  
-        return Redirect::to('negocio')->with('notification', 'Registro guardado exitosamente.');
+        $data->save();
+        return Redirect::back()->with('notification', 'Registro guardado exitosamente.');
+        //return Redirect::to('negocio')->with('notification', 'Registro guardado exitosamente.');
     }
 
     /**

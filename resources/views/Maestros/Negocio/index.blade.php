@@ -49,8 +49,8 @@
                                 <tbody>
                                     @foreach($clientes as $item)
                                         <tr>
-                                            <td>{{ $item->nrodoc}}</td>
-                                            <td>{{ $item->razons}}</td>
+                                            <td>{{$item->nrodoc}}</td>
+                                            <td>{{$item->razons}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -71,15 +71,13 @@
                                         <th style="width: 5%">Red</th>
                                         <th style="width: 5%">Zona</th>
                                         <th style="width: 5%">Loc</th>
-                                        <th style="width: 15%">Documento</th>
                                         <th style="width: 25%">Negocio</th> 
-                                        <th style="width: 15%">Dirección</th>
+                                        <th style="width: 25%">Dirección</th>
                                         <th style="width: 10%">Teléfono</th>
-                                        <th style="width: 15%">Acción</th>
+                                        <th style="width: 5%">Acción</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    
+                                <tbody id="contenido">
                                 </tbody>
                             </table>
                         </div>
@@ -93,21 +91,12 @@
     @section('scripts')
         <script>
             $('#idcli').change(function(){
-                var $sel = $(table);
+                var $sel = $('#contenido');
                 var cadena = `/AjaxNegocios/${this.value}`;
                 var val = "{{url("")}}";
                 var conca = val.concat(cadena);
                 var registros = [];
-                var d = `<tr>`+
-                        `<th style="width: 5%">Id</th>`+
-                        `<th style="width: 5%">Red</th>`+
-                        `<th style="width: 5%">Zona</th>`+
-                        `<th style="width: 5%">Loc</th>`+
-                        `<th style="width: 25%">Negocio</th>`+
-                        `<th style="width: 15%">Dirección</th>`+
-                        `<th style="width: 10%">Teléfono</th>`+
-                        `<th style="width: 15%">Acción</th>`+
-                        `</tr>`;
+                var filas = 0;
                 $sel.empty();
                 $sel.find('option').not(':first').remove();
                 $.ajax({
@@ -117,20 +106,16 @@
                     beforeSend: function () {
                         $("#resultado").html("Procesando, espere por favor...");
                     },
-                    success: function(data){               
+                    success: function(data){
                         $.each(data, function(index, item){
-                            registros.push(`<td>"${item.id}"</td>
-                                            <td>"${item.codred}"</td>
-                                            <td>"${item.codzon}"</td>
-                                            <td>"${item.codloc}"</td>
-                                            <td>"${item.nomneg}"</td>
-                                            <td>"${item.direccion}"</td>
-                                            <td>"${item.telefono}"</td>`);
+//                            var filas = data.length;
+//                            for ( i = 0 ; i < filas; i++){ //cuenta la cantidad de registros
+                            registros = `<tr><td>${item.id}</td><td>${item.codred}</td><td>${item.codzon}</td><td>${item.codloc}</td><td>${item.nomneg}</td><td>${item.direccion}</td><td>${item.telefono}</td></tr>`
+                            $sel.append(registros);
                         });
-                        $sel.append(registros);
                     },
                     complete: function () {
-                         $("#resultado").html("Volver");
+                        $("#resultado").html("Volver");
                     }
                 }); 
             });

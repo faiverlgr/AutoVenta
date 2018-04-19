@@ -29,7 +29,7 @@
             <section class="content container-fluid">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3>Nuevo<a href="/negocio"><button class="btn btn-succes pull-right">Listado</button></a></h3>
+                    <h3>Nuevo<a href="/cliente/{{ $cli->id }}"><button class="btn btn-succes pull-right">Volver al cliente</button></a></h3>
                     </div>
                     <div class="box-body">
                         <div class="col-md-8 col-md-offset-2">
