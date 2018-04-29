@@ -92,7 +92,7 @@
                             </table>
                         </div>
                     </div>
-                    {{ $clientes->render() }}
+                    {{$clientes->render()}}
                 </div>
             </section>
         </div>

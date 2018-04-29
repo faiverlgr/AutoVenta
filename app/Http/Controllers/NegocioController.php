@@ -67,29 +67,24 @@ class NegocioController extends Controller
      */
     public function index(Request $request)
     {
-        //dd('index controllador');
         if ($request) {
             $query=trim($request->get('searchText'));
         
-            $clientes = DB::table('clientes')
-            ->where('razons', 'LIKE', '%'.$query.'%')
-            ->orderBy('id', 'desc')
-            ->paginate(3);
-
-            $param = $clientes->first();
-
-            $data = DB::table('negocios as n')
+            $negocios = DB::table('negocios as n')
             ->join('redes as r', 'n.idred', '=', 'r.id')
             ->join('zonas as z', 'n.idzon', '=', 'z.id')
             ->join('localidades as l', 'n.idloc', '=', 'l.id')
             ->join('clientes as c', 'n.idcli', '=', 'c.id')
-            ->select('n.*', 'r.codred', 'r.desred', 'z.codzon', 'z.nomzon', 'l.codloc', 'l.nomloc', 'c.nrodoc', 'c.razons')
-            ->where('n.idcli', '=', $param->id)
-            ->orderBy('nomneg', 'asc')
+            ->select('n.*', 'r.codred', 'z.codzon', 'l.codloc', 'c.nrodoc')
+            ->where([
+                ['nomneg', 'LIKE', '%'.$query.'%'],
+                ['n.estado', '=', 1]
+            ])
+            ->orderBy('id', 'desc')
             ->paginate(10);
             
             return view('maestros.negocio.index', [
-                'clientes'   => $clientes,
+                'negocios'   => $negocios,
                 'searchText' => $query
                 ]
             );
