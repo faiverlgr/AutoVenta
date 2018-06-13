@@ -38,9 +38,9 @@ class ZonaController extends Controller
             $query=trim($request->get('searchText'));
             $data=DB::table('zonas as z')
             ->join('redes as r', 'z.idred', '=', 'r.id')
-            ->select('z.*', 'r.codred', 'r.desred')
-            ->where('nomzon', 'LIKE', '%'.$query.'%')
-            ->orderBy('codzon', 'asc')
+            ->select('z.*', 'r.codred')
+            ->where('z.nomzon', 'LIKE', '%'.$query.'%')
+            ->orderByRaw('r.codred, z.codzon')
             ->paginate(10);
             
             return view('parametros.zona.index', [

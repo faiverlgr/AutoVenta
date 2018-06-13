@@ -36,17 +36,17 @@
                         <table id="example1" class="table table-condensed table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th style="width: 10%">Red</th>
                                 <th style="width: 10%">Codigo</th>
-                                <th style="width: 40%">Zona</th>
-                                <th style="width: 40%">Red</th>
+                                <th style="width: 70%">Zona</th>
                                 <th style="width: 10%">Acción</th>
                             </tr>
                             </thead>
                             @foreach($data as $item)
                                 <tr>
+                                    <td>{{ $item->codred }}</td>
                                     <td>{{ $item->codzon }}</td>
                                     <td>{{ $item->nomzon }}</td>
-                                    <td>{{ $item->desred }}</td>
                                     <td>
                                         @if($item->estado == 0)
                                             <a href="" data-target="#modal-delete-{{ $item->id }}" data-toggle="modal">

@@ -85,7 +85,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="telefono1">Teléfono</label>
+                                <label for="telefono1">Teléfono *</label>
                                 <input type="text" id="telefono" name="telefono" class="numeric form-control" value="{{old('telefono1')}}">
                             </div>
                             <div class="form-group">

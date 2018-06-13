@@ -184,14 +184,15 @@ class NegocioController extends Controller
     public function edit($id)
     {
         $data = DB::table('negocios as n')
-            ->join('clientes as c', 'n.idred', '=', 'c.id')
+            ->join('clientes as c', 'n.idcli', '=', 'c.id')
             ->join('redes as r', 'n.idred', '=', 'r.id')
             ->join('zonas as z', 'n.idzon', '=', 'z.id')
-            ->join('localicades as l', 'n.idloc', '=', 'l.id')
-            ->select('n.*', 'r.desred', 'z.nomzon', 'z.nomloc', 'c.nrodoc', 'c.razons')
+            ->join('localidades as l', 'n.idloc', '=', 'l.id')
+            ->select('n.*', 'r.codred', 'r.desred', 'z.codzon', 'z.nomzon', 'l.codloc', 'l.nomloc', 'c.nrodoc', 'c.razons')
             ->where('n.id', '=', $id)
             ->first();
-        return view('parametros.negocio.edit', compact('data'));
+            //dd($data);
+            return view('maestros.negocio.edit', compact('data'));
     }
 
     /**

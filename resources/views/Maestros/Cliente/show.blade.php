@@ -24,7 +24,7 @@
             <section class="content container-fluid">
                 <div class="box box-default">
                     <div class="box-header with-border">
-                        <h3>Lista de Negocios<a href="/cliente/"><button class="btn btn-succes">Volver</button></a><a href="/crearnegoc/{{$cliente->id}}"><button class="btn btn-succes pull-right">Nuevo</button></a></h3>
+                        <h3>Negocios por cliente <a href="/cliente/"><button class="btn btn-succes">Volver</button></a><a href="/crearnegoc/{{$cliente->id}}"><button class="btn btn-succes pull-right">Nuevo</button></a></h3>
                     </div>
                     <div class="box-body">
                         <div class="row">
